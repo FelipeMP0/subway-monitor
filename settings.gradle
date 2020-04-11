@@ -1,0 +1,10 @@
+rootProject.name = 'subway_monitor'
+include 'server'
+include 'shared_model'
+include 'datastore'
+include 'metro'
+project(':metro').projectDir = new File('./monitors/metro')
+include 'cptm'
+project(':cptm').projectDir = new File('./monitors/cptm')
+include 'private_lines'
+project(':private_lines').projectDir = new File('./monitors/private_lines')

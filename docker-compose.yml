@@ -1,0 +1,8 @@
+version: "3.7"
+services:
+  subway_monitor:
+    build:
+      context: "./server"
+    container_name: "subway_monitor"
+    ports:
+    - 8080:8080

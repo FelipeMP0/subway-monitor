@@ -1,0 +1,27 @@
+plugins {
+    id "com.github.sherter.google-java-format" version "0.8"
+    id "com.avast.gradle.docker-compose" version "0.10.9"
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'com.github.sherter.google-java-format'
+
+    group 'com.subwaymonitor'
+    version '1.0'
+
+    sourceCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.2.6.RELEASE'
+
+        testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.6.1'
+    }
+
+    compileJava.dependsOn "googleJavaFormat"
+}
