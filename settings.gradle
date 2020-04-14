@@ -8,3 +8,5 @@ include 'cptm'
 project(':cptm').projectDir = new File('./monitors/cptm')
 include 'private_lines'
 project(':private_lines').projectDir = new File('./monitors/private_lines')
+include 'application'
+

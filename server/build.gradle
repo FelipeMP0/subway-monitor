@@ -11,12 +11,10 @@ bootJar {
 
 dependencies {
     implementation project(':shared_model')
-    implementation project(':datastore')
+    implementation project(':application')
 
-    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.12'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.2.6.RELEASE'
-
-    compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.2.6.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compile group: 'org.springframework.boot', name: 'spring-boot-devtools'
 }
 
 docker {
