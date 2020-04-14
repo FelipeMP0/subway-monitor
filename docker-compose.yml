@@ -1,8 +1,23 @@
 version: "3.7"
 services:
   subway_monitor:
-    build:
-      context: "./server"
-    container_name: "subway_monitor"
+    image: "subway_monitor"
+    container_name: subway_monitor
     ports:
     - 8080:8080
+    networks:
+      default:
+        aliases:
+          - "subway_monitor.subway_monitor"
+    depends_on:
+      - postgres_subway_monitor
+
+  postgres_subway_monitor:
+    image: postgres:9.6
+    container_name: postgres_subway_monitor
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=subway_monitor
+    ports:
+    - 5432:5432

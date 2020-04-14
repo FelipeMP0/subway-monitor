@@ -2,4 +2,6 @@ plugins {
     id 'java-library'
 }
 
-dependencies {}
+dependencies {
+    compile group: 'org.flywaydb', name: 'flyway-core', version: '6.3.3'
+}
