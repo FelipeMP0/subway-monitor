@@ -1,4 +1,4 @@
-package com.subwaymonitor.datastore;
+package com.subwaymonitor.datastore.repository;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
@@ -10,8 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "status", catalog = DatabaseSchemas.SUBWAY_MONITOR)
-class StatusEntity {
+@Table(name = "line", catalog = DatabaseSchemas.SUBWAY_MONITOR)
+class LineEntity {
 
   @Id
   @Column(name = "id")
@@ -26,6 +26,11 @@ class StatusEntity {
 
   @Column(name = "created_at", updatable = false)
   private ZonedDateTime createdAt;
+
+  @Column(name = "updated_at")
+  private ZonedDateTime updatedAt;
+
+  public LineEntity() {}
 
   public UUID getId() {
     return id;
@@ -57,5 +62,13 @@ class StatusEntity {
 
   public void setCreatedAt(ZonedDateTime createdAt) {
     this.createdAt = createdAt;
+  }
+
+  public ZonedDateTime getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(ZonedDateTime updatedAt) {
+    this.updatedAt = updatedAt;
   }
 }

@@ -1,4 +1,4 @@
-package com.subwaymonitor.datastore;
+package com.subwaymonitor.datastore.repository;
 
 class DatabaseSchemas {
 

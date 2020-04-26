@@ -1,4 +1,4 @@
-package com.subwaymonitor.datastore;
+package com.subwaymonitor.datastore.repository;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
@@ -10,16 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "line", catalog = DatabaseSchemas.SUBWAY_MONITOR)
-class LineEntity {
+@Table(name = "company", catalog = DatabaseSchemas.SUBWAY_MONITOR)
+class CompanyEntity {
 
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
-
-  @Column(name = "slug")
-  private String slug;
 
   @Column(name = "name")
   private String name;
@@ -30,20 +27,14 @@ class LineEntity {
   @Column(name = "updated_at")
   private ZonedDateTime updatedAt;
 
+  public CompanyEntity() {}
+
   public UUID getId() {
     return id;
   }
 
   public void setId(UUID id) {
     this.id = id;
-  }
-
-  public String getSlug() {
-    return slug;
-  }
-
-  public void setSlug(String slug) {
-    this.slug = slug;
   }
 
   public String getName() {
