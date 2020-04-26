@@ -4,7 +4,7 @@ services:
     image: "subway_monitor"
     container_name: subway_monitor
     ports:
-    - 8080:8080
+      - 8080:8080
     networks:
       default:
         aliases:
@@ -20,4 +20,4 @@ services:
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=subway_monitor
     ports:
-    - 5432:5432
+      - 5432:5432
