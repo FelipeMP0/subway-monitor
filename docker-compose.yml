@@ -13,7 +13,7 @@ services:
       - postgres_subway_monitor
 
   postgres_subway_monitor:
-    image: postgres:9.6
+    image: postgres:12.2
     container_name: postgres_subway_monitor
     environment:
       - POSTGRES_USER=root

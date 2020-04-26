@@ -8,5 +8,7 @@ dependencies {
     compile group: 'org.postgresql', name: 'postgresql', version: '42.2.12'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
 
+    testCompile group: 'org.testcontainers', name: 'testcontainers', version: '1.14.1'
     testCompile group: 'org.testcontainers', name: 'postgresql', version: '1.14.1'
+    testCompile group: 'org.testcontainers', name: 'junit-jupiter', version: '1.14.1'
 }

@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 create or replace function trigger_set_timestamp()
     RETURNS trigger AS
 $$
@@ -11,8 +13,8 @@ CREATE TABLE company
 (
     id         UUID      NOT NULL DEFAULT uuid_generate_v4(),
     name       VARCHAR   NOT NULL,
-    created_at timestampz NOT NULL DEFAULT NOW(),
-    updated_at timestampz NOT NULL DEFAULT NOW(),
+    created_at timestamp NOT NULL DEFAULT NOW(),
+    updated_at timestamp NOT NULL DEFAULT NOW(),
     PRIMARY KEY (id)
 );
 

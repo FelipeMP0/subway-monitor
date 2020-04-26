@@ -1,4 +1,4 @@
-package com.subwaymonitor;
+package com.subwaymonitor.datastore;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

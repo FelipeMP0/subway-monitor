@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 create or replace function trigger_set_timestamp()
     RETURNS trigger AS
 $$
@@ -13,8 +15,8 @@ CREATE TABLE line
     slug       VARCHAR   NOT NULL,
     name       VARCHAR   NOT NULL,
     company_id UUID      NOT NULL REFERENCES company (id) ON DELETE CASCADE,
-    created_at timestampz NOT NULL DEFAULT NOW(),
-    updated_at timestampz NOT NULL DEFAULT NOW(),
+    created_at timestamp NOT NULL DEFAULT NOW(),
+    updated_at timestamp NOT NULL DEFAULT NOW(),
     PRIMARY KEY (id)
 );
 

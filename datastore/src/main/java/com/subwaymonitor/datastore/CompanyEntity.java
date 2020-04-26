@@ -1,4 +1,4 @@
-package com.subwaymonitor.datastore.repository;
+package com.subwaymonitor.datastore;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
@@ -21,7 +21,7 @@ class CompanyEntity {
   @Column(name = "name")
   private String name;
 
-  @Column(name = "created_at", updatable = false)
+  @Column(name = "created_t", updatable = false)
   private ZonedDateTime createdAt;
 
   @Column(name = "updated_at")
