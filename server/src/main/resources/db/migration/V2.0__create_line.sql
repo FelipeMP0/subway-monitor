@@ -14,6 +14,7 @@ CREATE TABLE line
     id         UUID      NOT NULL DEFAULT uuid_generate_v4(),
     slug       VARCHAR   NOT NULL,
     name       VARCHAR   NOT NULL,
+    number     INTEGER   NOT NULL,
     company_id UUID      NOT NULL REFERENCES company (id) ON DELETE CASCADE,
     created_at timestamp NOT NULL DEFAULT NOW(),
     updated_at timestamp NOT NULL DEFAULT NOW(),

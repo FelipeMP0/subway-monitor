@@ -1,12 +1,15 @@
 package com.subwaymonitor.datastore;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.UUID;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,7 +24,10 @@ class CompanyEntity {
   @Column(name = "name")
   private String name;
 
-  @Column(name = "created_t", updatable = false)
+  @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<LineEntity> lines;
+
+  @Column(name = "created_at", updatable = false)
   private ZonedDateTime createdAt;
 
   @Column(name = "updated_at")
@@ -43,6 +49,14 @@ class CompanyEntity {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public List<LineEntity> getLines() {
+    return lines;
+  }
+
+  public void setLines(List<LineEntity> lines) {
+    this.lines = lines;
   }
 
   public ZonedDateTime getCreatedAt() {

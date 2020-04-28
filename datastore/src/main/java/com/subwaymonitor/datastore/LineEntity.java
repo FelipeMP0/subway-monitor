@@ -19,6 +19,12 @@ class LineEntity {
   @Column(name = "name")
   private String name;
 
+  @Column(name = "number")
+  private Integer number;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  private CompanyEntity company;
+
   @Column(name = "created_at", updatable = false)
   private ZonedDateTime createdAt;
 
@@ -49,6 +55,22 @@ class LineEntity {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public Integer getNumber() {
+    return number;
+  }
+
+  public void setNumber(Integer number) {
+    this.number = number;
+  }
+
+  public CompanyEntity getCompany() {
+    return company;
+  }
+
+  public void setCompany(CompanyEntity company) {
+    this.company = company;
   }
 
   public ZonedDateTime getCreatedAt() {
