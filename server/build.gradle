@@ -16,9 +16,7 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     compile group: 'org.springframework.boot', name: 'spring-boot-devtools'
 
-    testCompile group: 'org.testcontainers', name: 'testcontainers', version: '1.14.1'
-    testCompile group: 'org.testcontainers', name: 'postgresql', version: '1.14.1'
-    testCompile group: 'org.testcontainers', name: 'junit-jupiter', version: '1.14.1'
+    testCompile group: 'com.opentable.components', name: 'otj-pg-embedded', version: '0.13.3'
 }
 
 docker {

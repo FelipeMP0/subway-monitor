@@ -1,36 +1,20 @@
 package com.subwaymonitor.datastore;
 
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.util.TestPropertyValues;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
+import com.opentable.db.postgres.embedded.EmbeddedPostgres;
+import org.junit.jupiter.api.BeforeAll;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
-@DataJpaTest
-@Testcontainers
-@AutoConfigureTestDatabase(replace = Replace.NONE)
-@ContextConfiguration(initializers = {BaseRepositoryTest.Initializer.class})
-public class BaseRepositoryTest {
+@SpringBootTest
+@TestPropertySource("classpath:application.yml")
+public abstract class BaseRepositoryTest {
 
-  @Container
-  public static JdbcDatabaseContainer postgreSQLContainer =
-      new PostgreSQLContainer("postgres:12.2");
+  private static EmbeddedPostgres embeddedPostgres;
 
-  static class Initializer
-      implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-    @Override
-    public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
-      TestPropertyValues.of(
-              "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl(),
-              "spring.datasource.username=" + postgreSQLContainer.getUsername(),
-              "spring.datasource.password=" + postgreSQLContainer.getPassword())
-          .applyTo(configurableApplicationContext.getEnvironment());
+  @BeforeAll
+  public static void init() throws Exception {
+    if (embeddedPostgres == null) {
+      embeddedPostgres = EmbeddedPostgres.builder().setPort(5433).start();
     }
   }
 }
