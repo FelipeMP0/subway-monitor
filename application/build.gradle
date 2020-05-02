@@ -1,11 +1,11 @@
 plugins {
-    id 'java-library'
+    id "java-library"
 }
 
 dependencies {
-    implementation project(':shared_model')
-    implementation project(':datastore')
-    implementation project(':metro')
-    implementation project(':cptm')
-    implementation project(':private_lines')
+    implementation project(":shared_model")
+    implementation project(":datastore")
+    implementation project(":metro")
+    implementation project(":cptm")
+    implementation project(":private_lines")
 }

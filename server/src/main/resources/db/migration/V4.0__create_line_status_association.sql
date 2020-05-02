@@ -2,7 +2,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE line_status_history
 (
-    id                  UUID      NOT NULL DEFAULT uuid_generate_v4,
+    id                  UUID      NOT NULL DEFAULT uuid_generate_v4(),
     line_id             UUID      NOT NULL REFERENCES line (id),
     status_id           UUID      NOT NULL REFERENCES status (id),
     verification_number INTEGER   NOT NULL,

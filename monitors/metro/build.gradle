@@ -1,14 +1,14 @@
 plugins {
-    id 'java-library'
+    id "java-library"
 }
 
 dependencies {
-    implementation project(':shared_model')
+    implementation project(":shared_model")
 
-    annotationProcessor group: 'org.immutables', name: 'value', version: '2.8.3'
-    compileOnly group: 'org.immutables', name: 'value', version: '2.8.3'
-    compileOnly group: 'org.immutables', name: 'builder', version: '2.8.3'
-    compileOnly group: 'org.immutables', name: 'value-annotations', version: '2.8.3'
+    annotationProcessor group: "org.immutables", name: "value", version: commonLibs.immutablesVersion
+    compileOnly group: "org.immutables", name: "value", version: commonLibs.immutablesVersion
+    compileOnly group: "org.immutables", name: "builder", version: commonLibs.immutablesVersion
+    compileOnly group: "org.immutables", name: "value-annotations", version: commonLibs.immutablesVersion
 
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compile group: "org.springframework.boot", name: "spring-boot-starter-web"
 }

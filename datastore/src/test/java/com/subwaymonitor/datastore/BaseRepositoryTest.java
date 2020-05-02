@@ -7,7 +7,7 @@ import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest
 @TestPropertySource("classpath:application.yml")
-public abstract class BaseRepositoryTest {
+abstract class BaseRepositoryTest {
 
   private static EmbeddedPostgres embeddedPostgres;
 

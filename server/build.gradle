@@ -1,7 +1,7 @@
 plugins {
     id "java"
     id "org.springframework.boot" version "2.2.6.RELEASE"
-    id 'com.bmuschko.docker-spring-boot-application' version '6.4.0'
+    id "com.bmuschko.docker-spring-boot-application" version "6.4.0"
 }
 
 bootJar {
@@ -10,23 +10,25 @@ bootJar {
 }
 
 dependencies {
-    implementation project(':shared_model')
-    implementation project(':application')
+    implementation project(":shared_model")
+    implementation project(":application")
 
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    compile group: 'org.springframework.boot', name: 'spring-boot-devtools'
+    compile group: "org.springframework.boot", name: "spring-boot-starter-web"
+    compile group: "org.springframework.boot", name: "spring-boot-devtools"
 
-    testCompile group: 'com.opentable.components', name: 'otj-pg-embedded', version: '0.13.3'
+    compile group: "org.flywaydb", name: "flyway-core", version: "6.4.1"
+
+    testCompile group: "com.opentable.components", name: "otj-pg-embedded", version: "0.13.3"
 }
 
 docker {
     springBootApplication {
-        baseImage = 'openjdk:8-alpine'
+        baseImage = "openjdk:8-alpine"
         ports = [8080, 8080]
-        images = ['subway_monitor:latest']
+        images = ["subway_monitor:latest"]
     }
 }
 
 dockerSyncBuildContext {
-    exclude '**/spring-boot-devtools-*.jar'
+    exclude "**/spring-boot-devtools-*.jar"
 }
