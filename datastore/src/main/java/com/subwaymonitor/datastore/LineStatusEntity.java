@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "line_status", catalog = DatabaseSchemas.SUBWAY_MONITOR)
+@Table(name = "line_status_history", catalog = DatabaseSchemas.SUBWAY_MONITOR)
 class LineStatusEntity {
 
   @Id
