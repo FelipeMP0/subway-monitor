@@ -24,3 +24,27 @@ server:
 logging:
   config: classpath:logback-spring.xml
   file: ./subway_monitor.log
+
+---
+
+spring:
+  profiles: prod
+
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 8080
+
+logging:
+  config: classpath:logback-spring.xml
+  file: ./subway_monitor.log
