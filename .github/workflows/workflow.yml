@@ -23,7 +23,7 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
-      run: ./gradlew clean build dockerBuildImage
+      run: ./gradlew clean build dockerCreateDockerfile
     - name: Login to Heroku Container Registry
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
