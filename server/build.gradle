@@ -12,6 +12,7 @@ bootJar {
 dependencies {
     implementation project(":shared_model")
     implementation project(":application")
+    implementation project(":metro")
 
     compile group: "org.springframework.boot", name: "spring-boot-starter-web"
     compile group: "org.springframework.boot", name: "spring-boot-starter-data-jpa"

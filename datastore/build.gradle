@@ -5,8 +5,9 @@ plugins {
 dependencies {
     implementation project(":shared_model")
 
-    compile group: "org.postgresql", name: "postgresql", version: "42.2.12"
     compile group: "org.springframework.boot", name: "spring-boot-starter-data-jpa"
+
+    compile group: "org.postgresql", name: "postgresql", version: "42.2.12"
 
     testCompile group: "com.opentable.components", name: "otj-pg-embedded", version: "0.13.3"
 }

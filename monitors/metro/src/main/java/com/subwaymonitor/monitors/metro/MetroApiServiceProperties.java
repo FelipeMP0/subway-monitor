@@ -1,19 +1,19 @@
-package com.subwaymonitors.monitors.metro.config;
+package com.subwaymonitor.monitors.metro;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "metro-service")
-public class MetroApiServiceProperties {
+class MetroApiServiceProperties {
 
   private String url;
 
-  public String getUrl() {
+  String getUrl() {
     return url;
   }
 
-  public void setUrl(String url) {
+  void setUrl(final String url) {
     this.url = url;
   }
 }

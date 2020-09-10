@@ -1,9 +1,9 @@
-package com.subwaymonitors.monitors.metro;
+package com.subwaymonitor.monitors.metro;
 
+import com.subwaymonitor.monitors.metro.MetroApiResponse.StatusMetro;
 import com.subwaymonitor.sharedmodel.ImmutableLineStatus;
 import com.subwaymonitor.sharedmodel.LineStatus;
 import com.subwaymonitor.sharedmodel.SubwayStatusService;
-import com.subwaymonitors.monitors.metro.MetroApiResponse.StatusMetro;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +17,15 @@ public class MetroStatusService implements SubwayStatusService {
   private final MetroApiService metroApiService;
 
   @Autowired
-  public MetroStatusService(MetroApiService metroApiService) {
+  public MetroStatusService(final MetroApiService metroApiService) {
     this.metroApiService = metroApiService;
   }
 
   @Override
   public List<LineStatus> findLineStatuses() {
-    MetroApiResponse metroApiResponse = this.metroApiService.getStatuses();
+    final MetroApiResponse metroApiResponse = this.metroApiService.getStatuses();
 
-    StatusMetro statusMetro = metroApiResponse.statusMetro();
+    final StatusMetro statusMetro = metroApiResponse.statusMetro();
 
     return statusMetro
         .lineStatuses()
