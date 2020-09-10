@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "metro-service.url",
+      "type": "java.lang.String",
+      "description": "Description for metro-service.url."
+  }
+] }

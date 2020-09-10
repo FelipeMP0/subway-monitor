@@ -24,7 +24,7 @@ dependencies {
 
 docker {
     springBootApplication {
-        baseImage = "openjdk:8-alpine"
+        baseImage = "openjdk:11-jre-slim"
         ports = [8080]
         images = ["subway_monitor:latest"]
     }
