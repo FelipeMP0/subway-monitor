@@ -14,10 +14,9 @@ import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,25 +24,18 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.client.ExpectedCount;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.util.ResourceUtils;
-import org.springframework.web.client.RestTemplate;
 
-@SpringBootTest
+@RestClientTest
 @ContextConfiguration(classes = {SpringTestConfig.class, MetroApiService.class})
 class MetroApiServiceTest {
 
-  private final RestTemplate restTemplate;
   private final MetroApiService subject;
-  private MockRestServiceServer mockServer;
+  private final MockRestServiceServer mockServer;
 
   @Autowired
-  MetroApiServiceTest(final RestTemplate restTemplate, MetroApiService subject) {
-    this.restTemplate = restTemplate;
+  MetroApiServiceTest(final MetroApiService subject, final MockRestServiceServer mockServer) {
     this.subject = subject;
-  }
-
-  @BeforeEach
-  void setUp() {
-    this.mockServer = MockRestServiceServer.createServer(this.restTemplate);
+    this.mockServer = mockServer;
   }
 
   @Test

@@ -1,7 +1,9 @@
 package com.subwaymonitor.monitors.metro;
 
 import java.net.URI;
+import java.time.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -14,9 +16,10 @@ class MetroApiService {
   private final RestTemplate restTemplate;
 
   @Autowired
-  MetroApiService(final MetroApiServiceProperties properties, final RestTemplate restTemplate) {
+  MetroApiService(
+      final MetroApiServiceProperties properties, final RestTemplateBuilder restTemplateBuilder) {
     this.properties = properties;
-    this.restTemplate = restTemplate;
+    this.restTemplate = restTemplateBuilder.setReadTimeout(Duration.ofSeconds(30)).build();
   }
 
   MetroApiResponse getStatuses() {
