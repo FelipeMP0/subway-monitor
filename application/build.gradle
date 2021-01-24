@@ -8,4 +8,6 @@ dependencies {
     implementation project(":metro")
     implementation project(":cptm")
     implementation project(":private_lines")
+
+    compile group: "org.springframework.boot", name: "spring-boot-starter"
 }

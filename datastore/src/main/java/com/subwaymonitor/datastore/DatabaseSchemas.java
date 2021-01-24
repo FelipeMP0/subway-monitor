@@ -1,8 +1,8 @@
 package com.subwaymonitor.datastore;
 
-class DatabaseSchemas {
+public class DatabaseSchemas {
 
   private DatabaseSchemas() {}
 
-  static final String SUBWAY_MONITOR = "subway_monitor";
+  public static final String SUBWAY_MONITOR = "subway_monitor";
 }

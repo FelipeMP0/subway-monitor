@@ -1,4 +1,4 @@
-package com.subwaymonitor.datastore;
+package com.subwaymonitor.datastore.sql;
 
 import com.opentable.db.postgres.embedded.EmbeddedPostgres;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,9 +9,9 @@ import org.springframework.test.context.ContextConfiguration;
 
 @DataJpaTest
 @AutoConfigurationPackage
-@ContextConfiguration(classes = {BaseRepositoryTest.class})
+@ContextConfiguration(classes = {BaseSqlRepositoryTest.class})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-abstract class BaseRepositoryTest {
+abstract class BaseSqlRepositoryTest {
 
   private static EmbeddedPostgres embeddedPostgres;
 

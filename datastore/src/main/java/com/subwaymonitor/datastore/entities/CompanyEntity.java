@@ -1,5 +1,6 @@
-package com.subwaymonitor.datastore;
+package com.subwaymonitor.datastore.entities;
 
+import com.subwaymonitor.datastore.DatabaseSchemas;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -14,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "company", catalog = DatabaseSchemas.SUBWAY_MONITOR)
-class CompanyEntity {
+public class CompanyEntity {
 
   @Id
   @Column(name = "id")
@@ -33,7 +34,9 @@ class CompanyEntity {
   @Column(name = "updated_at")
   private ZonedDateTime updatedAt;
 
-  public CompanyEntity() {}
+  CompanyEntity() {
+    // Hibernate requires no-args constructor
+  }
 
   public UUID getId() {
     return id;

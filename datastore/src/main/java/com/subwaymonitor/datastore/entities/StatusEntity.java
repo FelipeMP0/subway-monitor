@@ -1,12 +1,14 @@
-package com.subwaymonitor.datastore;
+package com.subwaymonitor.datastore.entities;
 
+import com.subwaymonitor.datastore.DatabaseSchemas;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.UUID;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "line", catalog = DatabaseSchemas.SUBWAY_MONITOR)
-class LineEntity {
+@Table(name = "status", catalog = DatabaseSchemas.SUBWAY_MONITOR)
+public class StatusEntity {
 
   @Id
   @Column(name = "id")
@@ -19,19 +21,15 @@ class LineEntity {
   @Column(name = "name")
   private String name;
 
-  @Column(name = "number")
-  private Integer number;
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  private CompanyEntity company;
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "status", cascade = CascadeType.ALL)
+  private List<LineStatusEntity> status;
 
   @Column(name = "created_at", updatable = false)
   private ZonedDateTime createdAt;
 
-  @Column(name = "updated_at")
-  private ZonedDateTime updatedAt;
-
-  public LineEntity() {}
+  StatusEntity() {
+    // Hibernate requires no-args constructor
+  }
 
   public UUID getId() {
     return id;
@@ -57,20 +55,12 @@ class LineEntity {
     this.name = name;
   }
 
-  public Integer getNumber() {
-    return number;
+  public List<LineStatusEntity> getStatus() {
+    return status;
   }
 
-  public void setNumber(Integer number) {
-    this.number = number;
-  }
-
-  public CompanyEntity getCompany() {
-    return company;
-  }
-
-  public void setCompany(CompanyEntity company) {
-    this.company = company;
+  public void setStatus(List<LineStatusEntity> status) {
+    this.status = status;
   }
 
   public ZonedDateTime getCreatedAt() {
@@ -79,13 +69,5 @@ class LineEntity {
 
   public void setCreatedAt(ZonedDateTime createdAt) {
     this.createdAt = createdAt;
-  }
-
-  public ZonedDateTime getUpdatedAt() {
-    return updatedAt;
-  }
-
-  public void setUpdatedAt(ZonedDateTime updatedAt) {
-    this.updatedAt = updatedAt;
   }
 }

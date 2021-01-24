@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Qualifier("MetroStatusService")
-public class MetroStatusService implements SubwayStatusService {
+class MetroStatusService implements SubwayStatusService {
 
   private final MetroApiService metroApiService;
 

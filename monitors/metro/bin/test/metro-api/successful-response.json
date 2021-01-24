@@ -1,0 +1,50 @@
+{
+  "CurrentLineStatus": {
+    "DateUpdateFormated": "09/09/2020 23:27",
+    "Status": "Operação Normal",
+    "Icon": "20140415_6f5dad3fe3bd4abfa1f5ad90c87bed6a_normal.png",
+    "FinalDescription": null
+  },
+  "StatusMetro": {
+    "ListLineStatus": [
+      {
+        "Id": "1",
+        "Color": "Azul",
+        "Line": "Linha 1 - Azul",
+        "LineRaw": "Linha 1",
+        "StatusMetro": "Operação Normal",
+        "Status": 0,
+        "Description": ""
+      },
+      {
+        "Id": "2",
+        "Color": "Verde",
+        "Line": "Linha 2 - Verde",
+        "LineRaw": "Linha 2",
+        "StatusMetro": "Operação Normal",
+        "Status": 0,
+        "Description": ""
+      },
+      {
+        "Id": "3",
+        "Color": "Vermelha",
+        "Line": "Linha 3 - Vermelha",
+        "LineRaw": "Linha 3",
+        "StatusMetro": "Operação Normal",
+        "Status": 0,
+        "Description": ""
+      },
+      {
+        "Id": "15",
+        "Color": "Prata",
+        "Line": "Linha 15 - Prata",
+        "LineRaw": "Linha 15",
+        "StatusMetro": "Operação Normal",
+        "Status": 0,
+        "Description": ""
+      }
+    ],
+    "DateUpdateMetro": "09/09/2020 23:27"
+  },
+  "DateUpdateMetro": "09/09/2020 23:27"
+}
