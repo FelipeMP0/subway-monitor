@@ -1,11 +1,23 @@
 package com.subwaymonitor.datastore.sql;
 
+import com.subwaymonitor.datastore.VerificationRepository;
+import com.subwaymonitor.sharedmodel.Verification;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 @Repository
-class VerificationRepositorySqlImpl {
+class VerificationRepositorySqlImpl implements VerificationRepository {
 
-  @PersistenceContext private EntityManager entityManager;
+  private final EntityManager entityManager;
+
+  VerificationRepositorySqlImpl(final EntityManager entityManager) {
+    this.entityManager = entityManager;
+  }
+
+  @Override
+  public Verification create(final Verification verification) {
+    final VerificationEntity verificationEntity = new VerificationEntity(verification);
+    entityManager.persist(verificationEntity);
+    return verificationEntity.toModel();
+  }
 }

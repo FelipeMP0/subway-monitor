@@ -1,4 +1,4 @@
-package com.subwaymonitor.datastore.entities;
+package com.subwaymonitor.datastore.sql;
 
 import com.subwaymonitor.datastore.DatabaseSchemas;
 import java.time.ZonedDateTime;
@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "company", catalog = DatabaseSchemas.SUBWAY_MONITOR)
-public class CompanyEntity {
+class CompanyEntity {
 
   @Id
   @Column(name = "id")
@@ -38,43 +38,43 @@ public class CompanyEntity {
     // Hibernate requires no-args constructor
   }
 
-  public UUID getId() {
+  UUID getId() {
     return id;
   }
 
-  public void setId(UUID id) {
+  void setId(UUID id) {
     this.id = id;
   }
 
-  public String getName() {
+  String getName() {
     return name;
   }
 
-  public void setName(String name) {
+  void setName(String name) {
     this.name = name;
   }
 
-  public List<LineEntity> getLines() {
+  List<LineEntity> getLines() {
     return lines;
   }
 
-  public void setLines(List<LineEntity> lines) {
+  void setLines(List<LineEntity> lines) {
     this.lines = lines;
   }
 
-  public ZonedDateTime getCreatedAt() {
+  ZonedDateTime getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(ZonedDateTime createdAt) {
+  void setCreatedAt(ZonedDateTime createdAt) {
     this.createdAt = createdAt;
   }
 
-  public ZonedDateTime getUpdatedAt() {
+  ZonedDateTime getUpdatedAt() {
     return updatedAt;
   }
 
-  public void setUpdatedAt(ZonedDateTime updatedAt) {
+  void setUpdatedAt(ZonedDateTime updatedAt) {
     this.updatedAt = updatedAt;
   }
 }

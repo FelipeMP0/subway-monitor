@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface SubwayStatusService {
 
-  List<LineStatus> findLineStatuses();
+  List<LineCurrentStatus> findLineStatuses();
 }

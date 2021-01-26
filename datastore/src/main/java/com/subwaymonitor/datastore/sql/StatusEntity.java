@@ -1,20 +1,17 @@
-package com.subwaymonitor.datastore.entities;
+package com.subwaymonitor.datastore.sql;
 
 import com.subwaymonitor.datastore.DatabaseSchemas;
+import com.subwaymonitor.sharedmodel.ImmutableStatus;
+import com.subwaymonitor.sharedmodel.Status;
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.UUID;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "status", catalog = DatabaseSchemas.SUBWAY_MONITOR)
-public class StatusEntity {
+class StatusEntity {
 
   @Id
-  @Column(name = "id")
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private UUID id;
-
   @Column(name = "slug")
   private String slug;
 
@@ -31,43 +28,44 @@ public class StatusEntity {
     // Hibernate requires no-args constructor
   }
 
-  public UUID getId() {
-    return id;
+  StatusEntity(final Status status) {
+    this.slug = status.slug();
+    this.name = status.name();
   }
 
-  public void setId(UUID id) {
-    this.id = id;
+  Status toModel() {
+    return ImmutableStatus.builder().slug(this.slug).name(this.name).build();
   }
 
-  public String getSlug() {
+  String getSlug() {
     return slug;
   }
 
-  public void setSlug(String slug) {
+  void setSlug(String slug) {
     this.slug = slug;
   }
 
-  public String getName() {
+  String getName() {
     return name;
   }
 
-  public void setName(String name) {
+  void setName(String name) {
     this.name = name;
   }
 
-  public List<LineStatusEntity> getStatus() {
+  List<LineStatusEntity> getStatus() {
     return status;
   }
 
-  public void setStatus(List<LineStatusEntity> status) {
+  void setStatus(List<LineStatusEntity> status) {
     this.status = status;
   }
 
-  public ZonedDateTime getCreatedAt() {
+  ZonedDateTime getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(ZonedDateTime createdAt) {
+  void setCreatedAt(ZonedDateTime createdAt) {
     this.createdAt = createdAt;
   }
 }

@@ -1,20 +1,17 @@
-package com.subwaymonitor.datastore.entities;
+package com.subwaymonitor.datastore.sql;
 
 import com.subwaymonitor.datastore.DatabaseSchemas;
+import com.subwaymonitor.sharedmodel.ImmutableLine;
+import com.subwaymonitor.sharedmodel.Line;
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.UUID;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "line", catalog = DatabaseSchemas.SUBWAY_MONITOR)
-public class LineEntity {
+class LineEntity {
 
   @Id
-  @Column(name = "id")
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private UUID id;
-
   @Column(name = "slug")
   private String slug;
 
@@ -40,67 +37,69 @@ public class LineEntity {
     // Hibernate requires no-args constructor
   }
 
-  public UUID getId() {
-    return id;
+  LineEntity(final Line line) {
+    this.slug = line.slug();
+    this.name = line.name();
+    this.number = line.number();
   }
 
-  public void setId(UUID id) {
-    this.id = id;
+  Line toModel() {
+    return ImmutableLine.builder().slug(this.slug).name(this.name).number(this.number).build();
   }
 
-  public String getSlug() {
+  String getSlug() {
     return slug;
   }
 
-  public void setSlug(String slug) {
+  void setSlug(String slug) {
     this.slug = slug;
   }
 
-  public String getName() {
+  String getName() {
     return name;
   }
 
-  public void setName(String name) {
+  void setName(String name) {
     this.name = name;
   }
 
-  public Integer getNumber() {
+  Integer getNumber() {
     return number;
   }
 
-  public void setNumber(Integer number) {
+  void setNumber(Integer number) {
     this.number = number;
   }
 
-  public CompanyEntity getCompany() {
+  CompanyEntity getCompany() {
     return company;
   }
 
-  public void setCompany(CompanyEntity company) {
+  void setCompany(CompanyEntity company) {
     this.company = company;
   }
 
-  public List<LineStatusEntity> getLine() {
+  List<LineStatusEntity> getLine() {
     return line;
   }
 
-  public void setLine(List<LineStatusEntity> line) {
+  void setLine(List<LineStatusEntity> line) {
     this.line = line;
   }
 
-  public ZonedDateTime getCreatedAt() {
+  ZonedDateTime getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(ZonedDateTime createdAt) {
+  void setCreatedAt(ZonedDateTime createdAt) {
     this.createdAt = createdAt;
   }
 
-  public ZonedDateTime getUpdatedAt() {
+  ZonedDateTime getUpdatedAt() {
     return updatedAt;
   }
 
-  public void setUpdatedAt(ZonedDateTime updatedAt) {
+  void setUpdatedAt(ZonedDateTime updatedAt) {
     this.updatedAt = updatedAt;
   }
 }

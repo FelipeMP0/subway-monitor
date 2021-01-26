@@ -1,8 +1,8 @@
 package com.subwaymonitor.monitors.metro;
 
 import com.subwaymonitor.monitors.metro.MetroApiResponse.StatusMetro;
-import com.subwaymonitor.sharedmodel.ImmutableLineStatus;
-import com.subwaymonitor.sharedmodel.LineStatus;
+import com.subwaymonitor.sharedmodel.ImmutableLineCurrentStatus;
+import com.subwaymonitor.sharedmodel.LineCurrentStatus;
 import com.subwaymonitor.sharedmodel.SubwayStatusService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,7 +22,7 @@ class MetroStatusService implements SubwayStatusService {
   }
 
   @Override
-  public List<LineStatus> findLineStatuses() {
+  public List<LineCurrentStatus> findLineStatuses() {
     final MetroApiResponse metroApiResponse = this.metroApiService.getStatuses();
 
     final StatusMetro statusMetro = metroApiResponse.statusMetro();
@@ -32,7 +32,7 @@ class MetroStatusService implements SubwayStatusService {
         .stream()
         .map(
             lineStatus ->
-                ImmutableLineStatus.builder()
+                ImmutableLineCurrentStatus.builder()
                     .lineNumber(Integer.parseInt(lineStatus.id()))
                     .statusSlug(lineStatus.statusDescription())
                     .build())

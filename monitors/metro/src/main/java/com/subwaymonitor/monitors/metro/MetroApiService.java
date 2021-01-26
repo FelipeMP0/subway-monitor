@@ -26,7 +26,7 @@ class MetroApiService {
     final URI uri = UriComponentsBuilder.fromHttpUrl(this.properties.getUrl()).build().toUri();
 
     final ResponseEntity<MetroApiResponse> metroApiResponse =
-        this.restTemplate.getForEntity(uri, MetroApiResponse.class);
+        restTemplate.getForEntity(uri, MetroApiResponse.class);
 
     return metroApiResponse.getBody();
   }

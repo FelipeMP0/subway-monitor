@@ -1,3 +1,8 @@
 package com.subwaymonitor.datastore;
 
-public interface VerificationRepository {}
+import com.subwaymonitor.sharedmodel.Verification;
+
+public interface VerificationRepository {
+
+  Verification create(Verification verification);
+}

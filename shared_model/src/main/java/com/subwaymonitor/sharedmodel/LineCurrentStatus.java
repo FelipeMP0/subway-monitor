@@ -3,9 +3,9 @@ package com.subwaymonitor.sharedmodel;
 import org.immutables.value.Value;
 
 @Value.Immutable
-public interface LineStatus {
+public interface LineCurrentStatus {
 
-  Line line();
+  Integer lineNumber();
 
-  Status status();
+  String statusSlug();
 }
