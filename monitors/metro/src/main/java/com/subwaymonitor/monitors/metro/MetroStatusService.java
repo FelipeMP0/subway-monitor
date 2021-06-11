@@ -23,7 +23,7 @@ class MetroStatusService implements SubwayStatusService {
 
   @Override
   public List<LineCurrentStatus> findLineStatuses() {
-    final MetroApiResponse metroApiResponse = this.metroApiService.getStatuses();
+    final MetroApiResponse metroApiResponse = metroApiService.getStatuses();
 
     final StatusMetro statusMetro = metroApiResponse.statusMetro();
 

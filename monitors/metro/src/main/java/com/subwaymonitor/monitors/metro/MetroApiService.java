@@ -23,7 +23,7 @@ class MetroApiService {
   }
 
   MetroApiResponse getStatuses() {
-    final URI uri = UriComponentsBuilder.fromHttpUrl(this.properties.getUrl()).build().toUri();
+    final URI uri = UriComponentsBuilder.fromHttpUrl(properties.getUrl()).build().toUri();
 
     final ResponseEntity<MetroApiResponse> metroApiResponse =
         restTemplate.getForEntity(uri, MetroApiResponse.class);

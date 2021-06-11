@@ -7,7 +7,7 @@ spring:
   profiles: development
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/subway_monitor
+    url: jdbc:postgresql://postgres_subway_monitor:5432/subway_monitor
     username: root
     password: password
 

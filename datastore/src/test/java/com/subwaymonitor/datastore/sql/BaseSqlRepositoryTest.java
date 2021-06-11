@@ -9,7 +9,13 @@ import org.springframework.test.context.ContextConfiguration;
 
 @DataJpaTest
 @AutoConfigurationPackage
-@ContextConfiguration(classes = {BaseSqlRepositoryTest.class, VerificationRepositorySqlImpl.class})
+@ContextConfiguration(
+    classes = {
+      BaseSqlRepositoryTest.class,
+      VerificationRepositorySqlImpl.class,
+      LineRepositorySqlImpl.class,
+      StatusRepositorySqlImpl.class
+    })
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 abstract class BaseSqlRepositoryTest {
 

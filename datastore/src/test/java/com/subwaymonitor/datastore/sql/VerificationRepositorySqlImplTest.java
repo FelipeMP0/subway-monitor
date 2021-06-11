@@ -2,7 +2,11 @@ package com.subwaymonitor.datastore.sql;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.truth.Truth;
-import com.subwaymonitor.sharedmodel.*;
+import com.subwaymonitor.sharedmodel.ImmutableLine;
+import com.subwaymonitor.sharedmodel.ImmutableLineStatus;
+import com.subwaymonitor.sharedmodel.ImmutableStatus;
+import com.subwaymonitor.sharedmodel.ImmutableVerification;
+import com.subwaymonitor.sharedmodel.Verification;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,7 +16,7 @@ class VerificationRepositorySqlImplTest extends BaseSqlRepositoryTest {
 
   @Autowired
   VerificationRepositorySqlImplTest(final VerificationRepositorySqlImpl verificationRepositorySql) {
-    this.subject = verificationRepositorySql;
+    subject = verificationRepositorySql;
   }
 
   @Test

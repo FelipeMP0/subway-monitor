@@ -42,12 +42,12 @@ class MetroApiServiceTest {
   void requestMetroLinesStatuses_success() throws URISyntaxException, IOException {
     final File file = ResourceUtils.getFile("classpath:metro-api/successful-response.json");
     final String responseBody = new String(Files.readAllBytes(file.toPath()));
-    this.mockServer
+    mockServer
         .expect(ExpectedCount.once(), requestTo(new URI("http://example.com")))
         .andExpect(method(HttpMethod.GET))
         .andRespond(
             withStatus(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(responseBody));
-    final MetroApiResponse response = this.subject.getStatuses();
+    final MetroApiResponse response = subject.getStatuses();
     final MetroApiResponse expectedResponse =
         ImmutableMetroApiResponse.builder()
             .statusMetro(
@@ -55,11 +55,11 @@ class MetroApiServiceTest {
                     .dateUpdateMetro(
                         LocalDateTime.parse(
                             "09/09/2020 23:27", DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")))
-                    .addAllLineStatuses(this.buildLineStatuses())
+                    .addAllLineStatuses(buildLineStatuses())
                     .build())
             .build();
     Truth.assertThat(response).isEqualTo(expectedResponse);
-    this.mockServer.verify();
+    mockServer.verify();
   }
 
   private List<LineStatus> buildLineStatuses() {

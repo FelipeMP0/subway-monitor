@@ -1,9 +1,9 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-create or replace function trigger_set_timestamp()
+CREATE OR REPLACE FUNCTION trigger_set_timestamp()
     RETURNS trigger AS
 $$
-begin
+BEGIN
     NEW.updated_at = NOW();
     RETURN NEW;
 END;

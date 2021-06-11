@@ -96,3 +96,6 @@ gradle-app.setting
 .idea/modules/core_test.iml
 .idea/modules/core_test.iml
 .idea/modules/core_test.iml
+
+.classpath
+.project
