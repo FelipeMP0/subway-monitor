@@ -28,10 +28,10 @@ class CompanyEntity {
   @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<LineEntity> lines;
 
-  @Column(name = "created_at", updatable = false)
+  @Column(name = "created_at", insertable = false, updatable = false)
   private ZonedDateTime createdAt;
 
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   private ZonedDateTime updatedAt;
 
   CompanyEntity() {

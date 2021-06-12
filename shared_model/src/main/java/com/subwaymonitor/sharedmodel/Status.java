@@ -5,7 +5,7 @@ import org.immutables.value.Value;
 @Value.Immutable
 public interface Status {
 
-  String slug();
+  StatusEnum slug();
 
   String name();
 }

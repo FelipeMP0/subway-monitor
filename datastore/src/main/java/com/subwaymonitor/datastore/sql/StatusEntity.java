@@ -3,6 +3,7 @@ package com.subwaymonitor.datastore.sql;
 import com.subwaymonitor.datastore.DatabaseSchemas;
 import com.subwaymonitor.sharedmodel.ImmutableStatus;
 import com.subwaymonitor.sharedmodel.Status;
+import com.subwaymonitor.sharedmodel.StatusEnum;
 import java.time.ZonedDateTime;
 import java.util.List;
 import javax.persistence.*;
@@ -21,7 +22,7 @@ class StatusEntity {
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "status", cascade = CascadeType.ALL)
   private List<LineStatusEntity> status;
 
-  @Column(name = "created_at", updatable = false)
+  @Column(name = "created_at", insertable = false, updatable = false)
   private ZonedDateTime createdAt;
 
   StatusEntity() {
@@ -29,12 +30,12 @@ class StatusEntity {
   }
 
   StatusEntity(final Status status) {
-    this.slug = status.slug();
+    this.slug = status.slug().name();
     this.name = status.name();
   }
 
   Status toModel() {
-    return ImmutableStatus.builder().slug(this.slug).name(this.name).build();
+    return ImmutableStatus.builder().slug(StatusEnum.valueOf(this.slug)).name(this.name).build();
   }
 
   String getSlug() {

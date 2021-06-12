@@ -1,7 +1,8 @@
 package com.subwaymonitor.monitors.metro;
 
-import java.net.URI;
 import java.time.Duration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
 class MetroApiService {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(MetroApiService.class);
 
   private final MetroApiServiceProperties properties;
   private final RestTemplate restTemplate;
@@ -23,11 +26,15 @@ class MetroApiService {
   }
 
   MetroApiResponse getStatuses() {
-    final URI uri = UriComponentsBuilder.fromHttpUrl(properties.getUrl()).build().toUri();
+    final var uri = UriComponentsBuilder.fromHttpUrl(properties.getUrl()).build().toUri();
 
     final ResponseEntity<MetroApiResponse> metroApiResponse =
         restTemplate.getForEntity(uri, MetroApiResponse.class);
 
-    return metroApiResponse.getBody();
+    final var metroApiResponseBody = metroApiResponse.getBody();
+
+    LOGGER.info("GET request for {} returned = {}", properties.getUrl(), metroApiResponseBody);
+
+    return metroApiResponseBody;
   }
 }

@@ -21,6 +21,7 @@ class VerificationTask {
 
   @Scheduled(fixedRate = 180000)
   void verifyLinesCurrentStatus() {
+    LOGGER.info("Running line current status verification task");
     verificationService.verifyCurrentStatuses();
   }
 }

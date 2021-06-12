@@ -25,10 +25,11 @@ class LineRepositorySqlImplTest extends BaseSqlRepositoryTest {
   void getBySlug_success() {
     final String slug = UUID.randomUUID().toString();
     final String name = UUID.randomUUID().toString();
-    final Line expected = ImmutableLine.builder().slug(slug).number(1).name(name).build();
+    final int number = 1;
+    final Line expected = ImmutableLine.builder().slug(slug).number(number).name(name).build();
     final LineEntity lineEntity = new LineEntity(expected);
     entityManager.persist(lineEntity);
-    final Line result = subject.getBySlug(slug);
+    final Line result = subject.getByNumber(number);
     Truth.assertThat(result).isEqualTo(expected);
   }
 }

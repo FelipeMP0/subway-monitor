@@ -1,8 +1,9 @@
 package com.subwaymonitor.datastore;
 
 import com.subwaymonitor.sharedmodel.Status;
+import com.subwaymonitor.sharedmodel.StatusEnum;
 
 public interface StatusRepository {
 
-  Status getBySlug(String slug);
+  Status getBySlug(StatusEnum slug);
 }

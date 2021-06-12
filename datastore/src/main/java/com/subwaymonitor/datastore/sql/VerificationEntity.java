@@ -21,7 +21,7 @@ class VerificationEntity {
   @OneToMany(mappedBy = "verification", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<LineStatusEntity> lineStatuses;
 
-  @Column(name = "created_at", updatable = false)
+  @Column(name = "created_at", insertable = false, updatable = false)
   private ZonedDateTime createdAt;
 
   VerificationEntity() {
@@ -35,6 +35,7 @@ class VerificationEntity {
             .stream()
             .map(LineStatusEntity::new)
             .collect(Collectors.toList());
+    this.lineStatuses.forEach(lineStatusEntity -> lineStatusEntity.setVerification(this));
   }
 
   Verification toModel() {

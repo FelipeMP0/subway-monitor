@@ -4,5 +4,5 @@ import com.subwaymonitor.sharedmodel.Line;
 
 public interface LineRepository {
 
-  Line getBySlug(String slug);
+  Line getByNumber(int number);
 }

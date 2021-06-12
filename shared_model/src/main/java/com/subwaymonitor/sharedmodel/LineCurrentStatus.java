@@ -7,5 +7,5 @@ public interface LineCurrentStatus {
 
   Integer lineNumber();
 
-  String statusSlug();
+  StatusEnum statusSlug();
 }

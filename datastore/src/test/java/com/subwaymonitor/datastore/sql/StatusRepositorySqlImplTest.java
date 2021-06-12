@@ -3,6 +3,7 @@ package com.subwaymonitor.datastore.sql;
 import com.google.common.truth.Truth;
 import com.subwaymonitor.sharedmodel.ImmutableStatus;
 import com.subwaymonitor.sharedmodel.Status;
+import com.subwaymonitor.sharedmodel.StatusEnum;
 import java.util.UUID;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,7 @@ class StatusRepositorySqlImplTest extends BaseSqlRepositoryTest {
 
   @Test
   void getBySlug_success() {
-    final String slug = UUID.randomUUID().toString();
+    final StatusEnum slug = StatusEnum.NORMAL_OPERATION;
     final String name = UUID.randomUUID().toString();
     final Status expected = ImmutableStatus.builder().slug(slug).name(name).build();
     final StatusEntity statusEntity = new StatusEntity(expected);

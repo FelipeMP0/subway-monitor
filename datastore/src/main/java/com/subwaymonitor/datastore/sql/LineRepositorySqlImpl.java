@@ -15,11 +15,11 @@ class LineRepositorySqlImpl implements LineRepository {
   }
 
   @Override
-  public Line getBySlug(String slug) {
-    final LineEntity lineEntity =
+  public Line getByNumber(final int number) {
+    final var lineEntity =
         entityManager
-            .createQuery("SELECT l FROM LineEntity l WHERE l.slug = :slug", LineEntity.class)
-            .setParameter("slug", slug)
+            .createQuery("SELECT l FROM LineEntity l WHERE l.number = :number", LineEntity.class)
+            .setParameter("number", number)
             .getSingleResult();
     return lineEntity.toModel();
   }

@@ -5,7 +5,6 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
 
 import com.google.common.truth.Truth;
-import com.subwaymonitor.monitors.metro.MetroApiResponse.StatusMetro.LineStatus;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -13,7 +12,6 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
@@ -55,50 +53,10 @@ class MetroApiServiceTest {
                     .dateUpdateMetro(
                         LocalDateTime.parse(
                             "09/09/2020 23:27", DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")))
-                    .addAllLineStatuses(buildLineStatuses())
+                    .addAllLineStatuses(TestHelper.buildLineStatuses())
                     .build())
             .build();
     Truth.assertThat(response).isEqualTo(expectedResponse);
     mockServer.verify();
-  }
-
-  private List<LineStatus> buildLineStatuses() {
-    return List.of(
-        ImmutableLineStatus.builder()
-            .id("1")
-            .color("Azul")
-            .lineFullName("Linha 1 - Azul")
-            .lineNumberDescription("Linha 1")
-            .statusDescription("Operação Normal")
-            .statusNumber(0)
-            .description("")
-            .build(),
-        ImmutableLineStatus.builder()
-            .id("2")
-            .color("Verde")
-            .lineFullName("Linha 2 - Verde")
-            .lineNumberDescription("Linha 2")
-            .statusDescription("Operação Normal")
-            .statusNumber(0)
-            .description("")
-            .build(),
-        ImmutableLineStatus.builder()
-            .id("3")
-            .color("Vermelha")
-            .lineFullName("Linha 3 - Vermelha")
-            .lineNumberDescription("Linha 3")
-            .statusDescription("Operação Normal")
-            .statusNumber(0)
-            .description("")
-            .build(),
-        ImmutableLineStatus.builder()
-            .id("15")
-            .color("Prata")
-            .lineFullName("Linha 15 - Prata")
-            .lineNumberDescription("Linha 15")
-            .statusDescription("Operação Normal")
-            .statusNumber(0)
-            .description("")
-            .build());
   }
 }

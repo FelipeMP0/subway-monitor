@@ -27,10 +27,10 @@ class LineEntity {
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "line", cascade = CascadeType.ALL)
   private List<LineStatusEntity> line;
 
-  @Column(name = "created_at", updatable = false)
+  @Column(name = "created_at", insertable = false, updatable = false)
   private ZonedDateTime createdAt;
 
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   private ZonedDateTime updatedAt;
 
   LineEntity() {

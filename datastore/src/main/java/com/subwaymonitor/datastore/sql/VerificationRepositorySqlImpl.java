@@ -16,7 +16,7 @@ class VerificationRepositorySqlImpl implements VerificationRepository {
 
   @Override
   public Verification create(final Verification verification) {
-    final VerificationEntity verificationEntity = new VerificationEntity(verification);
+    final var verificationEntity = new VerificationEntity(verification);
     entityManager.persist(verificationEntity);
     return verificationEntity.toModel();
   }

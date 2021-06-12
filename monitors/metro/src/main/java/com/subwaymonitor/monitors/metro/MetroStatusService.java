@@ -1,11 +1,13 @@
 package com.subwaymonitor.monitors.metro;
 
-import com.subwaymonitor.monitors.metro.MetroApiResponse.StatusMetro;
 import com.subwaymonitor.sharedmodel.ImmutableLineCurrentStatus;
 import com.subwaymonitor.sharedmodel.LineCurrentStatus;
+import com.subwaymonitor.sharedmodel.StatusEnum;
 import com.subwaymonitor.sharedmodel.SubwayStatusService;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Service;
 @Service
 @Qualifier("MetroStatusService")
 class MetroStatusService implements SubwayStatusService {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(MetroStatusService.class);
 
   private final MetroApiService metroApiService;
 
@@ -23,9 +27,9 @@ class MetroStatusService implements SubwayStatusService {
 
   @Override
   public List<LineCurrentStatus> findLineStatuses() {
-    final MetroApiResponse metroApiResponse = metroApiService.getStatuses();
+    final var metroApiResponse = metroApiService.getStatuses();
 
-    final StatusMetro statusMetro = metroApiResponse.statusMetro();
+    final var statusMetro = metroApiResponse.statusMetro();
 
     return statusMetro
         .lineStatuses()
@@ -34,8 +38,23 @@ class MetroStatusService implements SubwayStatusService {
             lineStatus ->
                 ImmutableLineCurrentStatus.builder()
                     .lineNumber(Integer.parseInt(lineStatus.id()))
-                    .statusSlug(lineStatus.statusDescription())
+                    .statusSlug(convertStatus(lineStatus.statusDescription()))
                     .build())
         .collect(Collectors.toList());
+  }
+
+  private StatusEnum convertStatus(String statusDescription) {
+    if ("operação normal".equalsIgnoreCase(statusDescription)) {
+      return StatusEnum.NORMAL_OPERATION;
+    } else if ("velocidade reduzida".equalsIgnoreCase(statusDescription)) {
+      return StatusEnum.REDUCED_SPEED;
+    } else if ("operação encerrada".equalsIgnoreCase(statusDescription)) {
+      return StatusEnum.OPERATION_CLOSED;
+    } else if ("operação interrompida".equalsIgnoreCase(statusDescription)) {
+      return StatusEnum.OPERATION_INTERRUPTED;
+    } else {
+      LOGGER.warn("Unknown status metro status description = {}", statusDescription);
+      return StatusEnum.UNKNOWN;
+    }
   }
 }
