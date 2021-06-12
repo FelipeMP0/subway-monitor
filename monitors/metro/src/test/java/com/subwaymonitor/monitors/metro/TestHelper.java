@@ -10,7 +10,7 @@ class TestHelper {
             .color("Azul")
             .lineFullName("Linha 1 - Azul")
             .lineNumberDescription("Linha 1")
-            .statusDescription("OperaÃ§Ã£o Normal")
+            .statusDescription("Operação Normal")
             .statusNumber(0)
             .description("")
             .build(),
@@ -19,7 +19,7 @@ class TestHelper {
             .color("Verde")
             .lineFullName("Linha 2 - Verde")
             .lineNumberDescription("Linha 2")
-            .statusDescription("OperaÃ§Ã£o Encerrada")
+            .statusDescription("Operação Encerrada")
             .statusNumber(0)
             .description("")
             .build(),
