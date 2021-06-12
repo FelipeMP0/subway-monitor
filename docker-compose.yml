@@ -4,7 +4,7 @@ services:
     image: "subway_monitor"
     container_name: subway_monitor
     environment:
-      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
     ports:
       - 8080:8080
       - 5005:5005

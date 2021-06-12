@@ -21,7 +21,7 @@
         "Color": "Verde",
         "Line": "Linha 2 - Verde",
         "LineRaw": "Linha 2",
-        "StatusMetro": "Operação Normal",
+        "StatusMetro": "Operação Encerrada",
         "Status": 0,
         "Description": ""
       },
@@ -30,7 +30,7 @@
         "Color": "Vermelha",
         "Line": "Linha 3 - Vermelha",
         "LineRaw": "Linha 3",
-        "StatusMetro": "Operação Normal",
+        "StatusMetro": "Velocidade Reduzida",
         "Status": 0,
         "Description": ""
       },
@@ -39,7 +39,7 @@
         "Color": "Prata",
         "Line": "Linha 15 - Prata",
         "LineRaw": "Linha 15",
-        "StatusMetro": "Operação Normal",
+        "StatusMetro": "Desconhecido",
         "Status": 0,
         "Description": ""
       }
