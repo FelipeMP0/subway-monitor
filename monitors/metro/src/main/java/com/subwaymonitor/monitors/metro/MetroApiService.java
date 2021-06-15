@@ -1,6 +1,9 @@
 package com.subwaymonitor.monitors.metro;
 
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +34,33 @@ class MetroApiService {
     final ResponseEntity<MetroApiResponse> metroApiResponse =
         restTemplate.getForEntity(uri, MetroApiResponse.class);
 
-    final var metroApiResponseBody = metroApiResponse.getBody();
+    var metroApiResponseBody = metroApiResponse.getBody();
+    if (metroApiResponseBody != null) {
+      final List<ImmutableLineStatus> normalizedLineStatusList =
+          metroApiResponseBody
+              .statusMetro()
+              .lineStatuses()
+              .stream()
+              .map(
+                  lineStatus ->
+                      ImmutableLineStatus.copyOf(lineStatus)
+                          .withStatusDescription(iso88591ToUTF8(lineStatus.statusDescription())))
+              .collect(Collectors.toList());
+      metroApiResponseBody =
+          ImmutableMetroApiResponse.copyOf(metroApiResponseBody)
+              .withStatusMetro(
+                  ImmutableStatusMetro.copyOf(metroApiResponseBody.statusMetro())
+                      .withLineStatuses(normalizedLineStatusList));
+    }
 
     LOGGER.info("GET request for {} returned = {}", properties.getUrl(), metroApiResponseBody);
 
     return metroApiResponseBody;
+  }
+
+  private String iso88591ToUTF8(final String value) {
+    final byte[] utf8 =
+        new String(value.getBytes(), StandardCharsets.ISO_8859_1).getBytes(StandardCharsets.UTF_8);
+    return new String(utf8, StandardCharsets.UTF_8);
   }
 }

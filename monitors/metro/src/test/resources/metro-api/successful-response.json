@@ -1,7 +1,7 @@
 {
   "CurrentLineStatus": {
     "DateUpdateFormated": "09/09/2020 23:27",
-    "Status": "Operação Normal",
+    "Status": "OperaÃ§Ã£o Normal",
     "Icon": "20140415_6f5dad3fe3bd4abfa1f5ad90c87bed6a_normal.png",
     "FinalDescription": null
   },
@@ -12,7 +12,7 @@
         "Color": "Azul",
         "Line": "Linha 1 - Azul",
         "LineRaw": "Linha 1",
-        "StatusMetro": "Operação Normal",
+        "StatusMetro": "OperaÃ§Ã£o Normal",
         "Status": 0,
         "Description": ""
       },
@@ -21,7 +21,7 @@
         "Color": "Verde",
         "Line": "Linha 2 - Verde",
         "LineRaw": "Linha 2",
-        "StatusMetro": "Operação Encerrada",
+        "StatusMetro": "OperaÃ§Ã£o Encerrada",
         "Status": 0,
         "Description": ""
       },

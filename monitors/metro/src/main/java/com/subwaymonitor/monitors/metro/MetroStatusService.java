@@ -44,13 +44,13 @@ class MetroStatusService implements SubwayStatusService {
   }
 
   private StatusEnum convertStatus(String statusDescription) {
-    if ("Operação Normal".equalsIgnoreCase(statusDescription)) {
+    if ("OperaÃ§Ã£o Normal".equalsIgnoreCase(statusDescription)) {
       return StatusEnum.NORMAL_OPERATION;
     } else if ("Velocidade Reduzida".equalsIgnoreCase(statusDescription)) {
       return StatusEnum.REDUCED_SPEED;
-    } else if ("Operação Encerrada".contentEquals(statusDescription)) {
+    } else if ("OperaÃ§Ã£o Encerrada".contentEquals(statusDescription)) {
       return StatusEnum.OPERATION_CLOSED;
-    } else if ("Operação Interrompida".equalsIgnoreCase(statusDescription)) {
+    } else if ("OperaÃ§Ã£o Interrompida".equalsIgnoreCase(statusDescription)) {
       return StatusEnum.OPERATION_INTERRUPTED;
     } else {
       LOGGER.warn("Unknown status metro status description = {}", statusDescription);
