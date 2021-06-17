@@ -28,12 +28,6 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew clean build dockerCreateDockerfile
 
-    - name: Publish Unit Test Results
-      uses: EnricoMi/publish-unit-test-result-action@v1
-      if: always()
-      with:
-        files: /**/subway-monitor/**/*.xml
-
     - name: Login to Heroku Container Registry
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}

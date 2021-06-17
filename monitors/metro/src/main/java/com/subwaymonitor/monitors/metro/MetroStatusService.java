@@ -5,6 +5,7 @@ import com.subwaymonitor.sharedmodel.LineCurrentStatus;
 import com.subwaymonitor.sharedmodel.StatusEnum;
 import com.subwaymonitor.sharedmodel.SubwayStatusService;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,13 +45,14 @@ class MetroStatusService implements SubwayStatusService {
   }
 
   private StatusEnum convertStatus(String statusDescription) {
-    if ("Operação Normal".equalsIgnoreCase(statusDescription)) {
+    statusDescription = statusDescription.toLowerCase(Locale.ROOT);
+    if (statusDescription.endsWith("normal")) {
       return StatusEnum.NORMAL_OPERATION;
     } else if ("Velocidade Reduzida".equalsIgnoreCase(statusDescription)) {
       return StatusEnum.REDUCED_SPEED;
-    } else if ("Operação Encerrada".contentEquals(statusDescription)) {
+    } else if (statusDescription.endsWith("encerrada")) {
       return StatusEnum.OPERATION_CLOSED;
-    } else if ("Operação Interrompida".equalsIgnoreCase(statusDescription)) {
+    } else if (statusDescription.endsWith("interrompida")) {
       return StatusEnum.OPERATION_INTERRUPTED;
     } else {
       LOGGER.warn("Unknown status metro status description = {}", statusDescription);
