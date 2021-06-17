@@ -2,13 +2,13 @@ package com.subwaymonitor.monitors.metro;
 
 import static org.mockito.Mockito.when;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.truth.Truth;
 import com.subwaymonitor.sharedmodel.ImmutableLineCurrentStatus;
 import com.subwaymonitor.sharedmodel.LineCurrentStatus;
 import com.subwaymonitor.sharedmodel.StatusEnum;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -38,7 +38,7 @@ class MetroStatusServiceTest {
     when(metroApiService.getStatuses()).thenReturn(metroApiResponse);
     final List<LineCurrentStatus> result = subject.findLineStatuses();
     final List<LineCurrentStatus> expected =
-        ImmutableList.of(
+        Arrays.asList(
             ImmutableLineCurrentStatus.builder()
                 .lineNumber(1)
                 .statusSlug(StatusEnum.NORMAL_OPERATION)
@@ -55,6 +55,6 @@ class MetroStatusServiceTest {
                 .lineNumber(15)
                 .statusSlug(StatusEnum.UNKNOWN)
                 .build());
-    Truth.assertThat(result).isEqualTo(expected);
+    Assertions.assertEquals(expected, result);
   }
 }

@@ -4,7 +4,6 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
 
-import com.google.common.truth.Truth;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -12,6 +11,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
@@ -56,7 +56,7 @@ class MetroApiServiceTest {
                     .addAllLineStatuses(TestHelper.buildLineStatuses())
                     .build())
             .build();
-    Truth.assertThat(response).isEqualTo(expectedResponse);
+    Assertions.assertEquals(expectedResponse, response);
     mockServer.verify();
   }
 }

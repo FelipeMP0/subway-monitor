@@ -1,8 +1,8 @@
 package com.subwaymonitor.datastore.sql;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.truth.Truth;
 import com.subwaymonitor.sharedmodel.*;
+import java.util.Arrays;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,7 +20,7 @@ class VerificationRepositorySqlImplTest extends BaseSqlRepositoryTest {
     final Verification input =
         ImmutableVerification.builder()
             .addAllLineStatuses(
-                ImmutableList.of(
+                Arrays.asList(
                     ImmutableLineStatus.builder()
                         .line(
                             ImmutableLine.builder().number(1).name("line 1").slug("LINE_1").build())
@@ -41,6 +41,6 @@ class VerificationRepositorySqlImplTest extends BaseSqlRepositoryTest {
                         .build()))
             .build();
     final Verification result = subject.create(input);
-    Truth.assertThat(input).isEqualTo(result);
+    Assertions.assertEquals(input, result);
   }
 }

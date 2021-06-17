@@ -5,11 +5,11 @@ import static com.subwaymonitor.sharedmodel.StatusEnum.REDUCED_SPEED;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.google.common.collect.ImmutableList;
 import com.subwaymonitor.datastore.LineRepository;
 import com.subwaymonitor.datastore.StatusRepository;
 import com.subwaymonitor.datastore.VerificationRepository;
 import com.subwaymonitor.sharedmodel.*;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,7 +58,7 @@ class VerificationServiceTest {
     final Verification verification =
         ImmutableVerification.builder()
             .addAllLineStatuses(
-                ImmutableList.of(
+                Arrays.asList(
                     ImmutableLineStatus.builder().line(LINE_1).status(STATUS_1).build(),
                     ImmutableLineStatus.builder().line(LINE_2).status(STATUS_2).build()))
             .build();
@@ -67,7 +67,7 @@ class VerificationServiceTest {
   }
 
   private List<LineCurrentStatus> buildDefaultLineCurrentStatuses() {
-    return ImmutableList.of(
+    return Arrays.asList(
         ImmutableLineCurrentStatus.builder()
             .lineNumber(LINE_1_NUMBER)
             .statusSlug(NORMAL_OPERATION)

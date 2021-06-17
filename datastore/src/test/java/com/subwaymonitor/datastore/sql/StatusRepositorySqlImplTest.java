@@ -1,11 +1,11 @@
 package com.subwaymonitor.datastore.sql;
 
-import com.google.common.truth.Truth;
 import com.subwaymonitor.sharedmodel.ImmutableStatus;
 import com.subwaymonitor.sharedmodel.Status;
 import com.subwaymonitor.sharedmodel.StatusEnum;
 import java.util.UUID;
 import javax.persistence.EntityManager;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,6 +30,6 @@ class StatusRepositorySqlImplTest extends BaseSqlRepositoryTest {
     final StatusEntity statusEntity = new StatusEntity(expected);
     entityManager.persist(statusEntity);
     final Status result = subject.getBySlug(slug);
-    Truth.assertThat(result).isEqualTo(expected);
+    Assertions.assertEquals(expected, result);
   }
 }
