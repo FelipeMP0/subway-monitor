@@ -5,6 +5,7 @@ import com.subwaymonitor.sharedmodel.Verification;
 import javax.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
+/** SQL implementation of the {@link VerificationRepository}. */
 @Repository
 class VerificationRepositorySqlImpl implements VerificationRepository {
 

@@ -41,7 +41,7 @@ class MetroApiServiceTest {
     final File file = ResourceUtils.getFile("classpath:metro-api/successful-response.json");
     final String responseBody = new String(Files.readAllBytes(file.toPath()));
     mockServer
-        .expect(ExpectedCount.once(), requestTo(new URI("http://example.com")))
+        .expect(ExpectedCount.once(), requestTo(new URI("http://example.com/LineStatus")))
         .andExpect(method(HttpMethod.GET))
         .andRespond(
             withStatus(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(responseBody));

@@ -10,6 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+/**
+ * Service class responsible for interactions with the Metro's API. Used to query the current
+ * statuses of the Metro lines.
+ */
 @Service
 class MetroApiService {
 
@@ -25,8 +29,16 @@ class MetroApiService {
     this.restTemplate = restTemplateBuilder.setReadTimeout(Duration.ofSeconds(30)).build();
   }
 
+  /**
+   * Makes an HTTP request to the Metro's API and returns the current statuses for all lines in this
+   * transport system.
+   *
+   * @return The parsed JSON response from the API containing the information and the current
+   *     statuses of the lines.
+   */
   MetroApiResponse getStatuses() {
-    final var uri = UriComponentsBuilder.fromHttpUrl(properties.getUrl()).build().toUri();
+    final var uri =
+        UriComponentsBuilder.fromHttpUrl(properties.getUrl() + "/LineStatus").build().toUri();
 
     final ResponseEntity<MetroApiResponse> metroApiResponse =
         restTemplate.getForEntity(uri, MetroApiResponse.class);

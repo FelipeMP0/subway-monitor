@@ -5,6 +5,7 @@ import com.subwaymonitor.sharedmodel.Line;
 import javax.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
+/** SQL implementation of the {@link LineRepository}. */
 @Repository
 class LineRepositorySqlImpl implements LineRepository {
 

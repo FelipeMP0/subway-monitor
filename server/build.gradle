@@ -14,11 +14,17 @@ dependencies {
     implementation project(":application")
     implementation project(":metro")
 
+    annotationProcessor group: "org.immutables", name: "value", version: commonLibs.immutablesVersion
+
     compile group: "org.springframework.boot", name: "spring-boot-starter-web"
     compile group: "org.springframework.boot", name: "spring-boot-starter-data-jpa"
     compile group: "org.springframework.boot", name: "spring-boot-devtools"
 
     compile group: "org.flywaydb", name: "flyway-core", version: "6.4.1"
+
+    compileOnly group: "org.immutables", name: "value", version: commonLibs.immutablesVersion
+    compileOnly group: "org.immutables", name: "builder", version: commonLibs.immutablesVersion
+    compileOnly group: "org.immutables", name: "value-annotations", version: commonLibs.immutablesVersion
 
     testCompile group: "com.opentable.components", name: "otj-pg-embedded", version: "0.13.3"
 }

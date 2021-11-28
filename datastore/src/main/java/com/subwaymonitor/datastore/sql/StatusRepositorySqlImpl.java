@@ -6,6 +6,7 @@ import com.subwaymonitor.sharedmodel.StatusEnum;
 import javax.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
+/** SQL implementation of the {@link StatusRepository}. */
 @Repository
 class StatusRepositorySqlImpl implements StatusRepository {
 

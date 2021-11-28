@@ -25,7 +25,7 @@ logging:
   config: classpath:logback-spring.xml
   file: ./subway_monitor.log
 
-metro-service.url: http://www.viaquatro.com.br/generic/Main/LineStatus
+metro-service.url: http://www.viaquatro.com.br/generic/Main
 
 ---
 

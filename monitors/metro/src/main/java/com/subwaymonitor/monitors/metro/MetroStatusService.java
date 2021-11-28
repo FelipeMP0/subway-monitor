@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+/** Service class that performs the necessary actions to find statuses of the Metro's lines. */
 @Service
 @Qualifier("MetroStatusService")
 class MetroStatusService implements SubwayStatusService {
@@ -26,6 +27,12 @@ class MetroStatusService implements SubwayStatusService {
     this.metroApiService = metroApiService;
   }
 
+  /**
+   * Finds the currents statuses of Metro's lines and then adapt the results to the shared model.
+   *
+   * @return A list of {@link LineCurrentStatus} containing an adapted version the current statuses
+   *     of the lines.
+   */
   @Override
   public List<LineCurrentStatus> findLineStatuses() {
     final var metroApiResponse = metroApiService.getStatuses();

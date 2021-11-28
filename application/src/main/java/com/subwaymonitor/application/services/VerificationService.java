@@ -11,6 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service class responsible for verifying the current state of the lines and to persist the
+ * verified state.
+ */
 @Service
 public class VerificationService {
 
@@ -33,6 +37,7 @@ public class VerificationService {
     this.metroStatusService = metroStatusService;
   }
 
+  /** Verifies the current state of the lines and then persist them in a database. */
   @Transactional
   public void verifyCurrentStatuses() {
     final List<LineCurrentStatus> lineCurrentStatuses = metroStatusService.findLineStatuses();
