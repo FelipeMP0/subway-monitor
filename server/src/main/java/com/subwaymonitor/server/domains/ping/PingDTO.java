@@ -2,7 +2,6 @@ package com.subwaymonitor.server.domains.ping;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import java.time.ZonedDateTime;
 import org.immutables.value.Value;
 
 /** DTO for the ping endpoint. */
@@ -14,16 +13,10 @@ import org.immutables.value.Value;
 @JsonDeserialize(as = ImmutablePingDTO.class)
 interface PingDTO {
 
-  /** String field. Value is always "pong" */
+  /** String field. Value is always "pong". */
   @Value.Default
   default String response() {
     return "pong";
-  }
-
-  /** Current time of the server. */
-  @Value.Default
-  default ZonedDateTime currentTime() {
-    return ZonedDateTime.now();
   }
 
   /** Inner builder class to extend from the generated Builder. Used to simplify the syntax. */
