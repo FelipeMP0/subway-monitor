@@ -3,13 +3,11 @@ package com.subwaymonitor.server;
 import com.opentable.db.postgres.embedded.EmbeddedPostgres;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 
-@SpringBootTest
 @ContextConfiguration(initializers = {DatabaseTest.Initializer.class})
 class DatabaseTest {
 

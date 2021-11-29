@@ -4,7 +4,7 @@ plugins {
     id "io.spring.dependency-management" version "1.0.9.RELEASE"
 }
 
-ext.commonLibs = [immutablesVersion: "2.8.3"]
+ext.commonLibs = [immutablesVersion: "2.8.8"]
 
 allprojects {
     apply plugin: "java"
@@ -16,6 +16,7 @@ allprojects {
     version "1.0"
 
     sourceCompatibility = 11
+    targetCompatibility = 11
 
     repositories {
         mavenCentral()
@@ -38,6 +39,24 @@ allprojects {
 
     test {
         useJUnitPlatform()
+    }
+
+    def generatedJavaSourcesPath = "$buildDir/generated-sources/java"
+    def generatedJavaSourcesDir = file(generatedJavaSourcesPath)
+
+    compileJava {
+        options.compilerArgs = [
+                "-s",
+                generatedJavaSourcesPath
+        ]
+    }
+
+    sourceSets {
+        main {
+            java {
+                srcDir generatedJavaSourcesDir
+            }
+        }
     }
 
     compileJava.dependsOn "googleJavaFormat"
