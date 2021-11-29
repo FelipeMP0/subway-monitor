@@ -41,6 +41,7 @@ public class JacksonMapperFactory {
     final JavaTimeModule javaTimeModule = new JavaTimeModule();
     javaTimeModule.addSerializer(ZonedDateTime.class, zonedDateTimeSerializer);
     javaTimeModule.addDeserializer(ZonedDateTime.class, InstantDeserializer.ZONED_DATE_TIME);
+    objectMapper.registerModule(javaTimeModule);
     return objectMapper;
   }
 }

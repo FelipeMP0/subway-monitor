@@ -99,3 +99,11 @@ gradle-app.setting
 
 .classpath
 .project
+
+/bin
+/*/bin
+/*/*/bin
+
+/.settings
+/*/.settings
+/*/*/.settings
