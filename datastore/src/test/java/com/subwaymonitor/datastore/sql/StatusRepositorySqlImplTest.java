@@ -26,7 +26,7 @@ class StatusRepositorySqlImplTest extends BaseSqlRepositoryTest {
   void getBySlug_success() {
     final StatusEnum slug = StatusEnum.NORMAL_OPERATION;
     final String name = UUID.randomUUID().toString();
-    final Status expected = ImmutableStatus.builder().slug(slug).name(name).build();
+    final Status expected = ImmutableStatus.builder().status(slug).name(name).build();
     final StatusEntity statusEntity = new StatusEntity(expected);
     entityManager.persist(statusEntity);
     final Status result = subject.getBySlug(slug);

@@ -41,20 +41,17 @@ class MetroStatusServiceTest {
         Arrays.asList(
             ImmutableLineCurrentStatus.builder()
                 .lineNumber(1)
-                .statusSlug(StatusEnum.NORMAL_OPERATION)
+                .status(StatusEnum.NORMAL_OPERATION)
                 .build(),
             ImmutableLineCurrentStatus.builder()
                 .lineNumber(2)
-                .statusSlug(StatusEnum.OPERATION_CLOSED)
+                .status(StatusEnum.OPERATION_CLOSED)
                 .build(),
             ImmutableLineCurrentStatus.builder()
                 .lineNumber(3)
-                .statusSlug(StatusEnum.REDUCED_SPEED)
+                .status(StatusEnum.REDUCED_SPEED)
                 .build(),
-            ImmutableLineCurrentStatus.builder()
-                .lineNumber(15)
-                .statusSlug(StatusEnum.UNKNOWN)
-                .build());
+            ImmutableLineCurrentStatus.builder().lineNumber(15).status(StatusEnum.UNKNOWN).build());
     Assertions.assertEquals(expected, result);
   }
 }

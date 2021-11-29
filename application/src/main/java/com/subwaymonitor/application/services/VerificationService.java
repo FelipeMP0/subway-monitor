@@ -47,7 +47,7 @@ public class VerificationService {
             .map(
                 lineCurrentStatus -> {
                   final var line = lineRepository.getByNumber(lineCurrentStatus.lineNumber());
-                  final var status = statusRepository.getBySlug(lineCurrentStatus.statusSlug());
+                  final var status = statusRepository.getBySlug(lineCurrentStatus.status());
                   return buildLineStatus(line, status);
                 })
             .collect(Collectors.toList());

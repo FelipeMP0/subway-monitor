@@ -10,5 +10,5 @@ public interface LineCurrentStatus {
   Integer lineNumber();
 
   /** Current status of the line. */
-  StatusEnum statusSlug();
+  StatusEnum status();
 }

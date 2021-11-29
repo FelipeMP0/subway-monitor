@@ -30,12 +30,12 @@ class StatusEntity {
   }
 
   StatusEntity(final Status status) {
-    this.slug = status.slug().name();
+    this.slug = status.status().name();
     this.name = status.name();
   }
 
   Status toModel() {
-    return ImmutableStatus.builder().slug(StatusEnum.valueOf(this.slug)).name(this.name).build();
+    return ImmutableStatus.builder().status(StatusEnum.valueOf(this.slug)).name(this.name).build();
   }
 
   String getSlug() {

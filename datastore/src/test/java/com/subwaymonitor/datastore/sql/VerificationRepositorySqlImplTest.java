@@ -27,7 +27,7 @@ class VerificationRepositorySqlImplTest extends BaseSqlRepositoryTest {
                         .status(
                             ImmutableStatus.builder()
                                 .name("status 1")
-                                .slug(StatusEnum.NORMAL_OPERATION)
+                                .status(StatusEnum.NORMAL_OPERATION)
                                 .build())
                         .build(),
                     ImmutableLineStatus.builder()
@@ -36,7 +36,7 @@ class VerificationRepositorySqlImplTest extends BaseSqlRepositoryTest {
                         .status(
                             ImmutableStatus.builder()
                                 .name("status 2")
-                                .slug(StatusEnum.REDUCED_SPEED)
+                                .status(StatusEnum.REDUCED_SPEED)
                                 .build())
                         .build()))
             .build();

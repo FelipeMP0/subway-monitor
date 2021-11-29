@@ -33,9 +33,9 @@ class VerificationServiceTest {
   private static final Line LINE_2 =
       ImmutableLine.builder().slug("line-2").number(LINE_2_NUMBER).name("Line 2").build();
   private static final Status STATUS_1 =
-      ImmutableStatus.builder().slug(NORMAL_OPERATION).name(NORMAL_OPERATION.name()).build();
+      ImmutableStatus.builder().status(NORMAL_OPERATION).name(NORMAL_OPERATION.name()).build();
   private static final Status STATUS_2 =
-      ImmutableStatus.builder().slug(REDUCED_SPEED).name(REDUCED_SPEED.name()).build();
+      ImmutableStatus.builder().status(REDUCED_SPEED).name(REDUCED_SPEED.name()).build();
 
   @BeforeEach
   void setUp() {
@@ -70,11 +70,11 @@ class VerificationServiceTest {
     return Arrays.asList(
         ImmutableLineCurrentStatus.builder()
             .lineNumber(LINE_1_NUMBER)
-            .statusSlug(NORMAL_OPERATION)
+            .status(NORMAL_OPERATION)
             .build(),
         ImmutableLineCurrentStatus.builder()
             .lineNumber(LINE_2_NUMBER)
-            .statusSlug(REDUCED_SPEED)
+            .status(REDUCED_SPEED)
             .build());
   }
 }

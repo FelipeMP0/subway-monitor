@@ -7,7 +7,7 @@ import org.immutables.value.Value;
 public interface Status {
 
   /** Unique identifier of a status. */
-  StatusEnum slug();
+  StatusEnum status();
 
   /** Display name for the status. */
   String name();

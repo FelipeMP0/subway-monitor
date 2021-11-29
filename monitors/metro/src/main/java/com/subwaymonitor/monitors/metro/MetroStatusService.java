@@ -46,7 +46,7 @@ class MetroStatusService implements SubwayStatusService {
             lineStatus ->
                 ImmutableLineCurrentStatus.builder()
                     .lineNumber(Integer.parseInt(lineStatus.id()))
-                    .statusSlug(convertStatus(lineStatus.statusDescription()))
+                    .status(convertStatus(lineStatus.statusDescription()))
                     .build())
         .collect(Collectors.toList());
   }
