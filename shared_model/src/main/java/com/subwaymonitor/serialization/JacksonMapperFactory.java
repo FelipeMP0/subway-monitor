@@ -1,4 +1,4 @@
-package com.subwaymonitor.common;
+package com.subwaymonitor.serialization;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonSetter;

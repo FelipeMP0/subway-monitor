@@ -1,7 +1,7 @@
 package com.subwaymonitor.server.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.subwaymonitor.common.JacksonMapperFactory;
+import com.subwaymonitor.serialization.JacksonMapperFactory;
 import java.time.Clock;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;

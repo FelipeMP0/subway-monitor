@@ -7,7 +7,7 @@ dependencies {
     implementation project(":datastore")
     implementation project(":metro")
     implementation project(":cptm")
-    implementation project(":private_lines")
+    implementation project(":ping")
 
     compile group: "org.springframework.boot", name: "spring-boot-starter"
 }

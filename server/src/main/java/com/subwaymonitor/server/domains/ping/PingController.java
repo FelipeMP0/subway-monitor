@@ -3,6 +3,7 @@ package com.subwaymonitor.server.domains.ping;
 import java.time.Clock;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.concurrent.CompletableFuture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,11 +26,11 @@ class PingController {
   }
 
   @GetMapping()
-  ResponseEntity<PingDTO> ping() {
+  CompletableFuture<ResponseEntity<PingDTO>> ping() {
     final PingDTO pingDTO =
         PingDTO.builder()
             .currentTime(ZonedDateTime.ofInstant(clock.instant(), ZoneId.systemDefault()))
             .build();
-    return ResponseEntity.ok(pingDTO);
+    return CompletableFuture.completedFuture(ResponseEntity.ok(pingDTO));
   }
 }
