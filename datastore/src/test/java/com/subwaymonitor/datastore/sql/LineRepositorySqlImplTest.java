@@ -3,7 +3,7 @@ package com.subwaymonitor.datastore.sql;
 import com.subwaymonitor.sharedmodel.ImmutableLine;
 import com.subwaymonitor.sharedmodel.Line;
 import java.util.UUID;
-import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +12,12 @@ class LineRepositorySqlImplTest extends BaseSqlRepositoryTest {
 
   private final LineRepositorySqlImpl subject;
 
-  private final EntityManager entityManager;
-
   @Autowired
   LineRepositorySqlImplTest(
-      final LineRepositorySqlImpl lineRepositorySqlImpl, final EntityManager entityManager) {
+      final LineRepositorySqlImpl lineRepositorySqlImpl,
+      final EntityManagerFactory entityManagerFactory) {
+    super(entityManagerFactory);
     subject = lineRepositorySqlImpl;
-    this.entityManager = entityManager;
   }
 
   @Test

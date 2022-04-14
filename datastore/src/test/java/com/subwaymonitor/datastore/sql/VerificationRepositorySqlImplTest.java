@@ -2,6 +2,7 @@ package com.subwaymonitor.datastore.sql;
 
 import com.subwaymonitor.sharedmodel.*;
 import java.util.Arrays;
+import javax.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,10 @@ class VerificationRepositorySqlImplTest extends BaseSqlRepositoryTest {
   private final VerificationRepositorySqlImpl subject;
 
   @Autowired
-  VerificationRepositorySqlImplTest(final VerificationRepositorySqlImpl verificationRepositorySql) {
+  VerificationRepositorySqlImplTest(
+      final VerificationRepositorySqlImpl verificationRepositorySql,
+      final EntityManagerFactory entityManagerFactory) {
+    super(entityManagerFactory);
     subject = verificationRepositorySql;
   }
 

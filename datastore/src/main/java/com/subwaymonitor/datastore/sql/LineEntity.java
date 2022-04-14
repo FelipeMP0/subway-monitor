@@ -23,7 +23,7 @@ class LineEntity {
   private CompanyEntity company;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "line", cascade = CascadeType.ALL)
-  private List<LineStatusEntity> line;
+  private List<LineStatusEntity> lineStatuses;
 
   @Column(name = "created_at", insertable = false, updatable = false)
   private ZonedDateTime createdAt;
@@ -72,12 +72,12 @@ class LineEntity {
     this.company = company;
   }
 
-  List<LineStatusEntity> getLine() {
-    return line;
+  List<LineStatusEntity> getLineStatuses() {
+    return lineStatuses;
   }
 
-  void setLine(List<LineStatusEntity> line) {
-    this.line = line;
+  void setLineStatuses(List<LineStatusEntity> lineStatuses) {
+    this.lineStatuses = lineStatuses;
   }
 
   ZonedDateTime getCreatedAt() {
