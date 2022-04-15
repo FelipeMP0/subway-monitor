@@ -1,8 +1,8 @@
 package com.subwaymonitor.datastore.sql;
 
 import com.subwaymonitor.sharedmodel.*;
-import java.util.Arrays;
-import javax.persistence.EntityManagerFactory;
+import java.util.List;
+import javax.persistence.EntityManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +12,14 @@ class VerificationRepositorySqlImplTest extends BaseSqlRepositoryTest {
   private static final String COMPANY_SLUG = "company_slug";
 
   private final VerificationRepositorySqlImpl subject;
+  private final EntityManager entityManager;
 
   @Autowired
   VerificationRepositorySqlImplTest(
       final VerificationRepositorySqlImpl verificationRepositorySql,
-      final EntityManagerFactory entityManagerFactory) {
-    super(entityManagerFactory);
+      final EntityManager entityManager) {
     subject = verificationRepositorySql;
+    this.entityManager = entityManager;
   }
 
   @Test
@@ -26,7 +27,7 @@ class VerificationRepositorySqlImplTest extends BaseSqlRepositoryTest {
     final Verification input =
         ImmutableVerification.builder()
             .addAllLineStatuses(
-                Arrays.asList(
+                List.of(
                     ImmutableLineStatus.builder()
                         .line(
                             ImmutableLine.builder()

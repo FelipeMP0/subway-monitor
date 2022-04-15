@@ -7,7 +7,6 @@ import com.subwaymonitor.sharedmodel.ImmutableLineCurrentStatus;
 import com.subwaymonitor.sharedmodel.LineCurrentStatus;
 import com.subwaymonitor.sharedmodel.StatusEnum;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,7 +38,7 @@ class MetroStatusServiceTest {
     when(metroApiService.getStatuses()).thenReturn(metroApiResponse);
     final List<LineCurrentStatus> result = subject.findLineStatuses();
     final List<LineCurrentStatus> expected =
-        Arrays.asList(
+        List.of(
             ImmutableLineCurrentStatus.builder()
                 .line(
                     ImmutableLine.builder()

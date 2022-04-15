@@ -9,7 +9,6 @@ import com.subwaymonitor.datastore.LineRepository;
 import com.subwaymonitor.datastore.StatusRepository;
 import com.subwaymonitor.datastore.VerificationRepository;
 import com.subwaymonitor.sharedmodel.*;
-import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,7 +68,7 @@ class VerificationServiceTest {
     final Verification verification =
         ImmutableVerification.builder()
             .addAllLineStatuses(
-                Arrays.asList(
+                List.of(
                     ImmutableLineStatus.builder().line(LINE_1).status(STATUS_1).build(),
                     ImmutableLineStatus.builder().line(LINE_2).status(STATUS_2).build()))
             .build();
@@ -78,7 +77,7 @@ class VerificationServiceTest {
   }
 
   private List<LineCurrentStatus> buildDefaultLineCurrentStatuses() {
-    return Arrays.asList(
+    return List.of(
         ImmutableLineCurrentStatus.builder().line(LINE_1).status(NORMAL_OPERATION).build(),
         ImmutableLineCurrentStatus.builder().line(LINE_2).status(REDUCED_SPEED).build());
   }
