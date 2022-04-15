@@ -6,8 +6,8 @@ import org.immutables.value.Value;
 @Value.Immutable
 public interface LineCurrentStatus {
 
-  /** Numeric identifier of the line in the transport system. */
-  Integer lineNumber();
+  /** Line representation. */
+  Line line();
 
   /** Current status of the line. */
   StatusEnum status();

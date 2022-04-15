@@ -16,7 +16,8 @@ class LineStatusEntity {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
 
-  @JoinColumn(name = "line_slug")
+  @JoinColumn(name = "company_line_id")
+  @JoinColumn(name = "company_slug")
   @ManyToOne(fetch = FetchType.LAZY)
   private LineEntity line;
 

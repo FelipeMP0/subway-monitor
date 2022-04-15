@@ -46,7 +46,10 @@ public class VerificationService {
             .parallelStream()
             .map(
                 lineCurrentStatus -> {
-                  final var line = lineRepository.getByNumber(lineCurrentStatus.lineNumber());
+                  final var currentLine = lineCurrentStatus.line();
+                  final var line =
+                      lineRepository.getByCompanyLineIdAndCompanySlug(
+                          currentLine.companyLineId(), currentLine.companySlug());
                   final var status = statusRepository.getBySlug(lineCurrentStatus.status());
                   return buildLineStatus(line, status);
                 })

@@ -11,11 +11,11 @@ $$ LANGUAGE plpgsql;
 
 CREATE TABLE company
 (
-    id         UUID      NOT NULL DEFAULT uuid_generate_v4(),
+    slug       VARCHAR   NOT NULL,
     name       VARCHAR   NOT NULL,
     created_at timestamp NOT NULL DEFAULT NOW(),
     updated_at timestamp NOT NULL DEFAULT NOW(),
-    PRIMARY KEY (id)
+    PRIMARY KEY (slug)
 );
 
 CREATE TRIGGER set_timestamp

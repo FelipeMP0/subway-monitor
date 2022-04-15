@@ -16,11 +16,17 @@ class LineRepositorySqlImpl implements LineRepository {
   }
 
   @Override
-  public Line getByNumber(final int number) {
+  public Line getByCompanyLineIdAndCompanySlug(
+      final String companyLineId, final String companySlug) {
     final var lineEntity =
         entityManager
-            .createQuery("SELECT l FROM LineEntity l WHERE l.number = :number", LineEntity.class)
-            .setParameter("number", number)
+            .createQuery(
+                "SELECT l FROM LineEntity l "
+                    + "WHERE l.lineId.companyLineId = :companyLineId "
+                    + "AND l.lineId.companySlug = :companySlug",
+                LineEntity.class)
+            .setParameter("companyLineId", companyLineId)
+            .setParameter("companySlug", companySlug)
             .getSingleResult();
     return lineEntity.toModel();
   }

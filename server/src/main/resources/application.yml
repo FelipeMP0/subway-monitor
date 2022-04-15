@@ -18,6 +18,9 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
+  flyway:
+    locations: classpath:sql/db/migration
+
 server:
   port: 8080
 
@@ -45,6 +48,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  flyway:
+    locations: classpath:sql/db/migration
 
 server:
   port: ${PORT}

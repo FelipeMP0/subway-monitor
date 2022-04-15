@@ -25,13 +25,22 @@ class VerificationServiceTest {
 
   private SubwayStatusService subwayStatusService;
 
-  private static final int LINE_1_NUMBER = 1;
-  private static final int LINE_2_NUMBER = 2;
+  private static final String LINE_1_NUMBER_IDENTIFIER = "1";
+  private static final String LINE_2_NUMBER_IDENTIFIER = "2";
+  private static final String COMPANY_1_SLUG = "company_1";
 
   private static final Line LINE_1 =
-      ImmutableLine.builder().slug("line-1").number(LINE_1_NUMBER).name("Line 1").build();
+      ImmutableLine.builder()
+          .companyLineId(LINE_1_NUMBER_IDENTIFIER)
+          .companySlug(COMPANY_1_SLUG)
+          .name("Line 1")
+          .build();
   private static final Line LINE_2 =
-      ImmutableLine.builder().slug("line-2").number(LINE_2_NUMBER).name("Line 2").build();
+      ImmutableLine.builder()
+          .companyLineId(LINE_2_NUMBER_IDENTIFIER)
+          .companySlug(COMPANY_1_SLUG)
+          .name("Line 2")
+          .build();
   private static final Status STATUS_1 =
       ImmutableStatus.builder().status(NORMAL_OPERATION).name(NORMAL_OPERATION.name()).build();
   private static final Status STATUS_2 =
@@ -51,8 +60,10 @@ class VerificationServiceTest {
   void verifyCurrentStatuses_success() {
     final List<LineCurrentStatus> lineCurrentStatuses = buildDefaultLineCurrentStatuses();
     when(subwayStatusService.findLineStatuses()).thenReturn(lineCurrentStatuses);
-    when(lineRepository.getByNumber(LINE_1_NUMBER)).thenReturn(LINE_1);
-    when(lineRepository.getByNumber(LINE_2_NUMBER)).thenReturn(LINE_2);
+    when(lineRepository.getByCompanyLineIdAndCompanySlug(LINE_1_NUMBER_IDENTIFIER, COMPANY_1_SLUG))
+        .thenReturn(LINE_1);
+    when(lineRepository.getByCompanyLineIdAndCompanySlug(LINE_2_NUMBER_IDENTIFIER, COMPANY_1_SLUG))
+        .thenReturn(LINE_2);
     when(statusRepository.getBySlug(NORMAL_OPERATION)).thenReturn(STATUS_1);
     when(statusRepository.getBySlug(REDUCED_SPEED)).thenReturn(STATUS_2);
     final Verification verification =
@@ -68,13 +79,7 @@ class VerificationServiceTest {
 
   private List<LineCurrentStatus> buildDefaultLineCurrentStatuses() {
     return Arrays.asList(
-        ImmutableLineCurrentStatus.builder()
-            .lineNumber(LINE_1_NUMBER)
-            .status(NORMAL_OPERATION)
-            .build(),
-        ImmutableLineCurrentStatus.builder()
-            .lineNumber(LINE_2_NUMBER)
-            .status(REDUCED_SPEED)
-            .build());
+        ImmutableLineCurrentStatus.builder().line(LINE_1).status(NORMAL_OPERATION).build(),
+        ImmutableLineCurrentStatus.builder().line(LINE_2).status(REDUCED_SPEED).build());
   }
 }

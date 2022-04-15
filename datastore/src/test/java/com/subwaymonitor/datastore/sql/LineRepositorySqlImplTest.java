@@ -22,14 +22,24 @@ class LineRepositorySqlImplTest extends BaseSqlRepositoryTest {
   }
 
   @Test
-  void getBySlug_success() {
-    final String slug = UUID.randomUUID().toString();
+  void getByCompanyLineIdAndCompanySlug_success() {
+    final String companyLineId = UUID.randomUUID().toString();
+    final String companySlug = UUID.randomUUID().toString();
     final String name = UUID.randomUUID().toString();
-    final int number = 1;
-    final Line expected = ImmutableLine.builder().slug(slug).number(number).name(name).build();
+    final Line expected =
+        ImmutableLine.builder()
+            .companyLineId(companyLineId)
+            .companySlug(companySlug)
+            .name(name)
+            .build();
     final LineEntity lineEntity = new LineEntity(expected);
+    final CompanyEntity company = new CompanyEntity();
+    company.setSlug(companySlug);
+    company.setName("test");
+    lineEntity.setCompany(company);
+    entityManager.persist(company);
     entityManager.persist(lineEntity);
-    final Line result = subject.getByNumber(number);
+    final Line result = subject.getByCompanyLineIdAndCompanySlug(companyLineId, companySlug);
     Assertions.assertEquals(expected, result);
   }
 }

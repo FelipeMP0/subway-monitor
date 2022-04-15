@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 class VerificationRepositorySqlImplTest extends BaseSqlRepositoryTest {
 
+  private static final String COMPANY_SLUG = "company_slug";
+
   private final VerificationRepositorySqlImpl subject;
 
   @Autowired
@@ -23,7 +25,11 @@ class VerificationRepositorySqlImplTest extends BaseSqlRepositoryTest {
                 Arrays.asList(
                     ImmutableLineStatus.builder()
                         .line(
-                            ImmutableLine.builder().number(1).name("line 1").slug("LINE_1").build())
+                            ImmutableLine.builder()
+                                .companyLineId("1")
+                                .companySlug(COMPANY_SLUG)
+                                .name("line 1")
+                                .build())
                         .status(
                             ImmutableStatus.builder()
                                 .name("status 1")
@@ -32,7 +38,11 @@ class VerificationRepositorySqlImplTest extends BaseSqlRepositoryTest {
                         .build(),
                     ImmutableLineStatus.builder()
                         .line(
-                            ImmutableLine.builder().number(1).name("line 2").slug("LINE_2").build())
+                            ImmutableLine.builder()
+                                .companyLineId("2")
+                                .companySlug(COMPANY_SLUG)
+                                .name("line 2")
+                                .build())
                         .status(
                             ImmutableStatus.builder()
                                 .name("status 2")

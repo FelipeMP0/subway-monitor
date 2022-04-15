@@ -18,7 +18,11 @@ class VerificationEntity {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
 
-  @OneToMany(mappedBy = "verification", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(
+      mappedBy = "verification",
+      fetch = FetchType.LAZY,
+      cascade = CascadeType.ALL,
+      orphanRemoval = true)
   private List<LineStatusEntity> lineStatuses;
 
   @Column(name = "created_at", insertable = false, updatable = false)

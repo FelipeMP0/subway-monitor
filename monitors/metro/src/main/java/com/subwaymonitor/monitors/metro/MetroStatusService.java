@@ -1,9 +1,6 @@
 package com.subwaymonitor.monitors.metro;
 
-import com.subwaymonitor.sharedmodel.ImmutableLineCurrentStatus;
-import com.subwaymonitor.sharedmodel.LineCurrentStatus;
-import com.subwaymonitor.sharedmodel.StatusEnum;
-import com.subwaymonitor.sharedmodel.SubwayStatusService;
+import com.subwaymonitor.sharedmodel.*;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -19,6 +16,8 @@ import org.springframework.stereotype.Service;
 class MetroStatusService implements SubwayStatusService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(MetroStatusService.class);
+
+  private static final String COMPANY_SLUG = "METRO_SAO_PAULO";
 
   private final MetroApiService metroApiService;
 
@@ -45,7 +44,12 @@ class MetroStatusService implements SubwayStatusService {
         .map(
             lineStatus ->
                 ImmutableLineCurrentStatus.builder()
-                    .lineNumber(Integer.parseInt(lineStatus.id()))
+                    .line(
+                        ImmutableLine.builder()
+                            .companyLineId(lineStatus.id())
+                            .companySlug(COMPANY_SLUG)
+                            .name(lineStatus.lineFullName())
+                            .build())
                     .status(convertStatus(lineStatus.statusDescription()))
                     .build())
         .collect(Collectors.toList());

@@ -3,29 +3,24 @@ package com.subwaymonitor.datastore.sql;
 import com.subwaymonitor.datastore.DatabaseSchemas;
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.UUID;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "company", catalog = DatabaseSchemas.SUBWAY_MONITOR)
 class CompanyEntity {
 
   @Id
-  @Column(name = "id")
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private UUID id;
+  @Column(name = "slug")
+  private String slug;
 
   @Column(name = "name")
   private String name;
 
-  @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(
+      mappedBy = "company",
+      fetch = FetchType.LAZY,
+      cascade = CascadeType.ALL,
+      orphanRemoval = true)
   private List<LineEntity> lines;
 
   @Column(name = "created_at", insertable = false, updatable = false)
@@ -38,12 +33,12 @@ class CompanyEntity {
     // Hibernate requires no-args constructor
   }
 
-  UUID getId() {
-    return id;
+  String getSlug() {
+    return slug;
   }
 
-  void setId(UUID id) {
-    this.id = id;
+  void setSlug(String slug) {
+    this.slug = slug;
   }
 
   String getName() {

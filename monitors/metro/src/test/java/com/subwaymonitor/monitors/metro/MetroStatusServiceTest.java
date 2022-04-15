@@ -2,6 +2,7 @@ package com.subwaymonitor.monitors.metro;
 
 import static org.mockito.Mockito.when;
 
+import com.subwaymonitor.sharedmodel.ImmutableLine;
 import com.subwaymonitor.sharedmodel.ImmutableLineCurrentStatus;
 import com.subwaymonitor.sharedmodel.LineCurrentStatus;
 import com.subwaymonitor.sharedmodel.StatusEnum;
@@ -40,18 +41,41 @@ class MetroStatusServiceTest {
     final List<LineCurrentStatus> expected =
         Arrays.asList(
             ImmutableLineCurrentStatus.builder()
-                .lineNumber(1)
+                .line(
+                    ImmutableLine.builder()
+                        .companyLineId("1")
+                        .companySlug("METRO_SAO_PAULO")
+                        .name("Linha 1 - Azul")
+                        .build())
                 .status(StatusEnum.NORMAL_OPERATION)
                 .build(),
             ImmutableLineCurrentStatus.builder()
-                .lineNumber(2)
+                .line(
+                    ImmutableLine.builder()
+                        .companyLineId("2")
+                        .companySlug("METRO_SAO_PAULO")
+                        .name("Linha 2 - Verde")
+                        .build())
                 .status(StatusEnum.OPERATION_CLOSED)
                 .build(),
             ImmutableLineCurrentStatus.builder()
-                .lineNumber(3)
+                .line(
+                    ImmutableLine.builder()
+                        .companyLineId("3")
+                        .companySlug("METRO_SAO_PAULO")
+                        .name("Linha 3 - Vermelha")
+                        .build())
                 .status(StatusEnum.REDUCED_SPEED)
                 .build(),
-            ImmutableLineCurrentStatus.builder().lineNumber(15).status(StatusEnum.UNKNOWN).build());
+            ImmutableLineCurrentStatus.builder()
+                .line(
+                    ImmutableLine.builder()
+                        .companyLineId("15")
+                        .companySlug("METRO_SAO_PAULO")
+                        .name("Linha 15 - Prata")
+                        .build())
+                .status(StatusEnum.UNKNOWN)
+                .build());
     Assertions.assertEquals(expected, result);
   }
 }
