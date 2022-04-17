@@ -1,22 +1,19 @@
-package com.subwaymonitor.server.config;
+package com.subwaymonitor.application.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationProperties(
-    prefix = ApplicationProperties.CONFIGURATION_PROPERTY_PREFIX,
-    ignoreUnknownFields = false)
+@ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
 public class ApplicationProperties {
 
-  static final String CONFIGURATION_PROPERTY_PREFIX = "application";
-  private final Async async = new Async();
+  private final AsyncProperties async = new AsyncProperties();
 
-  public Async getAsync() {
+  public AsyncProperties getAsync() {
     return async;
   }
 
-  public static class Async {
+  public static class AsyncProperties {
 
     private Integer corePoolSize;
     private Integer maxPoolSize;

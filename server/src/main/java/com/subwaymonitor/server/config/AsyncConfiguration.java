@@ -1,5 +1,6 @@
 package com.subwaymonitor.server.config;
 
+import com.subwaymonitor.application.config.ApplicationProperties;
 import java.util.concurrent.Executor;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;
@@ -12,22 +13,26 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 @Configuration
 @EnableAsync
-public class AsyncConfiguration implements AsyncConfigurer {
+class AsyncConfiguration implements AsyncConfigurer {
 
+  private static final String DEFAULT_TASK_EXECUTOR_NAME_PREFIX = "taskExecutor-";
   private static final String MONITORS_TASK_EXECUTOR_NAME_PREFIX = "monitorsTaskExecutor-";
-
-  public static final String MONITORS_TASK_EXECUTOR = "monitorsTaskExecutor";
+  private static final String MONITORS_TASK_EXECUTOR = "monitorsTaskExecutor";
 
   private final ApplicationProperties applicationProperties;
 
   @Autowired
-  public AsyncConfiguration(final ApplicationProperties applicationProperties) {
+  AsyncConfiguration(final ApplicationProperties applicationProperties) {
     this.applicationProperties = applicationProperties;
   }
 
   @Override
-  @Bean(name = MONITORS_TASK_EXECUTOR)
   public Executor getAsyncExecutor() {
+    return newTaskExecutor(DEFAULT_TASK_EXECUTOR_NAME_PREFIX);
+  }
+
+  @Bean(name = MONITORS_TASK_EXECUTOR)
+  public Executor getMonitorsAsyncExecutor() {
     return newTaskExecutor(MONITORS_TASK_EXECUTOR_NAME_PREFIX);
   }
 
@@ -37,7 +42,7 @@ public class AsyncConfiguration implements AsyncConfigurer {
   }
 
   private Executor newTaskExecutor(final String taskExecutorNamePrefix) {
-    final ApplicationProperties.Async asyncProperties = applicationProperties.getAsync();
+    final ApplicationProperties.AsyncProperties asyncProperties = applicationProperties.getAsync();
     final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
     executor.setCorePoolSize(asyncProperties.getCorePoolSize());
     executor.setMaxPoolSize(asyncProperties.getMaxPoolSize());

@@ -1,7 +1,9 @@
 package com.subwaymonitor.monitors.metro;
 
+import com.subwaymonitor.config.ApplicationConfig;
 import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +24,17 @@ class MetroApiService {
 
   private final MetroApiServiceProperties properties;
   private final RestTemplate restTemplate;
+  private final Executor executor;
 
   @Autowired
   MetroApiService(
-      final MetroApiServiceProperties properties, final RestTemplateBuilder restTemplateBuilder) {
+      final MetroApiServiceProperties properties,
+      final RestTemplateBuilder restTemplateBuilder,
+      final ApplicationConfig applicationConfig) {
     this.properties = properties;
     this.restTemplate = restTemplateBuilder.setReadTimeout(Duration.ofSeconds(30)).build();
+    this.executor = applicationConfig.executors().monitorsExecutor();
+    ;
   }
 
   /**
@@ -52,6 +59,7 @@ class MetroApiService {
               "GET request for {} returned = {}", properties.getUrl(), metroApiResponseBody);
 
           return metroApiResponseBody;
-        });
+        },
+        executor);
   }
 }

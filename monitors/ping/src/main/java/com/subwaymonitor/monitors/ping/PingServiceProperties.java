@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 /** Configurations to parametrize the usage of the Ping API. */
 @Component
-@ConfigurationProperties(prefix = "ping")
+@ConfigurationProperties(prefix = "monitors.ping")
 public final class PingServiceProperties {
 
   private String url;

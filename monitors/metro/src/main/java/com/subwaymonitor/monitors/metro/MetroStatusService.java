@@ -1,9 +1,11 @@
 package com.subwaymonitor.monitors.metro;
 
+import com.subwaymonitor.config.ApplicationConfig;
 import com.subwaymonitor.sharedmodel.*;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,10 +23,13 @@ class MetroStatusService implements SubwayStatusService {
   private static final String COMPANY_SLUG = "METRO_SAO_PAULO";
 
   private final MetroApiService metroApiService;
+  private final Executor executor;
 
   @Autowired
-  public MetroStatusService(final MetroApiService metroApiService) {
+  public MetroStatusService(
+      final MetroApiService metroApiService, final ApplicationConfig applicationConfig) {
     this.metroApiService = metroApiService;
+    this.executor = applicationConfig.executors().monitorsExecutor();
   }
 
   /**
@@ -55,7 +60,8 @@ class MetroStatusService implements SubwayStatusService {
                               .status(convertStatus(lineStatus.statusDescription()))
                               .build())
                   .collect(Collectors.toList());
-            });
+            },
+            executor);
   }
 
   private StatusEnum convertStatus(String statusDescription) {

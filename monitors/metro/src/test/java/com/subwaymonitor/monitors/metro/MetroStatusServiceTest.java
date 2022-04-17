@@ -6,6 +6,7 @@ import com.subwaymonitor.sharedmodel.ImmutableLine;
 import com.subwaymonitor.sharedmodel.ImmutableLineCurrentStatus;
 import com.subwaymonitor.sharedmodel.LineCurrentStatus;
 import com.subwaymonitor.sharedmodel.StatusEnum;
+import com.subwaymonitor.testing.TestApplicationConfig;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -24,7 +25,8 @@ class MetroStatusServiceTest {
   @BeforeEach
   void setUp() {
     metroApiService = Mockito.mock(MetroApiService.class);
-    subject = new MetroStatusService(metroApiService);
+    final TestApplicationConfig config = TestApplicationConfig.newInstance();
+    subject = new MetroStatusService(metroApiService, config);
   }
 
   @Test

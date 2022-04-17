@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 
 /** Configurations to parametrize the usage of the Metro's API. */
 @Component
-@ConfigurationProperties(prefix = "metro-service")
-class MetroApiServiceProperties {
+@ConfigurationProperties(prefix = "monitors.metro-service")
+public class MetroApiServiceProperties {
 
   private String url;
 
@@ -15,7 +15,7 @@ class MetroApiServiceProperties {
    *
    * @return The configured URl.
    */
-  String getUrl() {
+  public String getUrl() {
     return url;
   }
 
@@ -24,7 +24,7 @@ class MetroApiServiceProperties {
    *
    * @param url A valid URL that will be used to query line statuses.
    */
-  void setUrl(final String url) {
+  public void setUrl(final String url) {
     this.url = url;
   }
 }

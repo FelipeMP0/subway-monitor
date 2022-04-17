@@ -35,9 +35,10 @@ application:
     max-pool-size: 50
     queue-capacity: 10000
 
-metro-service.url: https://www.viaquatro.com.br/generic/Main
+monitors:
+  metro-service.url: https://www.viaquatro.com.br/generic/Main
 
-ping.url: http://localhost:8080/v1/ping
+  ping.url: http://localhost:8080/v1/ping
 
 ---
 
@@ -73,9 +74,10 @@ application:
     max-pool-size: 50
     queue-capacity: 10000
 
-metro-service.url: https://www.viaquatro.com.br/generic/Main
+monitors:
+  metro-service.url: https://www.viaquatro.com.br/generic/Main
 
-ping.url: https://subway-monitor-api.herokuapp.com/v1/ping
+  ping.url: https://subway-monitor-api.herokuapp.com/v1/ping
 
 ---
 
@@ -114,8 +116,9 @@ application:
     max-pool-size: 50
     queue-capacity: 10000
 
-metro-service.url: https://www.viaquatro.com.br/generic/Main
+monitors:
+  metro-service.url: https://www.viaquatro.com.br/generic/Main
 
-ping.url: http://localhost:8080/v1/ping
+  ping.url: http://localhost:8080/v1/ping
 
 ---

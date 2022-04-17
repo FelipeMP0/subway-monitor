@@ -11,17 +11,17 @@ import org.springframework.context.annotation.Scope;
 
 /** Contains shared configurations and objects to be used by the spring application. */
 @Configuration
-public class SharedConfig {
+class SharedConfig {
 
   @Bean
   @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
-  public Clock clock() {
+  Clock clock() {
     return Clock.systemDefaultZone();
   }
 
   @Bean
   @Primary
-  public ObjectMapper objectMapper() {
+  ObjectMapper objectMapper() {
     return JacksonMapperFactory.create();
   }
 }
