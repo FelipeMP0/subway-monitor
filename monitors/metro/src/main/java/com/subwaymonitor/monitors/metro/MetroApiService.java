@@ -1,6 +1,7 @@
 package com.subwaymonitor.monitors.metro;
 
 import java.time.Duration;
+import java.util.concurrent.CompletableFuture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,17 +37,21 @@ class MetroApiService {
    * @return The parsed JSON response from the API containing the information and the current
    *     statuses of the lines.
    */
-  MetroApiResponse getStatuses() {
-    final var uri =
-        UriComponentsBuilder.fromHttpUrl(properties.getUrl() + "/LineStatus").build().toUri();
+  CompletableFuture<MetroApiResponse> getStatuses() {
+    return CompletableFuture.supplyAsync(
+        () -> {
+          final var uri =
+              UriComponentsBuilder.fromHttpUrl(properties.getUrl() + "/LineStatus").build().toUri();
 
-    final ResponseEntity<MetroApiResponse> metroApiResponse =
-        restTemplate.getForEntity(uri, MetroApiResponse.class);
+          final ResponseEntity<MetroApiResponse> metroApiResponse =
+              restTemplate.getForEntity(uri, MetroApiResponse.class);
 
-    var metroApiResponseBody = metroApiResponse.getBody();
+          var metroApiResponseBody = metroApiResponse.getBody();
 
-    LOGGER.info("GET request for {} returned = {}", properties.getUrl(), metroApiResponseBody);
+          LOGGER.info(
+              "GET request for {} returned = {}", properties.getUrl(), metroApiResponseBody);
 
-    return metroApiResponseBody;
+          return metroApiResponseBody;
+        });
   }
 }

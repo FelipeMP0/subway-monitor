@@ -3,6 +3,7 @@ package com.subwaymonitor.monitors.metro;
 import com.subwaymonitor.sharedmodel.*;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,26 +34,28 @@ class MetroStatusService implements SubwayStatusService {
    *     of the lines.
    */
   @Override
-  public List<LineCurrentStatus> findLineStatuses() {
-    final var metroApiResponse = metroApiService.getStatuses();
-
-    final var statusMetro = metroApiResponse.statusMetro();
-
-    return statusMetro
-        .lineStatuses()
-        .stream()
-        .map(
-            lineStatus ->
-                ImmutableLineCurrentStatus.builder()
-                    .line(
-                        ImmutableLine.builder()
-                            .companyLineId(lineStatus.id())
-                            .companySlug(COMPANY_SLUG)
-                            .name(lineStatus.lineFullName())
-                            .build())
-                    .status(convertStatus(lineStatus.statusDescription()))
-                    .build())
-        .collect(Collectors.toList());
+  public CompletableFuture<List<LineCurrentStatus>> findLineStatuses() {
+    return metroApiService
+        .getStatuses()
+        .thenApplyAsync(
+            response -> {
+              final var statusMetro = response.statusMetro();
+              return statusMetro
+                  .lineStatuses()
+                  .stream()
+                  .map(
+                      lineStatus ->
+                          ImmutableLineCurrentStatus.builder()
+                              .line(
+                                  ImmutableLine.builder()
+                                      .companyLineId(lineStatus.id())
+                                      .companySlug(COMPANY_SLUG)
+                                      .name(lineStatus.lineFullName())
+                                      .build())
+                              .status(convertStatus(lineStatus.statusDescription()))
+                              .build())
+                  .collect(Collectors.toList());
+            });
   }
 
   private StatusEnum convertStatus(String statusDescription) {

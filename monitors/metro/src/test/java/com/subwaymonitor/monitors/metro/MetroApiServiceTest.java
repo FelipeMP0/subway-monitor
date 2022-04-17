@@ -11,6 +11,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.concurrent.ExecutionException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,8 @@ class MetroApiServiceTest {
   }
 
   @Test
-  void requestMetroLinesStatuses_success() throws URISyntaxException, IOException {
+  void requestMetroLinesStatuses_success()
+      throws URISyntaxException, IOException, ExecutionException, InterruptedException {
     final File file = ResourceUtils.getFile("classpath:metro-api/successful-response.json");
     final String responseBody = new String(Files.readAllBytes(file.toPath()));
     mockServer
@@ -45,7 +47,7 @@ class MetroApiServiceTest {
         .andExpect(method(HttpMethod.GET))
         .andRespond(
             withStatus(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(responseBody));
-    final MetroApiResponse response = subject.getStatuses();
+    final MetroApiResponse response = subject.getStatuses().get();
     final MetroApiResponse expectedResponse =
         ImmutableMetroApiResponse.builder()
             .statusMetro(

@@ -8,6 +8,8 @@ import com.subwaymonitor.sharedmodel.LineCurrentStatus;
 import com.subwaymonitor.sharedmodel.StatusEnum;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +28,7 @@ class MetroStatusServiceTest {
   }
 
   @Test
-  void findLineStatuses_success() {
+  void findLineStatuses_success() throws ExecutionException, InterruptedException {
     final MetroApiResponse metroApiResponse =
         ImmutableMetroApiResponse.builder()
             .statusMetro(
@@ -35,8 +37,9 @@ class MetroStatusServiceTest {
                     .addAllLineStatuses(TestHelper.buildLineStatuses())
                     .build())
             .build();
-    when(metroApiService.getStatuses()).thenReturn(metroApiResponse);
-    final List<LineCurrentStatus> result = subject.findLineStatuses();
+    when(metroApiService.getStatuses())
+        .thenReturn(CompletableFuture.completedFuture(metroApiResponse));
+    final List<LineCurrentStatus> result = subject.findLineStatuses().get();
     final List<LineCurrentStatus> expected =
         List.of(
             ImmutableLineCurrentStatus.builder()

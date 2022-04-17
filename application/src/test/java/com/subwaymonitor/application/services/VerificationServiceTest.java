@@ -10,6 +10,7 @@ import com.subwaymonitor.datastore.StatusRepository;
 import com.subwaymonitor.datastore.VerificationRepository;
 import com.subwaymonitor.sharedmodel.*;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -58,7 +59,8 @@ class VerificationServiceTest {
   @Test
   void verifyCurrentStatuses_success() {
     final List<LineCurrentStatus> lineCurrentStatuses = buildDefaultLineCurrentStatuses();
-    when(subwayStatusService.findLineStatuses()).thenReturn(lineCurrentStatuses);
+    when(subwayStatusService.findLineStatuses())
+        .thenReturn(CompletableFuture.completedFuture(lineCurrentStatuses));
     when(lineRepository.getByCompanyLineIdAndCompanySlug(LINE_1_NUMBER_IDENTIFIER, COMPANY_1_SLUG))
         .thenReturn(LINE_1);
     when(lineRepository.getByCompanyLineIdAndCompanySlug(LINE_2_NUMBER_IDENTIFIER, COMPANY_1_SLUG))

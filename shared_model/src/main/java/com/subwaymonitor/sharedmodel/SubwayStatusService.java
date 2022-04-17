@@ -1,6 +1,7 @@
 package com.subwaymonitor.sharedmodel;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /** Interface responsible for providing the current statuses of lines in a given moment. */
 public interface SubwayStatusService {
@@ -10,5 +11,5 @@ public interface SubwayStatusService {
    *
    * @return the list of current statuses and line identifiers.
    */
-  List<LineCurrentStatus> findLineStatuses();
+  CompletableFuture<List<LineCurrentStatus>> findLineStatuses();
 }

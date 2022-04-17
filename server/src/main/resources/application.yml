@@ -17,6 +17,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
 
   flyway:
     locations: classpath:sql/db/migration
@@ -27,6 +28,12 @@ server:
 logging:
   config: classpath:logback-spring.xml
   file: ./subway_monitor.log
+
+application:
+  async:
+    core-pool-size: 10
+    max-pool-size: 50
+    queue-capacity: 10000
 
 metro-service.url: https://www.viaquatro.com.br/generic/Main
 
@@ -48,6 +55,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
 
   flyway:
     locations: classpath:sql/db/migration
@@ -58,6 +66,12 @@ server:
 logging:
   config: classpath:logback-spring.xml
   file: ./subway_monitor.log
+
+application:
+  async:
+    core-pool-size: 10
+    max-pool-size: 50
+    queue-capacity: 10000
 
 metro-service.url: https://www.viaquatro.com.br/generic/Main
 
@@ -85,6 +99,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
+    open-in-view: false
 
 server:
   port: 8080
@@ -92,6 +107,12 @@ server:
 logging:
   config: classpath:logback-spring.xml
   file: ./subway_monitor.log
+
+application:
+  async:
+    core-pool-size: 10
+    max-pool-size: 50
+    queue-capacity: 10000
 
 metro-service.url: https://www.viaquatro.com.br/generic/Main
 

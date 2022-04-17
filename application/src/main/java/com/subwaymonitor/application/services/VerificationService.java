@@ -4,7 +4,9 @@ import com.subwaymonitor.datastore.LineRepository;
 import com.subwaymonitor.datastore.StatusRepository;
 import com.subwaymonitor.datastore.VerificationRepository;
 import com.subwaymonitor.sharedmodel.*;
+import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,23 +42,35 @@ public class VerificationService {
   /** Verifies the current state of the lines and then persist them in a database. */
   @Transactional
   public void verifyCurrentStatuses() {
-    final List<LineCurrentStatus> lineCurrentStatuses = metroStatusService.findLineStatuses();
-    final List<LineStatus> lineStatuses =
-        lineCurrentStatuses
-            .parallelStream()
-            .map(
-                lineCurrentStatus -> {
-                  final var currentLine = lineCurrentStatus.line();
-                  final var line =
-                      lineRepository.getByCompanyLineIdAndCompanySlug(
-                          currentLine.companyLineId(), currentLine.companySlug());
-                  final var status = statusRepository.getBySlug(lineCurrentStatus.status());
-                  return buildLineStatus(line, status);
-                })
-            .collect(Collectors.toList());
-    final Verification verification =
-        ImmutableVerification.builder().addAllLineStatuses(lineStatuses).build();
-    repository.create(verification);
+    final List<CompletableFuture<List<LineCurrentStatus>>> lineStatusesFutures =
+        List.of(metroStatusService.findLineStatuses());
+    CompletableFuture.allOf(lineStatusesFutures.toArray(new CompletableFuture[0]))
+        .thenAccept(
+            result -> {
+              final List<LineCurrentStatus> lineCurrentStatuses =
+                  lineStatusesFutures
+                      .stream()
+                      .map(CompletableFuture::join)
+                      .flatMap(Collection::stream)
+                      .collect(Collectors.toList());
+              final List<LineStatus> lineStatuses =
+                  lineCurrentStatuses
+                      .stream()
+                      .map(
+                          lineCurrentStatus -> {
+                            final var currentLine = lineCurrentStatus.line();
+                            final var line =
+                                lineRepository.getByCompanyLineIdAndCompanySlug(
+                                    currentLine.companyLineId(), currentLine.companySlug());
+                            final var status =
+                                statusRepository.getBySlug(lineCurrentStatus.status());
+                            return buildLineStatus(line, status);
+                          })
+                      .collect(Collectors.toList());
+              final Verification verification =
+                  ImmutableVerification.builder().addAllLineStatuses(lineStatuses).build();
+              repository.create(verification);
+            });
   }
 
   private LineStatus buildLineStatus(final Line line, final Status status) {

@@ -13,8 +13,8 @@ services:
         -Xmx256m
 
     ports:
-      - 8080:8080
-      - 5005:5005
+      - "8080:8080"
+      - "5005:5005"
     networks:
       default:
         aliases:
@@ -30,4 +30,4 @@ services:
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=subway_monitor
     ports:
-      - 5432:5432
+      - "5432:5432"
