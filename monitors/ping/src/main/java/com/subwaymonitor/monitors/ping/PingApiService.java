@@ -1,5 +1,6 @@
 package com.subwaymonitor.monitors.ping;
 
+import com.subwaymonitor.config.MonitorConfig;
 import java.net.URI;
 import java.time.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +19,21 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Service
 public class PingApiService {
 
-  private final PingServiceProperties properties;
+  private final MonitorConfig<PingServiceProperties> config;
   private final RestTemplate restTemplate;
 
   @Autowired
   public PingApiService(
-      final PingServiceProperties properties, final RestTemplateBuilder restTemplateBuilder) {
-    this.properties = properties;
+      final MonitorConfig<PingServiceProperties> config,
+      final RestTemplateBuilder restTemplateBuilder) {
+    this.config = config;
     this.restTemplate = restTemplateBuilder.setReadTimeout(Duration.ofSeconds(30)).build();
   }
 
   /** Calls the configured Ping endpoint. */
   public void ping() {
+    final PingServiceProperties properties = config.properties();
+
     final URI uri = UriComponentsBuilder.fromHttpUrl(properties.getUrl()).build().toUri();
 
     final ResponseEntity<Void> response = restTemplate.getForEntity(uri, Void.class);

@@ -1,9 +1,8 @@
 package com.subwaymonitor.monitors.metro;
 
-import com.subwaymonitor.config.ApplicationConfig;
+import com.subwaymonitor.config.MonitorConfig;
 import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +21,15 @@ class MetroApiService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(MetroApiService.class);
 
-  private final MetroApiServiceProperties properties;
+  private final MonitorConfig<MetroApiServiceProperties> config;
   private final RestTemplate restTemplate;
-  private final Executor executor;
 
   @Autowired
   MetroApiService(
-      final MetroApiServiceProperties properties,
-      final RestTemplateBuilder restTemplateBuilder,
-      final ApplicationConfig applicationConfig) {
-    this.properties = properties;
+      final MonitorConfig<MetroApiServiceProperties> monitorConfig,
+      final RestTemplateBuilder restTemplateBuilder) {
+    this.config = monitorConfig;
     this.restTemplate = restTemplateBuilder.setReadTimeout(Duration.ofSeconds(30)).build();
-    this.executor = applicationConfig.executors().monitorsExecutor();
-    ;
   }
 
   /**
@@ -45,6 +40,7 @@ class MetroApiService {
    *     statuses of the lines.
    */
   CompletableFuture<MetroApiResponse> getStatuses() {
+    final MetroApiServiceProperties properties = config.properties();
     return CompletableFuture.supplyAsync(
         () -> {
           final var uri =
@@ -60,6 +56,6 @@ class MetroApiService {
 
           return metroApiResponseBody;
         },
-        executor);
+        config.executor());
   }
 }

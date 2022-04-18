@@ -17,7 +17,8 @@ class AsyncConfiguration implements AsyncConfigurer {
 
   private static final String DEFAULT_TASK_EXECUTOR_NAME_PREFIX = "taskExecutor-";
   private static final String MONITORS_TASK_EXECUTOR_NAME_PREFIX = "monitorsTaskExecutor-";
-  private static final String MONITORS_TASK_EXECUTOR = "monitorsTaskExecutor";
+  static final String DEFAULT_TASK_EXECUTOR = "defaultTaskExecutor";
+  static final String MONITORS_TASK_EXECUTOR = "monitorsTaskExecutor";
 
   private final ApplicationProperties applicationProperties;
 
@@ -27,12 +28,13 @@ class AsyncConfiguration implements AsyncConfigurer {
   }
 
   @Override
+  @Bean(name = DEFAULT_TASK_EXECUTOR)
   public Executor getAsyncExecutor() {
     return newTaskExecutor(DEFAULT_TASK_EXECUTOR_NAME_PREFIX);
   }
 
   @Bean(name = MONITORS_TASK_EXECUTOR)
-  public Executor getMonitorsAsyncExecutor() {
+  Executor getMonitorsAsyncExecutor() {
     return newTaskExecutor(MONITORS_TASK_EXECUTOR_NAME_PREFIX);
   }
 

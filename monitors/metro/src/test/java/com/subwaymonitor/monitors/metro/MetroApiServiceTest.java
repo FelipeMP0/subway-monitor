@@ -25,7 +25,7 @@ import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.util.ResourceUtils;
 
 @RestClientTest
-@ContextConfiguration(classes = {SpringTestConfig.class, MetroApiService.class})
+@ContextConfiguration(classes = {TestConfig.class, MetroApiService.class})
 class MetroApiServiceTest {
 
   private final MetroApiService subject;

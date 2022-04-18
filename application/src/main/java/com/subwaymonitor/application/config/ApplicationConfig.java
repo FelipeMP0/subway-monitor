@@ -1,11 +1,11 @@
-package com.subwaymonitor.config;
+package com.subwaymonitor.application.config;
 
 import java.util.concurrent.Executor;
 
-/** Holds configurations to be used across the application. */
+/** Runtime configurations. */
 public interface ApplicationConfig {
 
-  /** Returns the available executors for the application. */
+  /** Returns a container object with available executors. */
   ExecutorsContainer executors();
 
   /** Container for async executors. */
@@ -19,11 +19,13 @@ public interface ApplicationConfig {
       this.monitorsExecutor = monitorsExecutor;
     }
 
-    public Executor defaultExecutor() {
+    /** Returns the default async executor. */
+    public Executor getDefaultExecutor() {
       return defaultExecutor;
     }
 
-    public Executor monitorsExecutor() {
+    /** Returns a specific executor for monitors. */
+    public Executor getMonitorsExecutor() {
       return monitorsExecutor;
     }
   }

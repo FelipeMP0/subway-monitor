@@ -19,7 +19,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
 @RestClientTest
-@ContextConfiguration(classes = {SpringTestConfig.class, PingApiService.class})
+@ContextConfiguration(classes = {TestConfig.class, PingApiService.class})
 class PingApiServiceTest {
 
   private final PingApiService subject;
