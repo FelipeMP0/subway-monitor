@@ -6,6 +6,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.concurrent.ExecutionException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +33,12 @@ class PingApiServiceTest {
   }
 
   @Test
-  void ping_success() throws URISyntaxException {
+  void ping_success() throws URISyntaxException, ExecutionException, InterruptedException {
     mockServer
         .expect(ExpectedCount.once(), requestTo(new URI("http://example.com")))
         .andExpect(method(HttpMethod.GET))
         .andRespond(withStatus(HttpStatus.OK));
-    subject.ping();
+    subject.ping().get();
     mockServer.verify();
   }
 
@@ -47,17 +48,24 @@ class PingApiServiceTest {
         .expect(ExpectedCount.once(), requestTo(new URI("http://example.com")))
         .andExpect(method(HttpMethod.GET))
         .andRespond(withStatus(HttpStatus.BAD_REQUEST));
-    Assertions.assertThrows(HttpClientErrorException.class, subject::ping);
+    final ExecutionException exception =
+        Assertions.assertThrows(ExecutionException.class, () -> subject.ping().get());
+    Assertions.assertEquals(
+        HttpClientErrorException.BadRequest.class, exception.getCause().getClass());
     mockServer.verify();
   }
 
   @Test
-  void ping_serverError_throwsException() throws URISyntaxException {
+  void ping_serverError_throwsException()
+      throws URISyntaxException, ExecutionException, InterruptedException {
     mockServer
         .expect(ExpectedCount.once(), requestTo(new URI("http://example.com")))
         .andExpect(method(HttpMethod.GET))
         .andRespond(withStatus(HttpStatus.INTERNAL_SERVER_ERROR));
-    Assertions.assertThrows(HttpServerErrorException.class, subject::ping);
+    final ExecutionException exception =
+        Assertions.assertThrows(ExecutionException.class, () -> subject.ping().get());
+    Assertions.assertEquals(
+        HttpServerErrorException.InternalServerError.class, exception.getCause().getClass());
     mockServer.verify();
   }
 }

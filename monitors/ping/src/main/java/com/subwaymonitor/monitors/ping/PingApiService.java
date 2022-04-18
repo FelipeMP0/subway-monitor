@@ -3,6 +3,7 @@ package com.subwaymonitor.monitors.ping;
 import com.subwaymonitor.config.MonitorConfig;
 import java.net.URI;
 import java.time.Duration;
+import java.util.concurrent.CompletableFuture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpStatus;
@@ -31,19 +32,22 @@ public class PingApiService {
   }
 
   /** Calls the configured Ping endpoint. */
-  public void ping() {
-    final PingServiceProperties properties = config.properties();
+  public CompletableFuture<Void> ping() {
+    return CompletableFuture.runAsync(
+        () -> {
+          final PingServiceProperties properties = config.properties();
 
-    final URI uri = UriComponentsBuilder.fromHttpUrl(properties.getUrl()).build().toUri();
+          final URI uri = UriComponentsBuilder.fromHttpUrl(properties.getUrl()).build().toUri();
 
-    final ResponseEntity<Void> response = restTemplate.getForEntity(uri, Void.class);
+          final ResponseEntity<Void> response = restTemplate.getForEntity(uri, Void.class);
 
-    final HttpStatus statusCode = response.getStatusCode();
+          final HttpStatus statusCode = response.getStatusCode();
 
-    if (statusCode.is4xxClientError()) {
-      throw new HttpClientErrorException(statusCode);
-    } else if (statusCode.is5xxServerError()) {
-      throw new HttpServerErrorException(statusCode);
-    }
+          if (statusCode.is4xxClientError()) {
+            throw new HttpClientErrorException(statusCode);
+          } else if (statusCode.is5xxServerError()) {
+            throw new HttpServerErrorException(statusCode);
+          }
+        });
   }
 }
