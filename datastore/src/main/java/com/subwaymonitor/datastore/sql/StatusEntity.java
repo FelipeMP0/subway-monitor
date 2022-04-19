@@ -3,7 +3,7 @@ package com.subwaymonitor.datastore.sql;
 import com.subwaymonitor.datastore.DatabaseSchemas;
 import com.subwaymonitor.sharedmodel.Status;
 import com.subwaymonitor.sharedmodel.StatusEnum;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,7 +28,7 @@ class StatusEntity {
   private List<LineStatusEntity> status;
 
   @Column(name = "created_at", insertable = false, updatable = false)
-  private ZonedDateTime createdAt;
+  private LocalDateTime createdAt;
 
   StatusEntity() {
     // Hibernate requires no-args constructor
@@ -67,11 +67,11 @@ class StatusEntity {
     this.status = status;
   }
 
-  ZonedDateTime getCreatedAt() {
+  LocalDateTime getCreatedAt() {
     return createdAt;
   }
 
-  void setCreatedAt(ZonedDateTime createdAt) {
+  void setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
   }
 }

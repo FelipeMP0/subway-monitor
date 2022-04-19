@@ -10,5 +10,5 @@ public interface StatusMapper {
 
   StatusMapper INSTANCE = Mappers.getMapper(StatusMapper.class);
 
-  StatusDto statusToStatusDto(Status status);
+  StatusDto toDto(Status status);
 }

@@ -21,4 +21,20 @@ class VerificationRepositorySqlImpl implements VerificationRepository {
     entityManager.persist(verificationEntity);
     return verificationEntity.toModel();
   }
+
+  @Override
+  public Verification getLast() {
+    return entityManager
+        .createQuery(
+            "SELECT v FROM VerificationEntity v "
+                + "JOIN FETCH v.lineStatuses l "
+                + "LEFT JOIN FETCH l.line "
+                + "LEFT JOIN FETCH l.status "
+                + "WHERE v.createdAt = ("
+                + "SELECT MAX(v.createdAt) FROM VerificationEntity v"
+                + ")",
+            VerificationEntity.class)
+        .getSingleResult()
+        .toModel();
+  }
 }

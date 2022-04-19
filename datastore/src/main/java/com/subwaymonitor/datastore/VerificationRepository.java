@@ -13,4 +13,11 @@ public interface VerificationRepository {
    * @return A representation of the created object.
    */
   Verification create(Verification verification);
+
+  /**
+   * Returns the last saved verification.
+   *
+   * @return an instance {@link Verification} representing the last saved verification.
+   */
+  Verification getLast();
 }

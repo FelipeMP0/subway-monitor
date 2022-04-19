@@ -9,6 +9,8 @@ import com.subwaymonitor.sharedmodel.LineStatus;
 import com.subwaymonitor.sharedmodel.Status;
 import com.subwaymonitor.sharedmodel.SubwayStatusService;
 import com.subwaymonitor.sharedmodel.Verification;
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -26,6 +28,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class VerificationService {
 
+  private final Clock clock;
+
   private final VerificationRepository repository;
   private final LineRepository lineRepository;
   private final StatusRepository statusRepository;
@@ -35,10 +39,12 @@ public class VerificationService {
 
   @Autowired
   public VerificationService(
+      final Clock clock,
       final VerificationRepository repository,
       final LineRepository lineRepository,
       final StatusRepository statusRepository,
       final SubwayStatusService metroStatusService) {
+    this.clock = clock;
     this.repository = repository;
     this.lineRepository = lineRepository;
     this.statusRepository = statusRepository;
@@ -71,8 +77,12 @@ public class VerificationService {
                   return buildLineStatus(line, status);
                 })
             .toList();
-    final Verification verification = new Verification(lineStatuses);
+    final Verification verification = new Verification(lineStatuses, LocalDateTime.now(clock));
     repository.create(verification);
+  }
+
+  public Verification getLast() {
+    return repository.getLast();
   }
 
   private LineStatus buildLineStatus(final Line line, final Status status) {

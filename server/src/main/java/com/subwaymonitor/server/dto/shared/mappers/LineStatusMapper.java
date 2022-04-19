@@ -10,5 +10,5 @@ public interface LineStatusMapper {
 
   LineStatusMapper INSTANCE = Mappers.getMapper(LineStatusMapper.class);
 
-  LineStatusDto lineStatusToLineStatusDto(LineStatus lineStatus);
+  LineStatusDto toDto(LineStatus lineStatus);
 }

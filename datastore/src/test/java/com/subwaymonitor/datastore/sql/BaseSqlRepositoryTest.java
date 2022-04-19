@@ -13,7 +13,6 @@ import org.springframework.test.context.ContextConfiguration;
     classes = {
       BaseSqlRepositoryTest.class,
       VerificationRepositorySqlImpl.class,
-      LineStatusRepositorySqlImpl.class,
       LineRepositorySqlImpl.class,
       StatusRepositorySqlImpl.class
     })

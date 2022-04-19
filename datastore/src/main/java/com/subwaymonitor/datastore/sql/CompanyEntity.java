@@ -1,7 +1,7 @@
 package com.subwaymonitor.datastore.sql;
 
 import com.subwaymonitor.datastore.DatabaseSchemas;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -30,10 +30,10 @@ class CompanyEntity {
   private List<LineEntity> lines;
 
   @Column(name = "created_at", insertable = false, updatable = false)
-  private ZonedDateTime createdAt;
+  private LocalDateTime createdAt;
 
   @Column(name = "updated_at", insertable = false, updatable = false)
-  private ZonedDateTime updatedAt;
+  private LocalDateTime updatedAt;
 
   CompanyEntity() {
     // Hibernate requires no-args constructor
@@ -63,19 +63,19 @@ class CompanyEntity {
     this.lines = lines;
   }
 
-  ZonedDateTime getCreatedAt() {
+  LocalDateTime getCreatedAt() {
     return createdAt;
   }
 
-  void setCreatedAt(ZonedDateTime createdAt) {
+  void setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
   }
 
-  ZonedDateTime getUpdatedAt() {
+  LocalDateTime getUpdatedAt() {
     return updatedAt;
   }
 
-  void setUpdatedAt(ZonedDateTime updatedAt) {
+  void setUpdatedAt(LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
   }
 }

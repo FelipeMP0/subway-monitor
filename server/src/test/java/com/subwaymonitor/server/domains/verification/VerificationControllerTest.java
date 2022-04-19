@@ -1,4 +1,4 @@
-package com.subwaymonitor.server.domains.lines;
+package com.subwaymonitor.server.domains.verification;
 
 import static com.subwaymonitor.sharedmodel.StatusEnum.NORMAL_OPERATION;
 import static com.subwaymonitor.sharedmodel.StatusEnum.REDUCED_SPEED;
@@ -6,16 +6,15 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.subwaymonitor.application.services.LineStatusService;
+import com.subwaymonitor.application.services.VerificationService;
 import com.subwaymonitor.serialization.JsonUtils;
-import com.subwaymonitor.server.dto.lines.LinesCurrentStatusResponse;
-import com.subwaymonitor.server.dto.shared.LineStatusDto;
-import com.subwaymonitor.server.dto.shared.mappers.LineStatusMapper;
+import com.subwaymonitor.server.dto.shared.mappers.VerificationMapper;
 import com.subwaymonitor.sharedmodel.Line;
 import com.subwaymonitor.sharedmodel.LineStatus;
 import com.subwaymonitor.sharedmodel.Status;
+import com.subwaymonitor.sharedmodel.Verification;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,7 +27,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-class LinesControllerTest {
+class VerificationControllerTest {
 
   private static final String LINE_1_NUMBER_IDENTIFIER = "1";
   private static final String LINE_2_NUMBER_IDENTIFIER = "2";
@@ -40,21 +39,20 @@ class LinesControllerTest {
 
   @Autowired private MockMvc mockMvc;
 
-  @MockBean private LineStatusService lineStatusService;
+  @MockBean private VerificationService service;
 
   @Test
   void getCurrentStatus_returnsOk() throws Exception {
-    final List<LineStatus> lineStatusList =
-        List.of(new LineStatus(LINE_1, STATUS_1), new LineStatus(LINE_2, STATUS_2));
-    final List<LineStatusDto> lineStatusDtosList =
-        lineStatusList.stream()
-            .map(LineStatusMapper.INSTANCE::lineStatusToLineStatusDto)
-            .collect(Collectors.toList());
-    final LinesCurrentStatusResponse expected = new LinesCurrentStatusResponse(lineStatusDtosList);
-    when(lineStatusService.getCurrentStatus()).thenReturn(lineStatusList);
-    final String expectedJson = JsonUtils.writeValueAsString(expected);
+    final Verification verification =
+        new Verification(
+            List.of(new LineStatus(LINE_1, STATUS_1), new LineStatus(LINE_2, STATUS_2)),
+            LocalDateTime.now());
+
+    when(service.getLast()).thenReturn(verification);
+    final String expectedJson =
+        JsonUtils.writeValueAsString(VerificationMapper.INSTANCE.toDto(verification));
     mockMvc
-        .perform(MockMvcRequestBuilders.get("/v1/lines/currentStatus"))
+        .perform(MockMvcRequestBuilders.get("/v1/verifications/last"))
         .andExpect(status().isOk())
         .andExpect(content().json(expectedJson));
   }

@@ -2,7 +2,7 @@ package com.subwaymonitor.datastore.sql;
 
 import com.subwaymonitor.datastore.DatabaseSchemas;
 import com.subwaymonitor.sharedmodel.LineStatus;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,7 +37,7 @@ class LineStatusEntity {
   private VerificationEntity verification;
 
   @Column(name = "created_at", insertable = false, updatable = false)
-  private ZonedDateTime createdAt;
+  private LocalDateTime createdAt;
 
   LineStatusEntity() {
     // Hibernate requires no-args constructor
@@ -84,11 +84,11 @@ class LineStatusEntity {
     this.verification = verification;
   }
 
-  ZonedDateTime getCreatedAt() {
+  LocalDateTime getCreatedAt() {
     return createdAt;
   }
 
-  void setCreatedAt(ZonedDateTime createdAt) {
+  void setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
   }
 }

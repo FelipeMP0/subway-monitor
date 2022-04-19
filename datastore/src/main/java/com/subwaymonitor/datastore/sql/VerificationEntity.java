@@ -2,7 +2,7 @@ package com.subwaymonitor.datastore.sql;
 
 import com.subwaymonitor.datastore.DatabaseSchemas;
 import com.subwaymonitor.sharedmodel.Verification;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.CascadeType;
@@ -31,8 +31,8 @@ class VerificationEntity {
       orphanRemoval = true)
   private List<LineStatusEntity> lineStatuses;
 
-  @Column(name = "created_at", insertable = false, updatable = false)
-  private ZonedDateTime createdAt;
+  @Column(name = "created_at", updatable = false)
+  private LocalDateTime createdAt;
 
   VerificationEntity() {
     // Hibernate requires no-args constructor
@@ -41,10 +41,12 @@ class VerificationEntity {
   VerificationEntity(final Verification verification) {
     this.lineStatuses = verification.lineStatuses().stream().map(LineStatusEntity::new).toList();
     this.lineStatuses.forEach(lineStatusEntity -> lineStatusEntity.setVerification(this));
+    this.createdAt = verification.createdAt();
   }
 
   Verification toModel() {
-    return new Verification(this.lineStatuses.stream().map(LineStatusEntity::toModel).toList());
+    return new Verification(
+        this.lineStatuses.stream().map(LineStatusEntity::toModel).toList(), this.createdAt);
   }
 
   UUID getId() {
@@ -63,11 +65,11 @@ class VerificationEntity {
     this.lineStatuses = lineStatuses;
   }
 
-  ZonedDateTime getCreatedAt() {
+  LocalDateTime getCreatedAt() {
     return createdAt;
   }
 
-  void setCreatedAt(ZonedDateTime createdAt) {
+  void setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
   }
 }

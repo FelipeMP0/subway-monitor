@@ -14,6 +14,10 @@ import com.subwaymonitor.sharedmodel.LineStatus;
 import com.subwaymonitor.sharedmodel.Status;
 import com.subwaymonitor.sharedmodel.SubwayStatusService;
 import com.subwaymonitor.sharedmodel.Verification;
+import java.time.Clock;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -24,6 +28,8 @@ import org.mockito.Mockito;
 class VerificationServiceTest {
 
   private VerificationService subject;
+
+  private static final Clock CLOCK = Clock.fixed(Instant.now(), ZoneId.systemDefault());
 
   private VerificationRepository repository;
   private LineRepository lineRepository;
@@ -47,7 +53,8 @@ class VerificationServiceTest {
     lineRepository = Mockito.mock(LineRepository.class);
     statusRepository = Mockito.mock(StatusRepository.class);
     subject =
-        new VerificationService(repository, lineRepository, statusRepository, subwayStatusService);
+        new VerificationService(
+            CLOCK, repository, lineRepository, statusRepository, subwayStatusService);
   }
 
   @Test
@@ -63,9 +70,16 @@ class VerificationServiceTest {
     when(statusRepository.getBySlug(REDUCED_SPEED)).thenReturn(STATUS_2);
     final Verification verification =
         new Verification(
-            List.of(new LineStatus(LINE_1, STATUS_1), new LineStatus(LINE_2, STATUS_2)));
+            List.of(new LineStatus(LINE_1, STATUS_1), new LineStatus(LINE_2, STATUS_2)),
+            LocalDateTime.now(CLOCK));
     subject.verifyCurrentStatuses();
     verify(repository).create(verification);
+  }
+
+  @Test
+  void getLastVerification_success() {
+    subject.getLast();
+    verify(repository).getLast();
   }
 
   private List<LineCurrentStatus> buildDefaultLineCurrentStatuses() {

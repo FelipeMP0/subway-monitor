@@ -10,5 +10,5 @@ public interface LineMapper {
 
   LineMapper INSTANCE = Mappers.getMapper(LineMapper.class);
 
-  LineDto lineToLineDto(Line line);
+  LineDto toDto(Line line);
 }
