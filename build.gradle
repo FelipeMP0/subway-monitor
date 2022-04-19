@@ -51,6 +51,12 @@ allprojects {
             importOrder()
             googleJavaFormat()
             removeUnusedImports()
+
+            custom 'noWildcardImports', {
+                if (it.contains('*;\n')) {
+                    throw new Error('No wildcard imports allowed')
+                }
+            }
         }
     }
 

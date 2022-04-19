@@ -22,6 +22,8 @@ public class LineStatusRepositorySqlImpl implements LineStatusRepository {
         .createQuery(
             "SELECT l FROM VerificationEntity v "
                 + "JOIN v.lineStatuses l "
+                + "LEFT JOIN FETCH l.line "
+                + "LEFT JOIN FETCH l.status "
                 + "WHERE v.createdAt = ("
                 + "SELECT MAX(v.createdAt) FROM VerificationEntity v"
                 + ")",

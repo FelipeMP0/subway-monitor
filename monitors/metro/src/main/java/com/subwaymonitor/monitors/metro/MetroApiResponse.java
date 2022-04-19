@@ -1,7 +1,9 @@
 package com.subwaymonitor.monitors.metro;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,6 +13,8 @@ import java.util.List;
  *
  * @param statusMetro A wrapper object for the received data.
  */
+@JsonDeserialize
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public record MetroApiResponse(@JsonProperty("StatusMetro") StatusMetro statusMetro) {
 
   /**
@@ -19,6 +23,8 @@ public record MetroApiResponse(@JsonProperty("StatusMetro") StatusMetro statusMe
    * @param dateUpdateMetro Current data and time in UTC -03:00.
    * @param lineStatuses List of lines and their current statuses.
    */
+  @JsonDeserialize
+  @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
   public record StatusMetro(
       @JsonProperty("DateUpdateMetro")
           @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
@@ -40,6 +46,8 @@ public record MetroApiResponse(@JsonProperty("StatusMetro") StatusMetro statusMe
      * @param statusNumber An integer identifier for the status.
      * @param description String describing what the current status means.
      */
+    @JsonDeserialize
+    @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
     public record LineStatus(
         @JsonProperty("Id") String id,
         @JsonProperty("Color") String color,

@@ -9,9 +9,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.subwaymonitor.application.services.LineStatusService;
 import com.subwaymonitor.serialization.JsonUtils;
 import com.subwaymonitor.server.dto.lines.LinesCurrentStatusResponse;
-import com.subwaymonitor.server.dto.shared.*;
+import com.subwaymonitor.server.dto.shared.LineStatusDto;
 import com.subwaymonitor.server.dto.shared.mappers.LineStatusMapper;
-import com.subwaymonitor.sharedmodel.*;
+import com.subwaymonitor.sharedmodel.Line;
+import com.subwaymonitor.sharedmodel.LineStatus;
+import com.subwaymonitor.sharedmodel.Status;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;

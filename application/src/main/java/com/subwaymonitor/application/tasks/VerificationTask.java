@@ -1,6 +1,7 @@
 package com.subwaymonitor.application.tasks;
 
 import com.subwaymonitor.application.services.VerificationService;
+import java.util.concurrent.ExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,8 @@ class VerificationTask {
     this.verificationService = verificationService;
   }
 
-  @Scheduled(fixedRate = 180000)
-  void verifyLinesCurrentStatus() {
+  @Scheduled(cron = "${application.schedulers.verificationTask.cron-expression}")
+  void verifyLinesCurrentStatus() throws ExecutionException, InterruptedException {
     LOGGER.info("Running line current status verification task");
     verificationService.verifyCurrentStatuses();
   }

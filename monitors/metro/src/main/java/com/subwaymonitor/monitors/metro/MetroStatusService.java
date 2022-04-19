@@ -1,7 +1,10 @@
 package com.subwaymonitor.monitors.metro;
 
 import com.subwaymonitor.config.MonitorConfig;
-import com.subwaymonitor.sharedmodel.*;
+import com.subwaymonitor.sharedmodel.Line;
+import com.subwaymonitor.sharedmodel.LineCurrentStatus;
+import com.subwaymonitor.sharedmodel.StatusEnum;
+import com.subwaymonitor.sharedmodel.SubwayStatusService;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CompletableFuture;

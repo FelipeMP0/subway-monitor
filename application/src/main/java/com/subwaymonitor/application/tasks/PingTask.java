@@ -19,7 +19,7 @@ final class PingTask {
     this.service = service;
   }
 
-  @Scheduled(fixedRate = 180000)
+  @Scheduled(cron = "${application.schedulers.pingTask.cron-expression}")
   void pingApplication() {
     LOGGER.info("Sending ping request to application");
     service.ping();

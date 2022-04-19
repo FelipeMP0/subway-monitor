@@ -34,6 +34,11 @@ application:
     core-pool-size: 10
     max-pool-size: 50
     queue-capacity: 10000
+  schedulers:
+    verificationTask:
+      cron-expression: "0 */3 * * * *"
+    pingTask:
+      cron-expression: "0 */3 * * * *"
 
 monitors:
   metro-service.url: https://www.viaquatro.com.br/generic/Main
@@ -73,6 +78,11 @@ application:
     core-pool-size: 10
     max-pool-size: 50
     queue-capacity: 10000
+  schedulers:
+    verificationTask:
+      cron-expression: "0 */3 * * * *"
+    pingTask:
+      cron-expression: "0 */3 * * * *"
 
 monitors:
   metro-service.url: https://www.viaquatro.com.br/generic/Main
@@ -115,6 +125,11 @@ application:
     core-pool-size: 10
     max-pool-size: 50
     queue-capacity: 10000
+  schedulers:
+    verificationTask:
+      cron-expression: "0 0 0 31 2 *"
+    pingTask:
+      cron-expression: "0 0 0 31 2 *"
 
 monitors:
   metro-service.url: https://www.viaquatro.com.br/generic/Main

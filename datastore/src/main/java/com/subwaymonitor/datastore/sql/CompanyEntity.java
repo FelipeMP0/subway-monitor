@@ -3,7 +3,13 @@ package com.subwaymonitor.datastore.sql;
 import com.subwaymonitor.datastore.DatabaseSchemas;
 import java.time.ZonedDateTime;
 import java.util.List;
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "company", catalog = DatabaseSchemas.SUBWAY_MONITOR)

@@ -5,7 +5,18 @@ import com.subwaymonitor.sharedmodel.Line;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
-import javax.persistence.*;
+import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "line", catalog = DatabaseSchemas.SUBWAY_MONITOR)
@@ -105,6 +116,20 @@ class LineEntity {
     LineId(final String companyLineId, final String companySlug) {
       this.companyLineId = companyLineId;
       this.companySlug = companySlug;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
+      LineId lineId = (LineId) o;
+      return Objects.equals(companyLineId, lineId.companyLineId)
+          && Objects.equals(companySlug, lineId.companySlug);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(companyLineId, companySlug);
     }
   }
 }

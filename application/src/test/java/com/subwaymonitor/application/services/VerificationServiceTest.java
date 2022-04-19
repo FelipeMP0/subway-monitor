@@ -8,9 +8,15 @@ import static org.mockito.Mockito.when;
 import com.subwaymonitor.datastore.LineRepository;
 import com.subwaymonitor.datastore.StatusRepository;
 import com.subwaymonitor.datastore.VerificationRepository;
-import com.subwaymonitor.sharedmodel.*;
+import com.subwaymonitor.sharedmodel.Line;
+import com.subwaymonitor.sharedmodel.LineCurrentStatus;
+import com.subwaymonitor.sharedmodel.LineStatus;
+import com.subwaymonitor.sharedmodel.Status;
+import com.subwaymonitor.sharedmodel.SubwayStatusService;
+import com.subwaymonitor.sharedmodel.Verification;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -45,7 +51,7 @@ class VerificationServiceTest {
   }
 
   @Test
-  void verifyCurrentStatuses_success() {
+  void verifyCurrentStatuses_success() throws ExecutionException, InterruptedException {
     final List<LineCurrentStatus> lineCurrentStatuses = buildDefaultLineCurrentStatuses();
     when(subwayStatusService.findLineStatuses())
         .thenReturn(CompletableFuture.completedFuture(lineCurrentStatuses));

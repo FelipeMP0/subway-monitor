@@ -3,10 +3,17 @@ package com.subwaymonitor.application.services;
 import com.subwaymonitor.datastore.LineRepository;
 import com.subwaymonitor.datastore.StatusRepository;
 import com.subwaymonitor.datastore.VerificationRepository;
-import com.subwaymonitor.sharedmodel.*;
+import com.subwaymonitor.sharedmodel.Line;
+import com.subwaymonitor.sharedmodel.LineCurrentStatus;
+import com.subwaymonitor.sharedmodel.LineStatus;
+import com.subwaymonitor.sharedmodel.Status;
+import com.subwaymonitor.sharedmodel.SubwayStatusService;
+import com.subwaymonitor.sharedmodel.Verification;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -40,33 +47,32 @@ public class VerificationService {
 
   /** Verifies the current state of the lines and then persist them in a database. */
   @Transactional
-  public void verifyCurrentStatuses() {
+  public void verifyCurrentStatuses() throws ExecutionException, InterruptedException {
     final List<CompletableFuture<List<LineCurrentStatus>>> lineStatusesFutures =
         List.of(metroStatusService.findLineStatuses());
+    final List<LineCurrentStatus> lineCurrentStatuses = new ArrayList<>();
     CompletableFuture.allOf(lineStatusesFutures.toArray(new CompletableFuture[0]))
         .thenAccept(
-            result -> {
-              final List<LineCurrentStatus> lineCurrentStatuses =
-                  lineStatusesFutures.stream()
-                      .map(CompletableFuture::join)
-                      .flatMap(Collection::stream)
-                      .toList();
-              final List<LineStatus> lineStatuses =
-                  lineCurrentStatuses.stream()
-                      .map(
-                          lineCurrentStatus -> {
-                            final var currentLine = lineCurrentStatus.line();
-                            final var line =
-                                lineRepository.getByCompanyLineIdAndCompanySlug(
-                                    currentLine.companyLineId(), currentLine.companySlug());
-                            final var status =
-                                statusRepository.getBySlug(lineCurrentStatus.status());
-                            return buildLineStatus(line, status);
-                          })
-                      .toList();
-              final Verification verification = new Verification(lineStatuses);
-              repository.create(verification);
-            });
+            result ->
+                lineStatusesFutures.stream()
+                    .map(CompletableFuture::join)
+                    .flatMap(Collection::stream)
+                    .forEach(lineCurrentStatuses::add))
+        .get();
+    final List<LineStatus> lineStatuses =
+        lineCurrentStatuses.stream()
+            .map(
+                lineCurrentStatus -> {
+                  final var currentLine = lineCurrentStatus.line();
+                  final Line line =
+                      lineRepository.getByCompanyLineIdAndCompanySlug(
+                          currentLine.companyLineId(), currentLine.companySlug());
+                  final Status status = statusRepository.getBySlug(lineCurrentStatus.status());
+                  return buildLineStatus(line, status);
+                })
+            .toList();
+    final Verification verification = new Verification(lineStatuses);
+    repository.create(verification);
   }
 
   private LineStatus buildLineStatus(final Line line, final Status status) {

@@ -1,6 +1,9 @@
 package com.subwaymonitor.datastore.sql;
 
-import com.subwaymonitor.sharedmodel.*;
+import com.subwaymonitor.sharedmodel.Line;
+import com.subwaymonitor.sharedmodel.LineStatus;
+import com.subwaymonitor.sharedmodel.Status;
+import com.subwaymonitor.sharedmodel.StatusEnum;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
