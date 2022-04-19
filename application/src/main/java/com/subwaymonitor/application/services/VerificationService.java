@@ -7,7 +7,6 @@ import com.subwaymonitor.sharedmodel.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -48,14 +47,12 @@ public class VerificationService {
         .thenAccept(
             result -> {
               final List<LineCurrentStatus> lineCurrentStatuses =
-                  lineStatusesFutures
-                      .stream()
+                  lineStatusesFutures.stream()
                       .map(CompletableFuture::join)
                       .flatMap(Collection::stream)
-                      .collect(Collectors.toList());
+                      .toList();
               final List<LineStatus> lineStatuses =
-                  lineCurrentStatuses
-                      .stream()
+                  lineCurrentStatuses.stream()
                       .map(
                           lineCurrentStatus -> {
                             final var currentLine = lineCurrentStatus.line();
@@ -66,14 +63,13 @@ public class VerificationService {
                                 statusRepository.getBySlug(lineCurrentStatus.status());
                             return buildLineStatus(line, status);
                           })
-                      .collect(Collectors.toList());
-              final Verification verification =
-                  ImmutableVerification.builder().addAllLineStatuses(lineStatuses).build();
+                      .toList();
+              final Verification verification = new Verification(lineStatuses);
               repository.create(verification);
             });
   }
 
   private LineStatus buildLineStatus(final Line line, final Status status) {
-    return ImmutableLineStatus.builder().line(line).status(status).build();
+    return new LineStatus(line, status);
   }
 }

@@ -1,14 +1,9 @@
 package com.subwaymonitor.sharedmodel;
 
-import org.immutables.value.Value;
-
-/** Represent a possible status for a line. */
-@Value.Immutable
-public interface Status {
-
-  /** Unique identifier of a status. */
-  StatusEnum status();
-
-  /** Display name for the status. */
-  String name();
-}
+/**
+ * Represent a possible status for a line.
+ *
+ * @param status Unique identifier of a status.
+ * @param name Display name for the status.
+ */
+public record Status(StatusEnum status, String name) {}

@@ -1,22 +1,27 @@
 plugins {
-    id "com.github.sherter.google-java-format" version "0.8"
-    id "com.avast.gradle.docker-compose" version "0.10.9"
-    id "io.spring.dependency-management" version "1.0.9.RELEASE"
+    id "com.diffplug.spotless" version "6.4.2"
+    id "com.avast.gradle.docker-compose" version "0.15.2"
+    id "io.spring.dependency-management" version "1.0.11.RELEASE"
 }
 
-ext.commonLibs = [immutablesVersion: "2.8.8"]
+ext.commonLibs = [
+        jacksonVersion: "2.13.2",
+        opentableVersion: "0.13.3",
+        flywayVersion: "8.5.8",
+        mapstructVersion: "1.4.2.Final"
+]
 
 allprojects {
     apply plugin: "java"
     apply plugin: "idea"
     apply plugin: "io.spring.dependency-management"
-    apply plugin: "com.github.sherter.google-java-format"
+    apply plugin: "com.diffplug.spotless"
 
     group "com.subwaymonitor"
     version "1.0"
 
-    sourceCompatibility = 11
-    targetCompatibility = 11
+    sourceCompatibility = 17
+    targetCompatibility = 17
 
     repositories {
         mavenCentral()
@@ -24,39 +29,30 @@ allprojects {
 
     dependencyManagement {
         imports {
-            mavenBom("org.springframework.boot:spring-boot-dependencies:2.2.6.RELEASE")
+            mavenBom("org.springframework.boot:spring-boot-dependencies:2.6.6")
         }
     }
 
     dependencies {
-        testCompile group: "org.springframework.boot", name: "spring-boot-starter-test", {
+        testImplementation group: "org.springframework.boot", name: "spring-boot-starter-test", {
             exclude group: "junit", module: "junit"
             exclude group: "org.junit.vintage", module: "junit-vintage-engine"
         }
-        testCompile group: "org.junit.jupiter", name: "junit-jupiter", version: "5.6.2"
+        testImplementation group: "org.junit.jupiter", name: "junit-jupiter", version: "5.8.2"
     }
 
-    test {
+    tasks.named("test") {
         useJUnitPlatform()
     }
 
-    def generatedJavaSourcesPath = "$buildDir/generated-sources/java"
-    def generatedJavaSourcesDir = file(generatedJavaSourcesPath)
-
-    compileJava {
-        options.compilerArgs = [
-                "-s",
-                generatedJavaSourcesPath
-        ]
-    }
-
-    sourceSets {
-        main {
-            java {
-                srcDir generatedJavaSourcesDir
-            }
+    spotless {
+        java {
+            target "**/java/**/*.java"
+            importOrder()
+            googleJavaFormat()
+            removeUnusedImports()
         }
     }
 
-    compileJava.dependsOn "googleJavaFormat"
+    compileJava.dependsOn 'spotlessApply'
 }

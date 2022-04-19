@@ -1,7 +1,6 @@
 package com.subwaymonitor.datastore.sql;
 
 import com.subwaymonitor.datastore.DatabaseSchemas;
-import com.subwaymonitor.sharedmodel.ImmutableLine;
 import com.subwaymonitor.sharedmodel.Line;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -41,11 +40,7 @@ class LineEntity {
   }
 
   Line toModel() {
-    return ImmutableLine.builder()
-        .companyLineId(this.lineId.companyLineId)
-        .companySlug(this.lineId.companySlug)
-        .name(this.name)
-        .build();
+    return new Line(this.lineId.companyLineId, this.lineId.companySlug, this.name);
   }
 
   LineId getLineId() {

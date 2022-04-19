@@ -27,12 +27,12 @@ class MonitorsConfig {
   @Bean
   MonitorConfig<PingServiceProperties> pingConfig() {
     return new MonitorConfig<>(
-        pingServiceProperties, applicationConfig.executors().getMonitorsExecutor());
+        pingServiceProperties, applicationConfig.executors().monitorsExecutor());
   }
 
   @Bean
   MonitorConfig<MetroApiServiceProperties> metroConfig() {
     return new MonitorConfig<>(
-        metroApiServiceProperties, applicationConfig.executors().getMonitorsExecutor());
+        metroApiServiceProperties, applicationConfig.executors().monitorsExecutor());
   }
 }

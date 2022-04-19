@@ -5,10 +5,5 @@ plugins {
 dependencies {
     implementation project(":shared_model")
 
-    annotationProcessor group: "org.immutables", name: "value", version: commonLibs.immutablesVersion
-    compileOnly group: "org.immutables", name: "value", version: commonLibs.immutablesVersion
-    compileOnly group: "org.immutables", name: "builder", version: commonLibs.immutablesVersion
-    compileOnly group: "org.immutables", name: "value-annotations", version: commonLibs.immutablesVersion
-
-    compile group: "org.springframework.boot", name: "spring-boot-starter-web"
+    implementation group: "org.springframework.boot", name: "spring-boot-starter-web"
 }

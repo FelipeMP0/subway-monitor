@@ -31,7 +31,7 @@ class PingControllerTest {
   void ping_returnsOk() throws Exception {
     final ZonedDateTime currentTime = ZonedDateTime.now();
     when(clock.instant()).thenReturn(Instant.ofEpochSecond(currentTime.toEpochSecond()));
-    final PingDTO expected = PingDTO.builder().currentTime(currentTime).build();
+    final PingDto expected = new PingDto("pong", currentTime);
     final String expectedJson = JsonUtils.writeValueAsString(expected);
     final MvcResult mvcResult =
         mockMvc

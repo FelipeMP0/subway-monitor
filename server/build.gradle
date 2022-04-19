@@ -1,12 +1,6 @@
 plugins {
     id "java"
-    id "org.springframework.boot" version "2.2.6.RELEASE"
-    id "com.bmuschko.docker-spring-boot-application" version "6.4.0"
-}
-
-bootJar {
-    baseName = "subway_monitor"
-    version = ""
+    id "com.bmuschko.docker-spring-boot-application" version "7.3.0"
 }
 
 dependencies {
@@ -14,26 +8,24 @@ dependencies {
     implementation project(":application")
     implementation project(":metro")
 
-    annotationProcessor group: "org.immutables", name: "value", version: commonLibs.immutablesVersion
+    annotationProcessor group: "org.mapstruct", name: "mapstruct-processor", version: commonLibs.mapstructVersion
 
-    compile group: "org.springframework.boot", name: "spring-boot-starter-web"
-    compile group: "org.springframework.boot", name: "spring-boot-starter-data-jpa"
-    compile group: "org.springframework.boot", name: "spring-boot-devtools"
+    implementation group: "org.flywaydb", name: "flyway-core", version: commonLibs.flywayVersion
 
-    compile group: "org.flywaydb", name: "flyway-core", version: "6.4.1"
+    implementation group: "org.mapstruct", name: "mapstruct", version: commonLibs.mapstructVersion
 
-    compileOnly group: "org.immutables", name: "value", version: commonLibs.immutablesVersion
-    compileOnly group: "org.immutables", name: "builder", version: commonLibs.immutablesVersion
-    compileOnly group: "org.immutables", name: "value-annotations", version: commonLibs.immutablesVersion
+    implementation group: "org.springframework.boot", name: "spring-boot-starter-web"
+    implementation group: "org.springframework.boot", name: "spring-boot-starter-data-jpa"
+    implementation group: "org.springframework.boot", name: "spring-boot-devtools"
 
-    runtime group: "com.h2database", name: "h2", version: "1.4.200"
+    runtimeOnly group: "com.h2database", name: "h2", version: "2.1.212"
 
-    testCompile group: "com.opentable.components", name: "otj-pg-embedded", version: "0.13.3"
+    testImplementation group: "com.opentable.components", name: "otj-pg-embedded", version: commonLibs.opentableVersion
 }
 
 docker {
     springBootApplication {
-        baseImage = "openjdk:11.0.14.1-jre"
+        baseImage = "eclipse-temurin:17.0.2_8-jre"
         ports = [8080]
         images = ["subway_monitor:latest"]
         jvmArgs = ["-XX:+UseContainerSupport", "-Xlog:gc", "-Xms256m", "-Xmx256m"]

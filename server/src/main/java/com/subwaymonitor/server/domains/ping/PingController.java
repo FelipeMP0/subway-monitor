@@ -26,11 +26,9 @@ class PingController {
   }
 
   @GetMapping()
-  CompletableFuture<ResponseEntity<PingDTO>> ping() {
-    final PingDTO pingDTO =
-        PingDTO.builder()
-            .currentTime(ZonedDateTime.ofInstant(clock.instant(), ZoneId.systemDefault()))
-            .build();
-    return CompletableFuture.completedFuture(ResponseEntity.ok(pingDTO));
+  CompletableFuture<ResponseEntity<PingDto>> ping() {
+    return CompletableFuture.completedFuture(
+        ResponseEntity.ok(
+            new PingDto("pong", ZonedDateTime.ofInstant(clock.instant(), ZoneId.systemDefault()))));
   }
 }

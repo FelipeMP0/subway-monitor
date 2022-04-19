@@ -1,14 +1,9 @@
 package com.subwaymonitor.sharedmodel;
 
-import org.immutables.value.Value;
-
-/** Wrapper class that represents the current status of a line. */
-@Value.Immutable
-public interface LineCurrentStatus {
-
-  /** Line representation. */
-  Line line();
-
-  /** Current status of the line. */
-  StatusEnum status();
-}
+/**
+ * Wrapper class that represents the current status of a line.
+ *
+ * @param line Line representation.
+ * @param status Current status of the line.
+ */
+public record LineCurrentStatus(Line line, StatusEnum status) {}

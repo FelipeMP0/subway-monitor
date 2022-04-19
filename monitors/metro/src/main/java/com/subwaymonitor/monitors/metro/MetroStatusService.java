@@ -5,7 +5,6 @@ import com.subwaymonitor.sharedmodel.*;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,21 +44,13 @@ class MetroStatusService implements SubwayStatusService {
         .thenApplyAsync(
             response -> {
               final var statusMetro = response.statusMetro();
-              return statusMetro
-                  .lineStatuses()
-                  .stream()
+              return statusMetro.lineStatuses().stream()
                   .map(
                       lineStatus ->
-                          ImmutableLineCurrentStatus.builder()
-                              .line(
-                                  ImmutableLine.builder()
-                                      .companyLineId(lineStatus.id())
-                                      .companySlug(COMPANY_SLUG)
-                                      .name(lineStatus.lineFullName())
-                                      .build())
-                              .status(convertStatus(lineStatus.statusDescription()))
-                              .build())
-                  .collect(Collectors.toList());
+                          new LineCurrentStatus(
+                              new Line(lineStatus.id(), COMPANY_SLUG, lineStatus.lineFullName()),
+                              convertStatus(lineStatus.statusDescription())))
+                  .toList();
             },
             config.executor());
   }

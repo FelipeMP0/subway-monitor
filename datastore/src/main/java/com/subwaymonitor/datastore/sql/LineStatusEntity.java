@@ -1,7 +1,6 @@
 package com.subwaymonitor.datastore.sql;
 
 import com.subwaymonitor.datastore.DatabaseSchemas;
-import com.subwaymonitor.sharedmodel.ImmutableLineStatus;
 import com.subwaymonitor.sharedmodel.LineStatus;
 import java.time.ZonedDateTime;
 import java.util.UUID;
@@ -42,10 +41,7 @@ class LineStatusEntity {
   }
 
   LineStatus toModel() {
-    return ImmutableLineStatus.builder()
-        .line(this.line.toModel())
-        .status(this.status.toModel())
-        .build();
+    return new LineStatus(this.line.toModel(), this.status.toModel());
   }
 
   UUID getId() {

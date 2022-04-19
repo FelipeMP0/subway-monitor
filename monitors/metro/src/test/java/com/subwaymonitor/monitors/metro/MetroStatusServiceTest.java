@@ -3,8 +3,7 @@ package com.subwaymonitor.monitors.metro;
 import static org.mockito.Mockito.when;
 
 import com.subwaymonitor.config.MonitorConfig;
-import com.subwaymonitor.sharedmodel.ImmutableLine;
-import com.subwaymonitor.sharedmodel.ImmutableLineCurrentStatus;
+import com.subwaymonitor.sharedmodel.Line;
 import com.subwaymonitor.sharedmodel.LineCurrentStatus;
 import com.subwaymonitor.sharedmodel.StatusEnum;
 import java.time.LocalDateTime;
@@ -33,54 +32,21 @@ class MetroStatusServiceTest {
   @Test
   void findLineStatuses_success() throws ExecutionException, InterruptedException {
     final MetroApiResponse metroApiResponse =
-        ImmutableMetroApiResponse.builder()
-            .statusMetro(
-                ImmutableStatusMetro.builder()
-                    .dateUpdateMetro(LocalDateTime.now())
-                    .addAllLineStatuses(TestHelper.buildLineStatuses())
-                    .build())
-            .build();
+        new MetroApiResponse(
+            new MetroApiResponse.StatusMetro(LocalDateTime.now(), TestHelper.buildLineStatuses()));
     when(metroApiService.getStatuses())
         .thenReturn(CompletableFuture.completedFuture(metroApiResponse));
     final List<LineCurrentStatus> result = subject.findLineStatuses().get();
     final List<LineCurrentStatus> expected =
         List.of(
-            ImmutableLineCurrentStatus.builder()
-                .line(
-                    ImmutableLine.builder()
-                        .companyLineId("1")
-                        .companySlug("METRO_SAO_PAULO")
-                        .name("Linha 1 - Azul")
-                        .build())
-                .status(StatusEnum.NORMAL_OPERATION)
-                .build(),
-            ImmutableLineCurrentStatus.builder()
-                .line(
-                    ImmutableLine.builder()
-                        .companyLineId("2")
-                        .companySlug("METRO_SAO_PAULO")
-                        .name("Linha 2 - Verde")
-                        .build())
-                .status(StatusEnum.OPERATION_CLOSED)
-                .build(),
-            ImmutableLineCurrentStatus.builder()
-                .line(
-                    ImmutableLine.builder()
-                        .companyLineId("3")
-                        .companySlug("METRO_SAO_PAULO")
-                        .name("Linha 3 - Vermelha")
-                        .build())
-                .status(StatusEnum.REDUCED_SPEED)
-                .build(),
-            ImmutableLineCurrentStatus.builder()
-                .line(
-                    ImmutableLine.builder()
-                        .companyLineId("15")
-                        .companySlug("METRO_SAO_PAULO")
-                        .name("Linha 15 - Prata")
-                        .build())
-                .status(StatusEnum.UNKNOWN)
-                .build());
+            new LineCurrentStatus(
+                new Line("1", "METRO_SAO_PAULO", "Linha 1 - Azul"), StatusEnum.NORMAL_OPERATION),
+            new LineCurrentStatus(
+                new Line("2", "METRO_SAO_PAULO", "Linha 2 - Verde"), StatusEnum.OPERATION_CLOSED),
+            new LineCurrentStatus(
+                new Line("3", "METRO_SAO_PAULO", "Linha 3 - Vermelha"), StatusEnum.REDUCED_SPEED),
+            new LineCurrentStatus(
+                new Line("15", "METRO_SAO_PAULO", "Linha 15 - Prata"), StatusEnum.UNKNOWN));
     Assertions.assertEquals(expected, result);
   }
 }

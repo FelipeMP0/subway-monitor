@@ -25,36 +25,14 @@ class VerificationRepositorySqlImplTest extends BaseSqlRepositoryTest {
   @Test
   void createVerification_success() {
     final Verification input =
-        ImmutableVerification.builder()
-            .addAllLineStatuses(
-                List.of(
-                    ImmutableLineStatus.builder()
-                        .line(
-                            ImmutableLine.builder()
-                                .companyLineId("1")
-                                .companySlug(COMPANY_SLUG)
-                                .name("line 1")
-                                .build())
-                        .status(
-                            ImmutableStatus.builder()
-                                .name("status 1")
-                                .status(StatusEnum.NORMAL_OPERATION)
-                                .build())
-                        .build(),
-                    ImmutableLineStatus.builder()
-                        .line(
-                            ImmutableLine.builder()
-                                .companyLineId("2")
-                                .companySlug(COMPANY_SLUG)
-                                .name("line 2")
-                                .build())
-                        .status(
-                            ImmutableStatus.builder()
-                                .name("status 2")
-                                .status(StatusEnum.REDUCED_SPEED)
-                                .build())
-                        .build()))
-            .build();
+        new Verification(
+            List.of(
+                new LineStatus(
+                    new Line("1", COMPANY_SLUG, "line 1"),
+                    new Status(StatusEnum.NORMAL_OPERATION, "status 1")),
+                new LineStatus(
+                    new Line("2", COMPANY_SLUG, "line 2"),
+                    new Status(StatusEnum.REDUCED_SPEED, "status 2"))));
     final Verification result = subject.create(input);
     Assertions.assertEquals(input, result);
   }

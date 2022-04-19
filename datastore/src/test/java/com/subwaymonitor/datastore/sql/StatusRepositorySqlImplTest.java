@@ -1,6 +1,5 @@
 package com.subwaymonitor.datastore.sql;
 
-import com.subwaymonitor.sharedmodel.ImmutableStatus;
 import com.subwaymonitor.sharedmodel.Status;
 import com.subwaymonitor.sharedmodel.StatusEnum;
 import javax.persistence.EntityManager;
@@ -24,7 +23,7 @@ class StatusRepositorySqlImplTest extends BaseSqlRepositoryTest {
   void getBySlug_success() {
     final StatusEnum slug = StatusEnum.NORMAL_OPERATION;
     final String name = "Operando normalmente";
-    final Status expected = ImmutableStatus.builder().status(slug).name(name).build();
+    final Status expected = new Status(slug, name);
     final Status result = subject.getBySlug(slug);
     Assertions.assertEquals(expected, result);
   }

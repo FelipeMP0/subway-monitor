@@ -1,7 +1,6 @@
 package com.subwaymonitor.datastore.sql;
 
 import com.subwaymonitor.datastore.DatabaseSchemas;
-import com.subwaymonitor.sharedmodel.ImmutableStatus;
 import com.subwaymonitor.sharedmodel.Status;
 import com.subwaymonitor.sharedmodel.StatusEnum;
 import java.time.ZonedDateTime;
@@ -35,7 +34,7 @@ class StatusEntity {
   }
 
   Status toModel() {
-    return ImmutableStatus.builder().status(StatusEnum.valueOf(this.slug)).name(this.name).build();
+    return new Status(StatusEnum.valueOf(this.slug), this.name);
   }
 
   String getSlug() {

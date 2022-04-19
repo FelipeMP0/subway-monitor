@@ -2,8 +2,7 @@ package com.subwaymonitor.datastore.sql;
 
 import com.subwaymonitor.datastore.LineStatusRepository;
 import com.subwaymonitor.sharedmodel.LineStatus;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.List;
 import javax.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +17,7 @@ public class LineStatusRepositorySqlImpl implements LineStatusRepository {
   }
 
   @Override
-  public Set<LineStatus> getCurrentState() {
+  public List<LineStatus> getCurrentState() {
     return entityManager
         .createQuery(
             "SELECT l FROM VerificationEntity v "
@@ -30,6 +29,6 @@ public class LineStatusRepositorySqlImpl implements LineStatusRepository {
         .getResultList()
         .stream()
         .map(LineStatusEntity::toModel)
-        .collect(Collectors.toSet());
+        .toList();
   }
 }

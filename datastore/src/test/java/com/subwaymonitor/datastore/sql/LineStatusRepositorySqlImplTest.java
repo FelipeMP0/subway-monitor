@@ -1,7 +1,7 @@
 package com.subwaymonitor.datastore.sql;
 
 import com.subwaymonitor.sharedmodel.*;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.Assertions;
@@ -35,35 +35,15 @@ class LineStatusRepositorySqlImplTest extends BaseSqlRepositoryTest {
 
   @Test
   void getCurrentState_success() {
-    final Set<LineStatus> result = subject.getCurrentState();
-    final Set<LineStatus> expected =
-        Set.of(
-            ImmutableLineStatus.builder()
-                .line(
-                    ImmutableLine.builder()
-                        .companyLineId("3")
-                        .companySlug("METRO_SAO_PAULO")
-                        .name("Vermelha")
-                        .build())
-                .status(
-                    ImmutableStatus.builder()
-                        .status(StatusEnum.REDUCED_SPEED)
-                        .name("Velocidade reduzida")
-                        .build())
-                .build(),
-            ImmutableLineStatus.builder()
-                .line(
-                    ImmutableLine.builder()
-                        .companyLineId("2")
-                        .companySlug("METRO_SAO_PAULO")
-                        .name("Verde")
-                        .build())
-                .status(
-                    ImmutableStatus.builder()
-                        .status(StatusEnum.NORMAL_OPERATION)
-                        .name("Operando normalmente")
-                        .build())
-                .build());
+    final List<LineStatus> result = subject.getCurrentState();
+    final List<LineStatus> expected =
+        List.of(
+            new LineStatus(
+                new Line("3", "METRO_SAO_PAULO", "Vermelha"),
+                new Status(StatusEnum.REDUCED_SPEED, "Velocidade reduzida")),
+            new LineStatus(
+                new Line("2", "METRO_SAO_PAULO", "Verde"),
+                new Status(StatusEnum.NORMAL_OPERATION, "Operando normalmente")));
     Assertions.assertEquals(expected, result);
   }
 }

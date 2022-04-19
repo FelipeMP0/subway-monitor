@@ -1,12 +1,10 @@
 package com.subwaymonitor.datastore.sql;
 
 import com.subwaymonitor.datastore.DatabaseSchemas;
-import com.subwaymonitor.sharedmodel.ImmutableVerification;
 import com.subwaymonitor.sharedmodel.Verification;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import javax.persistence.*;
 
 @Entity
@@ -33,20 +31,12 @@ class VerificationEntity {
   }
 
   VerificationEntity(final Verification verification) {
-    this.lineStatuses =
-        verification
-            .lineStatuses()
-            .stream()
-            .map(LineStatusEntity::new)
-            .collect(Collectors.toList());
+    this.lineStatuses = verification.lineStatuses().stream().map(LineStatusEntity::new).toList();
     this.lineStatuses.forEach(lineStatusEntity -> lineStatusEntity.setVerification(this));
   }
 
   Verification toModel() {
-    return ImmutableVerification.builder()
-        .addAllLineStatuses(
-            this.lineStatuses.stream().map(LineStatusEntity::toModel).collect(Collectors.toList()))
-        .build();
+    return new Verification(this.lineStatuses.stream().map(LineStatusEntity::toModel).toList());
   }
 
   UUID getId() {

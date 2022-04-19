@@ -1,6 +1,5 @@
 package com.subwaymonitor.datastore.sql;
 
-import com.subwaymonitor.sharedmodel.ImmutableLine;
 import com.subwaymonitor.sharedmodel.Line;
 import java.util.UUID;
 import javax.persistence.EntityManager;
@@ -25,12 +24,7 @@ class LineRepositorySqlImplTest extends BaseSqlRepositoryTest {
     final String companyLineId = UUID.randomUUID().toString();
     final String companySlug = UUID.randomUUID().toString();
     final String name = UUID.randomUUID().toString();
-    final Line expected =
-        ImmutableLine.builder()
-            .companyLineId(companyLineId)
-            .companySlug(companySlug)
-            .name(name)
-            .build();
+    final Line expected = new Line(companyLineId, companySlug, name);
     final LineEntity lineEntity = new LineEntity(expected);
     final CompanyEntity company = new CompanyEntity();
     company.setSlug(companySlug);

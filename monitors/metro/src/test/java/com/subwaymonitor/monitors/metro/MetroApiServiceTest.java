@@ -49,15 +49,11 @@ class MetroApiServiceTest {
             withStatus(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(responseBody));
     final MetroApiResponse response = subject.getStatuses().get();
     final MetroApiResponse expectedResponse =
-        ImmutableMetroApiResponse.builder()
-            .statusMetro(
-                ImmutableStatusMetro.builder()
-                    .dateUpdateMetro(
-                        LocalDateTime.parse(
-                            "09/09/2020 23:27", DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")))
-                    .addAllLineStatuses(TestHelper.buildLineStatuses())
-                    .build())
-            .build();
+        new MetroApiResponse(
+            new MetroApiResponse.StatusMetro(
+                LocalDateTime.parse(
+                    "09/09/2020 23:27", DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
+                TestHelper.buildLineStatuses()));
     Assertions.assertEquals(expectedResponse, response);
     mockServer.verify();
   }

@@ -29,22 +29,10 @@ class VerificationServiceTest {
   private static final String LINE_2_NUMBER_IDENTIFIER = "2";
   private static final String COMPANY_1_SLUG = "company_1";
 
-  private static final Line LINE_1 =
-      ImmutableLine.builder()
-          .companyLineId(LINE_1_NUMBER_IDENTIFIER)
-          .companySlug(COMPANY_1_SLUG)
-          .name("Line 1")
-          .build();
-  private static final Line LINE_2 =
-      ImmutableLine.builder()
-          .companyLineId(LINE_2_NUMBER_IDENTIFIER)
-          .companySlug(COMPANY_1_SLUG)
-          .name("Line 2")
-          .build();
-  private static final Status STATUS_1 =
-      ImmutableStatus.builder().status(NORMAL_OPERATION).name(NORMAL_OPERATION.name()).build();
-  private static final Status STATUS_2 =
-      ImmutableStatus.builder().status(REDUCED_SPEED).name(REDUCED_SPEED.name()).build();
+  private static final Line LINE_1 = new Line(LINE_1_NUMBER_IDENTIFIER, COMPANY_1_SLUG, "Line 1");
+  private static final Line LINE_2 = new Line(LINE_2_NUMBER_IDENTIFIER, COMPANY_1_SLUG, "Line 2");
+  private static final Status STATUS_1 = new Status(NORMAL_OPERATION, NORMAL_OPERATION.name());
+  private static final Status STATUS_2 = new Status(REDUCED_SPEED, REDUCED_SPEED.name());
 
   @BeforeEach
   void setUp() {
@@ -68,19 +56,15 @@ class VerificationServiceTest {
     when(statusRepository.getBySlug(NORMAL_OPERATION)).thenReturn(STATUS_1);
     when(statusRepository.getBySlug(REDUCED_SPEED)).thenReturn(STATUS_2);
     final Verification verification =
-        ImmutableVerification.builder()
-            .addAllLineStatuses(
-                List.of(
-                    ImmutableLineStatus.builder().line(LINE_1).status(STATUS_1).build(),
-                    ImmutableLineStatus.builder().line(LINE_2).status(STATUS_2).build()))
-            .build();
+        new Verification(
+            List.of(new LineStatus(LINE_1, STATUS_1), new LineStatus(LINE_2, STATUS_2)));
     subject.verifyCurrentStatuses();
     verify(repository).create(verification);
   }
 
   private List<LineCurrentStatus> buildDefaultLineCurrentStatuses() {
     return List.of(
-        ImmutableLineCurrentStatus.builder().line(LINE_1).status(NORMAL_OPERATION).build(),
-        ImmutableLineCurrentStatus.builder().line(LINE_2).status(REDUCED_SPEED).build());
+        new LineCurrentStatus(LINE_1, NORMAL_OPERATION),
+        new LineCurrentStatus(LINE_2, REDUCED_SPEED));
   }
 }

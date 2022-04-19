@@ -9,5 +9,7 @@ dependencies {
     implementation project(":cptm")
     implementation project(":ping")
 
-    compile group: "org.springframework.boot", name: "spring-boot-starter"
+    implementation group: 'javax.transaction', name: 'javax.transaction-api', version: '1.3'
+
+    implementation group: "org.springframework.boot", name: "spring-boot-starter"
 }
