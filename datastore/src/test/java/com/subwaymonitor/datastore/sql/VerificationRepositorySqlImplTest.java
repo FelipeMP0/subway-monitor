@@ -70,11 +70,11 @@ class VerificationRepositorySqlImplTest extends BaseSqlRepositoryTest {
         new Verification(
             List.of(
                 new LineStatus(
-                    new Line("3", "METRO_SAO_PAULO", "Vermelha"),
-                    new Status(StatusEnum.REDUCED_SPEED, "Velocidade reduzida")),
-                new LineStatus(
                     new Line("2", "METRO_SAO_PAULO", "Verde"),
-                    new Status(StatusEnum.NORMAL_OPERATION, "Operando normalmente"))),
+                    new Status(StatusEnum.NORMAL_OPERATION, "Operando normalmente")),
+                new LineStatus(
+                    new Line("3", "METRO_SAO_PAULO", "Vermelha"),
+                    new Status(StatusEnum.REDUCED_SPEED, "Velocidade reduzida"))),
             NOW);
     Assertions.assertEquals(expected, result);
   }

@@ -26,13 +26,14 @@ class VerificationRepositorySqlImpl implements VerificationRepository {
   public Verification getLast() {
     return entityManager
         .createQuery(
-            "SELECT v FROM VerificationEntity v "
-                + "JOIN FETCH v.lineStatuses l "
-                + "LEFT JOIN FETCH l.line "
-                + "LEFT JOIN FETCH l.status "
-                + "WHERE v.createdAt = ("
-                + "SELECT MAX(v.createdAt) FROM VerificationEntity v"
-                + ")",
+            "SELECT verification FROM VerificationEntity verification "
+                + "JOIN FETCH verification.lineStatuses lineStatus "
+                + "LEFT JOIN FETCH lineStatus.line line "
+                + "LEFT JOIN FETCH lineStatus.status status "
+                + "WHERE verification.createdAt = ("
+                + "SELECT MAX(verification.createdAt) FROM VerificationEntity verification"
+                + ") "
+                + "ORDER BY line.lineId.companyLineId, line.lineId.companySlug",
             VerificationEntity.class)
         .getSingleResult()
         .toModel();
