@@ -8,7 +8,6 @@ ext.commonLibs = [
         jacksonVersion: "2.13.2",
         opentableVersion: "0.13.3",
         flywayVersion: "8.5.8",
-        mapstructVersion: "1.4.2.Final"
 ]
 
 allprojects {

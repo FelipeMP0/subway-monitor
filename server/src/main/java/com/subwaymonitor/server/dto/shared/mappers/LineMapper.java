@@ -2,13 +2,12 @@ package com.subwaymonitor.server.dto.shared.mappers;
 
 import com.subwaymonitor.server.dto.shared.LineDto;
 import com.subwaymonitor.sharedmodel.Line;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
-@Mapper
-public interface LineMapper {
+public final class LineMapper {
 
-  LineMapper INSTANCE = Mappers.getMapper(LineMapper.class);
+  private LineMapper() {}
 
-  LineDto toDto(Line line);
+  public static LineDto toDto(final Line line) {
+    return new LineDto(line.companyLineId(), line.companySlug(), line.name());
+  }
 }

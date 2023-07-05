@@ -50,7 +50,7 @@ class VerificationControllerTest {
 
     when(service.getLast()).thenReturn(verification);
     final String expectedJson =
-        JsonUtils.writeValueAsString(VerificationMapper.INSTANCE.toDto(verification));
+        JsonUtils.writeValueAsString(VerificationMapper.toDto(verification));
     mockMvc
         .perform(MockMvcRequestBuilders.get("/v1/verifications/last"))
         .andExpect(status().isOk())

@@ -77,6 +77,9 @@ spring:
 
 server:
   port: ${PORT}
+  web:
+    cors:
+      allowed-origins: "http://localhost:3000"
 
 logging:
   config: classpath:logback-spring.xml
@@ -124,6 +127,9 @@ spring:
 
 server:
   port: 8080
+  web:
+    cors:
+      allowed-origins: "http://localhost:3000"
 
 logging:
   config: classpath:logback-spring.xml

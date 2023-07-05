@@ -8,11 +8,7 @@ dependencies {
     implementation project(":application")
     implementation project(":metro")
 
-    annotationProcessor group: "org.mapstruct", name: "mapstruct-processor", version: commonLibs.mapstructVersion
-
     implementation group: "org.flywaydb", name: "flyway-core", version: commonLibs.flywayVersion
-
-    implementation group: "org.mapstruct", name: "mapstruct", version: commonLibs.mapstructVersion
 
     implementation group: "org.springframework.boot", name: "spring-boot-starter-web"
     implementation group: "org.springframework.boot", name: "spring-boot-starter-data-jpa"

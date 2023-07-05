@@ -23,6 +23,6 @@ class VerificationController {
   @GetMapping("/last")
   VerificationDto getCurrentStatus() {
     final Verification verification = service.getLast();
-    return VerificationMapper.INSTANCE.toDto(verification);
+    return VerificationMapper.toDto(verification);
   }
 }
