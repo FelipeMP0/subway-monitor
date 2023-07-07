@@ -99,7 +99,7 @@ application:
 monitors:
   metro-service.url: https://www.viaquatro.com.br/generic/Main
 
-  ping.url: https://subway-monitor-api.herokuapp.com/v1/ping
+  ping.url: https://api-subway-monitor-bb0c5df07afb.herokuapp.com/v1/ping
 
 ---
 
