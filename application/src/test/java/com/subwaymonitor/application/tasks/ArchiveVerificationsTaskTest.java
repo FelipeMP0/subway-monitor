@@ -3,26 +3,25 @@ package com.subwaymonitor.application.tasks;
 import static org.mockito.Mockito.verify;
 
 import com.subwaymonitor.application.services.VerificationService;
-import java.util.concurrent.ExecutionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-class VerificationTaskTest {
+class ArchiveVerificationsTaskTest {
 
-  private VerificationTask subject;
+  private ArchiveVerificationsTask subject;
 
   private VerificationService verificationService;
 
   @BeforeEach
   void setUp() {
     verificationService = Mockito.mock(VerificationService.class);
-    subject = new VerificationTask(verificationService);
+    subject = new ArchiveVerificationsTask(verificationService);
   }
 
   @Test
-  void verifyLinesCurrentStatus_success() throws ExecutionException, InterruptedException {
-    subject.verifyLinesCurrentStatus();
-    verify(verificationService).verifyCurrentStatuses();
+  void run_success() {
+    subject.run();
+    verify(verificationService).archive();
   }
 }

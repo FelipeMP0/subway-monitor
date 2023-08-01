@@ -6,12 +6,14 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.subwaymonitor.datastore.LineRepository;
+import com.subwaymonitor.datastore.LineStatusRepository;
 import com.subwaymonitor.datastore.StatusRepository;
 import com.subwaymonitor.datastore.VerificationRepository;
 import com.subwaymonitor.sharedmodel.Line;
 import com.subwaymonitor.sharedmodel.LineCurrentStatus;
 import com.subwaymonitor.sharedmodel.LineStatus;
 import com.subwaymonitor.sharedmodel.Status;
+import com.subwaymonitor.sharedmodel.StatusEnum;
 import com.subwaymonitor.sharedmodel.SubwayStatusService;
 import com.subwaymonitor.sharedmodel.Verification;
 import java.time.Clock;
@@ -21,22 +23,14 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 class VerificationServiceTest {
 
-  private VerificationService subject;
-
   private static final Clock CLOCK = Clock.fixed(Instant.now(), ZoneId.systemDefault());
-
-  private VerificationRepository repository;
-  private LineRepository lineRepository;
-  private StatusRepository statusRepository;
-
-  private SubwayStatusService subwayStatusService;
-
   private static final String LINE_1_NUMBER_IDENTIFIER = "1";
   private static final String LINE_2_NUMBER_IDENTIFIER = "2";
   private static final String COMPANY_1_SLUG = "company_1";
@@ -46,15 +40,28 @@ class VerificationServiceTest {
   private static final Status STATUS_1 = new Status(NORMAL_OPERATION, NORMAL_OPERATION.name());
   private static final Status STATUS_2 = new Status(REDUCED_SPEED, REDUCED_SPEED.name());
 
+  private VerificationService subject;
+  private VerificationRepository repository;
+  private LineRepository lineRepository;
+  private StatusRepository statusRepository;
+  private LineStatusRepository lineStatusRepository;
+  private SubwayStatusService subwayStatusService;
+
   @BeforeEach
   void setUp() {
     subwayStatusService = Mockito.mock(SubwayStatusService.class);
     repository = Mockito.mock(VerificationRepository.class);
     lineRepository = Mockito.mock(LineRepository.class);
     statusRepository = Mockito.mock(StatusRepository.class);
+    lineStatusRepository = Mockito.mock(LineStatusRepository.class);
     subject =
         new VerificationService(
-            CLOCK, repository, lineRepository, statusRepository, subwayStatusService);
+            CLOCK,
+            repository,
+            lineRepository,
+            statusRepository,
+            lineStatusRepository,
+            subwayStatusService);
   }
 
   @Test
@@ -80,6 +87,19 @@ class VerificationServiceTest {
   void getLastVerification_success() {
     subject.getLast();
     verify(repository).getLast();
+  }
+
+  @Test
+  void archive_success() {
+    final var archiveUntil = LocalDateTime.now(CLOCK).minusDays(30);
+
+    when(lineStatusRepository.findByStatus(
+            List.of(StatusEnum.REDUCED_SPEED, StatusEnum.OPERATION_INTERRUPTED), archiveUntil))
+        .thenReturn(List.of());
+
+    Assertions.assertDoesNotThrow(() -> subject.archive());
+
+    verify(repository).delete(archiveUntil);
   }
 
   private List<LineCurrentStatus> buildDefaultLineCurrentStatuses() {

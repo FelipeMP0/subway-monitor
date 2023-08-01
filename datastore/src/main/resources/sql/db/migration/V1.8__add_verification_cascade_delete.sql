@@ -1,0 +1,4 @@
+ALTER TABLE line_status_history
+DROP CONSTRAINT line_status_history_verification_id_fkey,
+ADD CONSTRAINT line_status_history_verification_id_fkey
+FOREIGN KEY (verification_id) REFERENCES verification(id) ON DELETE CASCADE;

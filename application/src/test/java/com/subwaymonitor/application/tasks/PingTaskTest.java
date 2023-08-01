@@ -14,7 +14,7 @@ class PingTaskTest {
   private PingService pingService;
 
   @BeforeEach
-  void setup() {
+  void setUp() {
     pingService = Mockito.mock(PingService.class);
     subject = new PingTask(pingService);
   }
