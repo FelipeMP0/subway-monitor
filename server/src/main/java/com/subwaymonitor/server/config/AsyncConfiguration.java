@@ -7,9 +7,11 @@ import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 @Configuration
 @EnableAsync
@@ -36,6 +38,14 @@ class AsyncConfiguration implements AsyncConfigurer {
   @Bean(name = MONITORS_TASK_EXECUTOR)
   Executor getMonitorsAsyncExecutor() {
     return newTaskExecutor(MONITORS_TASK_EXECUTOR_NAME_PREFIX);
+  }
+
+  @Bean
+  public TaskScheduler taskScheduler() {
+    final var taskScheduler = new ThreadPoolTaskScheduler();
+    taskScheduler.setPoolSize(3);
+    taskScheduler.setThreadNamePrefix("taskScheduler-");
+    return taskScheduler;
   }
 
   @Override

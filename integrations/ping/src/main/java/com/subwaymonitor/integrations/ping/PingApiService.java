@@ -48,6 +48,7 @@ public class PingApiService {
           } else if (statusCode.is5xxServerError()) {
             throw new HttpServerErrorException(statusCode);
           }
-        });
+        },
+        config.executor());
   }
 }
