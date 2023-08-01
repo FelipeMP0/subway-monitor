@@ -48,7 +48,7 @@ application:
     verificationTask:
       cron-expression: "0 */3 * * * *"
 
-monitors:
+integrations:
   metro-service.url: https://www.viaquatro.com.br/generic/Main
 
   ping.url: http://localhost:8080/v1/ping
@@ -100,7 +100,7 @@ application:
     verificationTask:
       cron-expression: "0 */3 * * * *"
 
-monitors:
+integrations:
   metro-service.url: https://www.viaquatro.com.br/generic/Main
 
   ping.url: https://api-subway-monitor-bb0c5df07afb.herokuapp.com/v1/ping
@@ -152,7 +152,7 @@ application:
     verificationTask:
       cron-expression: "0 */3 * * * *"
 
-monitors:
+integrations:
   metro-service.url: https://www.viaquatro.com.br/generic/Main
 
   ping.url: http://localhost:8080/v1/ping

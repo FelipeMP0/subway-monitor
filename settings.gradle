@@ -3,10 +3,10 @@ include 'server'
 include 'shared_model'
 include 'datastore'
 include 'metro'
-project(':metro').projectDir = new File('./monitors/metro')
+project(':metro').projectDir = new File('./integrations/metro')
 include 'cptm'
-project(':cptm').projectDir = new File('./monitors/cptm')
+project(':cptm').projectDir = new File('./integrations/cptm')
 include 'ping'
-project(':ping').projectDir = new File('./monitors/ping')
+project(':ping').projectDir = new File('./integrations/ping')
 include 'application'
 

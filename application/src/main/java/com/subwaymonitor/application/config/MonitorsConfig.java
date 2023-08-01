@@ -1,8 +1,8 @@
 package com.subwaymonitor.application.config;
 
 import com.subwaymonitor.config.MonitorConfig;
-import com.subwaymonitor.monitors.metro.MetroApiServiceProperties;
-import com.subwaymonitor.monitors.ping.PingServiceProperties;
+import com.subwaymonitor.integrations.metro.MetroApiServiceProperties;
+import com.subwaymonitor.integrations.ping.PingServiceProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

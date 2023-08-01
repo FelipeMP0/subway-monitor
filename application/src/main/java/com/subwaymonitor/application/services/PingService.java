@@ -1,6 +1,6 @@
 package com.subwaymonitor.application.services;
 
-import com.subwaymonitor.monitors.ping.PingApiService;
+import com.subwaymonitor.integrations.ping.PingApiService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
