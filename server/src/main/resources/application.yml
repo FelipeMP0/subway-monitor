@@ -88,7 +88,7 @@ server:
   port: ${PORT}
   web:
     cors:
-      allowed-origins: "http://localhost:3000"
+      allowed-origins: "https://app-subway-monitor-19fac521c38d.herokuapp.com"
 
 logging:
   config: classpath:logback-spring.xml
