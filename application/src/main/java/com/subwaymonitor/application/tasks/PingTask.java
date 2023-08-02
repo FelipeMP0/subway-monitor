@@ -23,5 +23,6 @@ final class PingTask {
   void pingApplication() {
     LOGGER.info("Sending ping request to application");
     service.ping();
+    LOGGER.info("Successfully pinged the application");
   }
 }

@@ -1,6 +1,7 @@
 package com.subwaymonitor.application.services;
 
 import static com.subwaymonitor.sharedmodel.StatusEnum.NORMAL_OPERATION;
+import static com.subwaymonitor.sharedmodel.StatusEnum.OPERATION_INTERRUPTED;
 import static com.subwaymonitor.sharedmodel.StatusEnum.REDUCED_SPEED;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -9,6 +10,7 @@ import com.subwaymonitor.datastore.LineRepository;
 import com.subwaymonitor.datastore.LineStatusRepository;
 import com.subwaymonitor.datastore.StatusRepository;
 import com.subwaymonitor.datastore.VerificationRepository;
+import com.subwaymonitor.sharedmodel.ArchiveService;
 import com.subwaymonitor.sharedmodel.Line;
 import com.subwaymonitor.sharedmodel.LineCurrentStatus;
 import com.subwaymonitor.sharedmodel.LineStatus;
@@ -46,6 +48,7 @@ class VerificationServiceTest {
   private StatusRepository statusRepository;
   private LineStatusRepository lineStatusRepository;
   private SubwayStatusService subwayStatusService;
+  private ArchiveService archiveService;
 
   @BeforeEach
   void setUp() {
@@ -54,6 +57,7 @@ class VerificationServiceTest {
     lineRepository = Mockito.mock(LineRepository.class);
     statusRepository = Mockito.mock(StatusRepository.class);
     lineStatusRepository = Mockito.mock(LineStatusRepository.class);
+    archiveService = Mockito.mock(ArchiveService.class);
     subject =
         new VerificationService(
             CLOCK,
@@ -61,7 +65,8 @@ class VerificationServiceTest {
             lineRepository,
             statusRepository,
             lineStatusRepository,
-            subwayStatusService);
+            subwayStatusService,
+            archiveService);
   }
 
   @Test
@@ -91,13 +96,23 @@ class VerificationServiceTest {
 
   @Test
   void archive_success() {
-    final var archiveUntil = LocalDateTime.now(CLOCK).minusDays(30);
+    final var archiveUntil = LocalDateTime.now(CLOCK).minusDays(15);
+
+    final var line1 = new Line("2", "METRO_SAO_PAULO", "Verde");
+    final var line2 = new Line("1", "METRO_SAO_PAULO", "Azul");
+    final var status1 = new Status(NORMAL_OPERATION, "Operando normalmente");
+    final var status2 = new Status(OPERATION_INTERRUPTED, "Operação interrompida");
+
+    final List<LineStatus> lineStatuses =
+        List.of(new LineStatus(line1, status1), new LineStatus(line2, status2));
 
     when(lineStatusRepository.findByStatus(
             List.of(StatusEnum.REDUCED_SPEED, StatusEnum.OPERATION_INTERRUPTED), archiveUntil))
-        .thenReturn(List.of());
+        .thenReturn(lineStatuses);
+    when(archiveService.archiveLineStatus(lineStatuses))
+        .thenReturn(CompletableFuture.completedFuture(null));
 
-    Assertions.assertDoesNotThrow(() -> subject.archive());
+    Assertions.assertDoesNotThrow(() -> subject.archiveOldVerifications());
 
     verify(repository).delete(archiveUntil);
   }

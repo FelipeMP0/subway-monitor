@@ -8,6 +8,7 @@ dependencies {
     implementation project(":metro")
     implementation project(":cptm")
     implementation project(":ping")
+    implementation project(":google")
 
     implementation group: 'javax.transaction', name: 'javax.transaction-api', version: '1.3'
 

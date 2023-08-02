@@ -41,7 +41,7 @@ application:
     max-pool-size: 50
     queue-capacity: 10000
   schedulers:
-    archiveTask:
+    archiveVerificationsTask:
       cron-expression: "0 */30 * * * *"
     pingTask:
       cron-expression: "0 */3 * * * *"
@@ -50,8 +50,15 @@ application:
 
 integrations:
   metro-service.url: https://www.viaquatro.com.br/generic/Main
-
   ping.url: http://localhost:8080/v1/ping
+  google:
+    enabled: true
+    serviceAccount:
+      credentials: ${GOOGLE_CREDENTIALS}
+    spreadsheetsConfig:
+      spreadsheets:
+        VERIFICATION_ARCHIVE:
+          id: 1LT8kpJZwID14ApmV8A20Jv5e5TADcn-5wOH9SkJUHTk
 
 ---
 
@@ -93,7 +100,7 @@ application:
     max-pool-size: 50
     queue-capacity: 10000
   schedulers:
-    archiveTask:
+    archiveVerificationsTask:
       cron-expression: "0 */30 * * * *"
     pingTask:
       cron-expression: "0 */3 * * * *"
@@ -102,8 +109,15 @@ application:
 
 integrations:
   metro-service.url: https://www.viaquatro.com.br/generic/Main
-
   ping.url: https://api-subway-monitor-bb0c5df07afb.herokuapp.com/v1/ping
+  google:
+    enabled: true
+    serviceAccount:
+      credentials: ${GOOGLE_CREDENTIALS}
+    spreadsheetsConfig:
+      spreadsheets:
+        VERIFICATION_ARCHIVE:
+          id: 1eVKG_w1K5a-JTvq_ku3o-EKL3T_RlkQJoNLsGwKkS3o
 
 ---
 
@@ -145,7 +159,7 @@ application:
     max-pool-size: 50
     queue-capacity: 10000
   schedulers:
-    archiveTask:
+    archiveVerificationsTask:
       cron-expression: "0 */30 * * * *"
     pingTask:
       cron-expression: "0 */3 * * * *"
@@ -154,7 +168,13 @@ application:
 
 integrations:
   metro-service.url: https://www.viaquatro.com.br/generic/Main
-
   ping.url: http://localhost:8080/v1/ping
-
+  google:
+    enabled: false
+    serviceAccount:
+      credentials: ${GOOGLE_CREDENTIALS}
+    spreadsheetsConfig:
+      spreadsheets:
+        VERIFICATION_ARCHIVE:
+          id: 1LT8kpJZwID14ApmV8A20Jv5e5TADcn-5wOH9SkJUHTk
 ---

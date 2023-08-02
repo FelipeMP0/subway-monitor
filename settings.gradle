@@ -8,5 +8,6 @@ include 'cptm'
 project(':cptm').projectDir = new File('./integrations/cptm')
 include 'ping'
 project(':ping').projectDir = new File('./integrations/ping')
+include 'google'
+project(':google').projectDir = new File('./integrations/google')
 include 'application'
-

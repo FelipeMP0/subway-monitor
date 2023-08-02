@@ -24,5 +24,6 @@ class VerificationTask {
   void verifyLinesCurrentStatus() throws ExecutionException, InterruptedException {
     LOGGER.info("Running line current status verification task");
     verificationService.verifyCurrentStatuses();
+    LOGGER.info("Successfully fetched the current statuses of lines");
   }
 }

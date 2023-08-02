@@ -3,6 +3,7 @@ package com.subwaymonitor.application.tasks;
 import static org.mockito.Mockito.verify;
 
 import com.subwaymonitor.application.services.VerificationService;
+import java.util.concurrent.ExecutionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -20,8 +21,8 @@ class ArchiveVerificationsTaskTest {
   }
 
   @Test
-  void run_success() {
+  void run_success() throws ExecutionException, InterruptedException {
     subject.run();
-    verify(verificationService).archive();
+    verify(verificationService).archiveOldVerifications();
   }
 }

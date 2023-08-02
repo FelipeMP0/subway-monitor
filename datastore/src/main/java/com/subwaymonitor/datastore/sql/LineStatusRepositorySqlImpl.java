@@ -19,7 +19,8 @@ class LineStatusRepositorySqlImpl implements LineStatusRepository {
   }
 
   @Override
-  public List<LineStatus> findByStatus(List<StatusEnum> statusEnumList, LocalDateTime until) {
+  public List<LineStatus> findByStatus(
+      final List<StatusEnum> statusEnumList, final LocalDateTime until) {
     List<String> statuses = statusEnumList.stream().map(Enum::name).toList();
     return entityManager
         .createQuery(
