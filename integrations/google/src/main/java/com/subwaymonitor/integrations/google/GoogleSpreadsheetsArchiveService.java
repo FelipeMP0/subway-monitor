@@ -3,6 +3,7 @@ package com.subwaymonitor.integrations.google;
 import com.subwaymonitor.integrations.google.GoogleServicesProperties.SpreadsheetsConfig;
 import com.subwaymonitor.integrations.google.GoogleServicesProperties.SpreadsheetsConfig.Spreadsheet;
 import com.subwaymonitor.integrations.google.GoogleServicesProperties.SpreadsheetsConfig.SpreadsheetType;
+import com.subwaymonitor.serialization.DateTimeUtils;
 import com.subwaymonitor.sharedmodel.ArchiveService;
 import com.subwaymonitor.sharedmodel.Line;
 import com.subwaymonitor.sharedmodel.LineStatus;
@@ -44,6 +45,7 @@ public class GoogleSpreadsheetsArchiveService implements ArchiveService {
       dataRow.add(line.companyLineId());
       dataRow.add(line.name());
       dataRow.add(lineStatus.status().status().name());
+      dataRow.add(DateTimeUtils.formatLocalDataTime(lineStatus.createdAt()));
       data.add(dataRow);
     }
     return api.append(spreadsheet.getId(), START_RANGE, data);

@@ -1,5 +1,6 @@
 package com.subwaymonitor.datastore.sql;
 
+import com.subwaymonitor.serialization.DateTimeUtils;
 import com.subwaymonitor.sharedmodel.Line;
 import com.subwaymonitor.sharedmodel.LineStatus;
 import com.subwaymonitor.sharedmodel.Status;
@@ -34,15 +35,15 @@ class VerificationRepositorySqlImplTest extends BaseSqlRepositoryTest {
                 + "VALUES ('%s', '%s') "
                 + "ON CONFLICT (id) "
                 + "DO NOTHING;",
-            VERIFICATION_ID, TestHelpers.formatLocalDataTime(TestConstants.NOW)));
+            VERIFICATION_ID, DateTimeUtils.formatLocalDataTime(TestConstants.NOW)));
     runNativeQuery(
         String.format(
-            "INSERT INTO line_status_history (id, verification_id, company_line_id, company_slug, status_slug) "
-                + "VALUES ('5f5262d7-40e3-4748-9f80-865e9f6ee4c1', '%1$s', '3', 'METRO_SAO_PAULO', 'REDUCED_SPEED'), "
-                + "('13455ab7-ae61-46e3-b5e6-8371b1dcd7c8', '%1$s', '2', 'METRO_SAO_PAULO', 'NORMAL_OPERATION') "
+            "INSERT INTO line_status_history (id, verification_id, company_line_id, company_slug, status_slug, created_at) "
+                + "VALUES ('5f5262d7-40e3-4748-9f80-865e9f6ee4c1', '%1$s', '3', 'METRO_SAO_PAULO', 'REDUCED_SPEED', '%2$s'), "
+                + "('13455ab7-ae61-46e3-b5e6-8371b1dcd7c8', '%1$s', '2', 'METRO_SAO_PAULO', 'NORMAL_OPERATION', '%2$s') "
                 + "ON CONFLICT (id) "
                 + "DO NOTHING;",
-            VERIFICATION_ID));
+            VERIFICATION_ID, DateTimeUtils.formatLocalDataTime(TestConstants.NOW)));
   }
 
   @Test
@@ -52,12 +53,16 @@ class VerificationRepositorySqlImplTest extends BaseSqlRepositoryTest {
             List.of(
                 new LineStatus(
                     new Line("1", TestConstants.COMPANY_SLUG, "line 1"),
-                    new Status(StatusEnum.NORMAL_OPERATION, "status 1")),
+                    new Status(StatusEnum.NORMAL_OPERATION, "status 1"),
+                    TestConstants.NOW),
                 new LineStatus(
                     new Line("2", TestConstants.COMPANY_SLUG, "line 2"),
-                    new Status(StatusEnum.REDUCED_SPEED, "status 2"))),
+                    new Status(StatusEnum.REDUCED_SPEED, "status 2"),
+                    TestConstants.NOW)),
             TestConstants.NOW);
+
     final Verification result = subject.create(input);
+
     Assertions.assertEquals(input, result);
   }
 
@@ -69,10 +74,12 @@ class VerificationRepositorySqlImplTest extends BaseSqlRepositoryTest {
             List.of(
                 new LineStatus(
                     new Line("2", "METRO_SAO_PAULO", "Verde"),
-                    new Status(StatusEnum.NORMAL_OPERATION, "Operando normalmente")),
+                    new Status(StatusEnum.NORMAL_OPERATION, "Operando normalmente"),
+                    TestConstants.NOW),
                 new LineStatus(
                     new Line("3", "METRO_SAO_PAULO", "Vermelha"),
-                    new Status(StatusEnum.REDUCED_SPEED, "Velocidade reduzida"))),
+                    new Status(StatusEnum.REDUCED_SPEED, "Velocidade reduzida"),
+                    TestConstants.NOW)),
             TestConstants.NOW);
     Assertions.assertEquals(expected, result);
   }

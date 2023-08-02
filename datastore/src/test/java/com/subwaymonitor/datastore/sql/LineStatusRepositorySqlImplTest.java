@@ -3,6 +3,7 @@ package com.subwaymonitor.datastore.sql;
 import static com.subwaymonitor.sharedmodel.StatusEnum.NORMAL_OPERATION;
 import static com.subwaymonitor.sharedmodel.StatusEnum.OPERATION_INTERRUPTED;
 
+import com.subwaymonitor.serialization.DateTimeUtils;
 import com.subwaymonitor.sharedmodel.Line;
 import com.subwaymonitor.sharedmodel.LineStatus;
 import com.subwaymonitor.sharedmodel.Status;
@@ -25,9 +26,9 @@ class LineStatusRepositorySqlImplTest extends BaseSqlRepositoryTest {
   @BeforeEach
   void setUp() throws SQLException {
     clearDatabase();
-    final var formattedTime = TestHelpers.formatLocalDataTime(TestConstants.NOW);
+    final var formattedTime = DateTimeUtils.formatLocalDataTime(TestConstants.NOW);
     final var formattedTimePlus1Day =
-        TestHelpers.formatLocalDataTime(TestConstants.NOW.plusDays(1));
+        DateTimeUtils.formatLocalDataTime(TestConstants.NOW.plusDays(1));
     runNativeQuery(
         String.format(
             "INSERT INTO verification (id, created_at) "
@@ -60,7 +61,9 @@ class LineStatusRepositorySqlImplTest extends BaseSqlRepositoryTest {
     final var status2 = new Status(OPERATION_INTERRUPTED, "Operação interrompida");
 
     final List<LineStatus> expected =
-        List.of(new LineStatus(line1, status1), new LineStatus(line2, status2));
+        List.of(
+            new LineStatus(line1, status1, TestConstants.NOW),
+            new LineStatus(line2, status2, TestConstants.NOW));
 
     Assertions.assertEquals(expected, result);
   }

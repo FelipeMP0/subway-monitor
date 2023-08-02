@@ -72,6 +72,7 @@ class VerificationServiceTest {
   @Test
   void verifyCurrentStatuses_success() throws ExecutionException, InterruptedException {
     final List<LineCurrentStatus> lineCurrentStatuses = buildDefaultLineCurrentStatuses();
+
     when(subwayStatusService.findLineStatuses())
         .thenReturn(CompletableFuture.completedFuture(lineCurrentStatuses));
     when(lineRepository.getByCompanyLineIdAndCompanySlug(LINE_1_NUMBER_IDENTIFIER, COMPANY_1_SLUG))
@@ -80,11 +81,14 @@ class VerificationServiceTest {
         .thenReturn(LINE_2);
     when(statusRepository.getBySlug(NORMAL_OPERATION)).thenReturn(STATUS_1);
     when(statusRepository.getBySlug(REDUCED_SPEED)).thenReturn(STATUS_2);
+
+    final var now = LocalDateTime.now(CLOCK);
     final Verification verification =
         new Verification(
-            List.of(new LineStatus(LINE_1, STATUS_1), new LineStatus(LINE_2, STATUS_2)),
-            LocalDateTime.now(CLOCK));
+            List.of(new LineStatus(LINE_1, STATUS_1, now), new LineStatus(LINE_2, STATUS_2, now)),
+            now);
     subject.verifyCurrentStatuses();
+
     verify(repository).create(verification);
   }
 
@@ -103,8 +107,9 @@ class VerificationServiceTest {
     final var status1 = new Status(NORMAL_OPERATION, "Operando normalmente");
     final var status2 = new Status(OPERATION_INTERRUPTED, "Operação interrompida");
 
+    final var now = LocalDateTime.now(CLOCK);
     final List<LineStatus> lineStatuses =
-        List.of(new LineStatus(line1, status1), new LineStatus(line2, status2));
+        List.of(new LineStatus(line1, status1, now), new LineStatus(line2, status2, now));
 
     when(lineStatusRepository.findByStatus(
             List.of(StatusEnum.REDUCED_SPEED, StatusEnum.OPERATION_INTERRUPTED), archiveUntil))

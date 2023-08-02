@@ -8,9 +8,11 @@ import com.subwaymonitor.integrations.google.GoogleServicesProperties.ServiceAcc
 import com.subwaymonitor.integrations.google.GoogleServicesProperties.SpreadsheetsConfig;
 import com.subwaymonitor.integrations.google.GoogleServicesProperties.SpreadsheetsConfig.Spreadsheet;
 import com.subwaymonitor.integrations.google.GoogleServicesProperties.SpreadsheetsConfig.SpreadsheetType;
+import com.subwaymonitor.serialization.DateTimeUtils;
 import com.subwaymonitor.sharedmodel.Line;
 import com.subwaymonitor.sharedmodel.LineStatus;
 import com.subwaymonitor.sharedmodel.Status;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,9 +47,10 @@ class GoogleSpreadsheetsArchiveServiceTest {
     final var line2 = new Line("1", "METRO_SAO_PAULO", "Azul");
     final var status1 = new Status(NORMAL_OPERATION, "Operando normalmente");
     final var status2 = new Status(OPERATION_INTERRUPTED, "Operação interrompida");
+    final var now = LocalDateTime.now();
 
     final List<LineStatus> lineStatuses =
-        List.of(new LineStatus(line1, status1), new LineStatus(line2, status2));
+        List.of(new LineStatus(line1, status1, now), new LineStatus(line2, status2, now));
 
     final List<List<Object>> data = convertToSpreadsheetFormat(lineStatuses);
 
@@ -68,6 +71,7 @@ class GoogleSpreadsheetsArchiveServiceTest {
       dataRow.add(line.companyLineId());
       dataRow.add(line.name());
       dataRow.add(lineStatus.status().status().name());
+      dataRow.add(DateTimeUtils.formatLocalDataTime(lineStatus.createdAt()));
       data.add(dataRow);
     }
     return data;

@@ -36,7 +36,7 @@ class LineStatusEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   private VerificationEntity verification;
 
-  @Column(name = "created_at", insertable = false, updatable = false)
+  @Column(name = "created_at", updatable = false)
   private LocalDateTime createdAt;
 
   LineStatusEntity() {
@@ -46,10 +46,11 @@ class LineStatusEntity {
   LineStatusEntity(final LineStatus lineStatus) {
     this.line = new LineEntity(lineStatus.line());
     this.status = new StatusEntity(lineStatus.status());
+    this.createdAt = lineStatus.createdAt();
   }
 
   LineStatus toModel() {
-    return new LineStatus(this.line.toModel(), this.status.toModel());
+    return new LineStatus(this.line.toModel(), this.status.toModel(), this.createdAt);
   }
 
   UUID getId() {

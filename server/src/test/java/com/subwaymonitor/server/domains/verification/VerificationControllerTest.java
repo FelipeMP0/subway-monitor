@@ -43,10 +43,11 @@ class VerificationControllerTest {
 
   @Test
   void getCurrentStatus_returnsOk() throws Exception {
+    final var now = LocalDateTime.now();
     final Verification verification =
         new Verification(
-            List.of(new LineStatus(LINE_1, STATUS_1), new LineStatus(LINE_2, STATUS_2)),
-            LocalDateTime.now());
+            List.of(new LineStatus(LINE_1, STATUS_1, now), new LineStatus(LINE_2, STATUS_2, now)),
+            now);
 
     when(service.getLast()).thenReturn(verification);
     final String expectedJson =

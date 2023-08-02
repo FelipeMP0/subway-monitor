@@ -79,6 +79,7 @@ public class VerificationService {
                     .flatMap(Collection::stream)
                     .forEach(lineCurrentStatuses::add))
         .get();
+    final var now = LocalDateTime.now(clock);
     final List<LineStatus> lineStatuses =
         lineCurrentStatuses.stream()
             .map(
@@ -88,10 +89,10 @@ public class VerificationService {
                       lineRepository.getByCompanyLineIdAndCompanySlug(
                           currentLine.companyLineId(), currentLine.companySlug());
                   final Status status = statusRepository.getBySlug(lineCurrentStatus.status());
-                  return buildLineStatus(line, status);
+                  return buildLineStatus(line, status, now);
                 })
             .toList();
-    final Verification verification = new Verification(lineStatuses, LocalDateTime.now(clock));
+    final Verification verification = new Verification(lineStatuses, now);
     repository.create(verification);
   }
 
@@ -110,7 +111,8 @@ public class VerificationService {
     repository.delete(archiveUntil);
   }
 
-  private LineStatus buildLineStatus(final Line line, final Status status) {
-    return new LineStatus(line, status);
+  private LineStatus buildLineStatus(
+      final Line line, final Status status, final LocalDateTime now) {
+    return new LineStatus(line, status, now);
   }
 }

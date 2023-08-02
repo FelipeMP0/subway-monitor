@@ -1,11 +1,11 @@
-package com.subwaymonitor.datastore.sql;
+package com.subwaymonitor.serialization;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-final class TestHelpers {
+public class DateTimeUtils {
 
-  private TestHelpers() {}
+  private DateTimeUtils() {}
 
   public static String formatLocalDataTime(final LocalDateTime localDateTime) {
     final var formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
