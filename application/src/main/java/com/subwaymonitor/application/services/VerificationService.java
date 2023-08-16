@@ -33,7 +33,7 @@ public class VerificationService {
 
   private static final List<StatusEnum> OUTAGE_STATUSES =
       List.of(StatusEnum.REDUCED_SPEED, StatusEnum.OPERATION_INTERRUPTED);
-  private static final int RETENTION_PERIOD_IN_DAYS = 8;
+  private static final int RETENTION_PERIOD_IN_DAYS = 5;
 
   private final Clock clock;
 
