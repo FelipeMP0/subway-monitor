@@ -100,7 +100,7 @@ class VerificationServiceTest {
 
   @Test
   void archive_success() {
-    final var archiveUntil = LocalDateTime.now(CLOCK).minusDays(8);
+    final var archiveUntil = LocalDateTime.now(CLOCK).minusDays(5);
 
     final var line1 = new Line("2", "METRO_SAO_PAULO", "Verde");
     final var line2 = new Line("1", "METRO_SAO_PAULO", "Azul");
